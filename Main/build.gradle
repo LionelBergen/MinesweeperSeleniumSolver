@@ -29,4 +29,8 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-support
 	compile group: 'org.seleniumhq.selenium', name: 'selenium-support', version: '3.141.59'
+	
+	// https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager
+	compile group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '3.7.1'
+	
 }

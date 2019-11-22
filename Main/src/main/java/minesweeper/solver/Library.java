@@ -6,9 +6,9 @@ package minesweeper.solver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class Library {
-	private static final String CHROMEDRIVER_LOCATION = "C:\\Users\\Lionel\\Desktop\\webdrivers\\chromedriver.exe";
-	
     public static void main(String[] args) {
     	WebDriver webDriver = getWebDriver();
     	
@@ -16,7 +16,7 @@ public class Library {
     }
     
     private static WebDriver getWebDriver() {
-    	System.setProperty("webdriver.chrome.driver", CHROMEDRIVER_LOCATION);
+    	WebDriverManager.chromedriver().setup();
     	
     	return new ChromeDriver();
     }
