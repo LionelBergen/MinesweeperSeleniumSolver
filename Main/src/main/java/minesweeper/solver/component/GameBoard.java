@@ -9,7 +9,7 @@ import minesweeper.solver.transformers.WebElementTransformer;
 import minesweeper.solver.utility.Utility;
 
 public class GameBoard {
-	private final List<GameSquare> gameBoard;
+	private final List<SeleniumGameSquare> gameBoard;
 	
 	public GameBoard(List<WebElement> playableSquares) {
 		// Transform, getting the X and Y of each
@@ -17,7 +17,7 @@ public class GameBoard {
 	}
 	
 	public GameSquare getRandomOpenElement() {
-		List<GameSquare> blankSquares = getAllBlankSquares();
+		List<SeleniumGameSquare> blankSquares = getAllBlankSquares();
 		
 		return blankSquares.get(Utility.getRandomNumber(0, blankSquares.size() - 1));
 	}
@@ -31,19 +31,19 @@ public class GameBoard {
 	 * 
 	 * @return A square that is surrounded by 8 blank squares
 	 */
-	public GameSquare getRandomLonelySquare() {
+	public SeleniumGameSquare getRandomLonelySquare() {
 		return getAllBlankSquares().stream().filter(e -> getSurroundingBlankSquares(e).size() == 8).findFirst().orElse(null);
 	}
 	
-	public List<GameSquare> getAllNumberedSquares() {
+	public List<SeleniumGameSquare> getAllNumberedSquares() {
 		return getAllSquaresOfType(SquareValue.NUMBERED_VALUES);
 	}
 	
-	public List<GameSquare> getAllBlankSquares() {
+	public List<SeleniumGameSquare> getAllBlankSquares() {
 		return getAllSquaresOfType(SquareValue.BLANK_UNTOUCHED);
 	}
 	
-	public List<GameSquare> getallFlaggedSquares() {
+	public List<SeleniumGameSquare> getallFlaggedSquares() {
 		return getAllSquaresOfType(SquareValue.FLAGGED);
 	}
 	
@@ -51,11 +51,11 @@ public class GameBoard {
 		return getAllSquaresOfType(SquareValue.FLAGGED).stream().filter(e-> isTouching(square, e)).collect(Collectors.toList());
 	}
 	
-	public List<GameSquare> getSurroundingBlankSquares(GameSquare square) {
+	public List<SeleniumGameSquare> getSurroundingBlankSquares(GameSquare square) {
 		return getAllBlankSquares().stream().filter(e -> isTouching(square, e)).collect(Collectors.toList());
 	}
 	
-	public List<GameSquare> getSurroundingNumberedSquares(GameSquare square) {
+	public List<SeleniumGameSquare> getSurroundingNumberedSquares(GameSquare square) {
 		return getAllNumberedSquares().stream().filter(e -> isTouching(square, e)).collect(Collectors.toList());
 	}
 	
@@ -91,15 +91,15 @@ public class GameBoard {
 		return this.getAllBlankSquares().size() == 0;
 	}
 	
-	private List<GameSquare> getAllSquaresOfType(List<SquareValue> squareValuesToFilterBy) {
+	private List<SeleniumGameSquare> getAllSquaresOfType(List<SquareValue> squareValuesToFilterBy) {
 		return this.gameBoard.stream().filter(e -> squareValuesToFilterBy.contains(e.getValue())).collect(Collectors.toList());
 	}
 	
-	private List<GameSquare> getAllSquaresOfType(SquareValue squareValueToFilterBy) {
+	private List<SeleniumGameSquare> getAllSquaresOfType(SquareValue squareValueToFilterBy) {
 		return this.gameBoard.stream().filter(e -> squareValueToFilterBy == e.getValue()).collect(Collectors.toList());
 	}
     
-    private GameSquare transformGameSquare(WebElement playableSquareElement) {
+    private SeleniumGameSquare transformGameSquare(WebElement playableSquareElement) {
     	return WebElementTransformer.transform(playableSquareElement);
     }
 }

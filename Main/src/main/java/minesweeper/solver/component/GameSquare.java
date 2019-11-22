@@ -1,26 +1,14 @@
 package minesweeper.solver.component;
 
-import org.openqa.selenium.WebElement;
-
 public class GameSquare {
-	private WebElement webElement;
 	private SquareValue value;
 	private int x;
 	private int y;
 	
-	public GameSquare(WebElement webElement, SquareValue value, int x, int y) {
-		this.webElement = webElement;
+	public GameSquare(SquareValue value, int x, int y) {
 		this.value = value;
 		this.x = x;
 		this.y = y;
-	}
-
-	public WebElement getWebElement() {
-		return webElement;
-	}
-
-	public void setWebElement(WebElement webElement) {
-		this.webElement = webElement;
 	}
 
 	public int getX() {

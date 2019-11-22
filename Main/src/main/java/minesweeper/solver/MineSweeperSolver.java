@@ -1,11 +1,7 @@
 package minesweeper.solver;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
@@ -16,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import minesweeper.solver.component.GameBoard;
 import minesweeper.solver.component.GameSquare;
+import minesweeper.solver.component.SeleniumGameSquare;
 import minesweeper.solver.component.SquareValue;
 import minesweeper.solver.logging.Logger;
 import minesweeper.solver.utility.Utility;
@@ -53,7 +50,7 @@ public class MineSweeperSolver {
     	Logger.setCurrentTime();
     	
     	while (!gameBoard.isGameWon()) {
-	    	List<GameSquare> surroundingSquaresToUpdate = selectARandomSquare(webDriver, gameBoard, startingMines);
+	    	List<SeleniumGameSquare> surroundingSquaresToUpdate = selectARandomSquare(webDriver, gameBoard, startingMines);
 
 	    	do
 	    	{
@@ -66,18 +63,18 @@ public class MineSweeperSolver {
     	Logger.logMessage("Congrats you won!");
 	}
 	
-	private List<GameSquare> updateAllNumberedSquares(WebDriver webDriver, GameBoard gameBoard, List<GameSquare> squaresToUpdate) {
-    	List<GameSquare> squaresToUpdate2 = new ArrayList<GameSquare>();
-		for (GameSquare square : squaresToUpdate) {
+	private List<SeleniumGameSquare> updateAllNumberedSquares(WebDriver webDriver, GameBoard gameBoard, List<SeleniumGameSquare> squaresToUpdate) {
+    	List<SeleniumGameSquare> squaresToUpdate2 = new ArrayList<SeleniumGameSquare>();
+		for (SeleniumGameSquare square : squaresToUpdate) {
     		squaresToUpdate2.addAll(updateNumberedSquare(webDriver, gameBoard, square));
     	}
 		
 		return squaresToUpdate2;
 	}
 
-	private List<GameSquare> selectARandomSquare(WebDriver webDriver, GameBoard gameBoard, int startingMines) {
+	private List<SeleniumGameSquare> selectARandomSquare(WebDriver webDriver, GameBoard gameBoard, int startingMines) {
 		// Get a random square and click it
-		GameSquare randomSquare = getRandomSquareWithBestProbability(gameBoard, startingMines);
+		SeleniumGameSquare randomSquare = getRandomSquareWithBestProbability(gameBoard, startingMines);
     	SquareValue newValue = selectSquareWithWait(webDriver, randomSquare);
     	
     	// handle the new value change
@@ -89,12 +86,12 @@ public class MineSweeperSolver {
 	 * Selects a random square, given the best odds. 
 	 * Does simple calculations, does not go into anything complicated such as calculating odds of each surrounding square around 2+ touching numbers
 	 */
-	private GameSquare getRandomSquareWithBestProbability(GameBoard gameBoard, int startingMines) {
+	private SeleniumGameSquare getRandomSquareWithBestProbability(GameBoard gameBoard, int startingMines) {
 		int totalBlankSquares = gameBoard.getSize();
 		int unFoundMines = startingMines - gameBoard.getallFlaggedSquares().size();
 		
 		float oddsOfRandomSquare = Utility.asFloat(unFoundMines, totalBlankSquares);
-		GameSquare randomSquare = gameBoard.getRandomLonelySquare();
+		SeleniumGameSquare randomSquare = gameBoard.getRandomLonelySquare();
 
     	Logger.logMessage("Found random square. Odds of hitting a mine: " + oddsOfRandomSquare + "%");
 		return randomSquare;
@@ -139,8 +136,8 @@ public class MineSweeperSolver {
 	 * Updates the value on the square. If the new value is a bomb, ends the game.
 	 * Otherwise, returns the squares which need to be updated
 	 */
-	private List<GameSquare> updateSquare(WebDriver webDriver, GameBoard gameBoard, GameSquare gameSquare, SquareValue newSquareValue) {
-		List<GameSquare> squaresWhichNeedToBeUpdated = new ArrayList<GameSquare>();
+	private List<SeleniumGameSquare> updateSquare(WebDriver webDriver, GameBoard gameBoard, GameSquare gameSquare, SquareValue newSquareValue) {
+		List<SeleniumGameSquare> squaresWhichNeedToBeUpdated = new ArrayList<SeleniumGameSquare>();
 		
 		// Already updated
 		if (gameSquare.getValue() == newSquareValue) {
@@ -164,7 +161,7 @@ public class MineSweeperSolver {
 	    		break;
 			case ZERO:
 				// If 0, it means all surrounding blank squares were also updated.
-				for (GameSquare surroundingGameSquare : gameBoard.getSurroundingBlankSquares(gameSquare)) {
+				for (SeleniumGameSquare surroundingGameSquare : gameBoard.getSurroundingBlankSquares(gameSquare)) {
 					SquareValue newValue = selectSquareWithWait(webDriver, surroundingGameSquare);
 					squaresWhichNeedToBeUpdated.addAll(updateSquare(webDriver, gameBoard, surroundingGameSquare, newValue));
 				}
@@ -187,16 +184,16 @@ public class MineSweeperSolver {
 		return squaresWhichNeedToBeUpdated;
 	}
 	
-	private List<GameSquare> updateNumberedSquare(WebDriver webDriver, GameBoard gameBoard, GameSquare gameSquare) {
-		List<GameSquare> surroundingBlankSquares = gameBoard.getSurroundingBlankSquares(gameSquare);
+	private List<SeleniumGameSquare> updateNumberedSquare(WebDriver webDriver, GameBoard gameBoard, GameSquare gameSquare) {
+		List<SeleniumGameSquare> surroundingBlankSquares = gameBoard.getSurroundingBlankSquares(gameSquare);
 		final int numberOfSurroundingMines = gameSquare.getValue().getNumberOfSurroundingMines();
 		int numberOfSurroundingFlags = gameBoard.getSurroundingFlaggedSquares(gameSquare).size();
 		int numberOfSurroundingUntouchedSquares = surroundingBlankSquares.size() + numberOfSurroundingFlags;
 		
-		List<GameSquare> squaresToUpdate = new ArrayList<GameSquare>();
+		List<SeleniumGameSquare> squaresToUpdate = new ArrayList<SeleniumGameSquare>();
 		
 		if (numberOfSurroundingMines == numberOfSurroundingUntouchedSquares) {
-			for (GameSquare touchingGameSquare : surroundingBlankSquares) {
+			for (SeleniumGameSquare touchingGameSquare : surroundingBlankSquares) {
 				// Value may have changed during previous iteration
 				if (touchingGameSquare.getValue() == SquareValue.BLANK_UNTOUCHED) {
 					squaresToUpdate.addAll(flagSquare(webDriver, gameBoard, touchingGameSquare));
@@ -204,7 +201,7 @@ public class MineSweeperSolver {
 			}
 		}
 		else if (numberOfSurroundingMines == numberOfSurroundingFlags && surroundingBlankSquares.size() > 0) {
-			for (GameSquare squareToClick : surroundingBlankSquares) {
+			for (SeleniumGameSquare squareToClick : surroundingBlankSquares) {
 				SquareValue newValue = selectSquareWithWait(webDriver, squareToClick);
 		    	
 				squaresToUpdate.addAll(updateSquare(webDriver, gameBoard, squareToClick, newValue));
@@ -218,7 +215,7 @@ public class MineSweeperSolver {
 	 * Right clicks a square to flag it & updates the value of the GameSquare to 'FLAGGED'.
 	 * @return 
 	 */
-	private List<GameSquare> flagSquare(WebDriver webDriver, GameBoard gameBoard, GameSquare squareToFlag) {
+	private List<SeleniumGameSquare> flagSquare(WebDriver webDriver, GameBoard gameBoard, SeleniumGameSquare squareToFlag) {
 		if (squareToFlag.getValue() != SquareValue.BLANK_UNTOUCHED) {
 			throw new RuntimeException("Cannot flag a square that has a value of: " + squareToFlag.getValue());
 		}
@@ -236,7 +233,7 @@ public class MineSweeperSolver {
 		return updateSquare(webDriver, gameBoard, squareToFlag, newValue);
 	}
 	
-	private SquareValue waitForElementToChange(WebDriver webDriver, GameSquare gameSquare) {
+	private SquareValue waitForElementToChange(WebDriver webDriver, SeleniumGameSquare gameSquare) {
 		// Wait for the WebElement to update & retrieve the new value
     	String newClassName = waitForClassNameToChange(webDriver, gameSquare.getWebElement());
     	SquareValue newValue = SquareValue.fromValue(newClassName);
@@ -284,7 +281,7 @@ public class MineSweeperSolver {
     	return allPlayableSquares;
     }
 	
-	private SquareValue selectSquareWithWait(WebDriver webDriver, GameSquare gameSquare) {
+	private SquareValue selectSquareWithWait(WebDriver webDriver, SeleniumGameSquare gameSquare) {
 		gameSquare.getWebElement().click();
 		
 		// Wait for the WebElement to update & retrieve the new value
