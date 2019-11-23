@@ -5,8 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import minesweeper.solver.component.GameBoard;
-import minesweeper.solver.component.GameSquare;
+import main.solver.component.GameBoard;
+import main.solver.component.GameSquare;
 
 public class GameBoardTest {
 	@Test

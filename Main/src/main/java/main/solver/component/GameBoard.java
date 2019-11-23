@@ -1,12 +1,12 @@
-package minesweeper.solver.component;
+package main.solver.component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.WebElement;
 
-import minesweeper.solver.transformers.WebElementTransformer;
-import minesweeper.solver.utility.Utility;
+import main.solver.transformers.WebElementTransformer;
+import main.solver.utility.Utility;
 
 public class GameBoard {
 	private final List<SeleniumGameSquare> gameBoard;

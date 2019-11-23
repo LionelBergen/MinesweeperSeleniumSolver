@@ -1,4 +1,4 @@
-package minesweeper.solver;
+package main.solver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +10,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import minesweeper.solver.component.GameBoard;
-import minesweeper.solver.component.GameSquare;
-import minesweeper.solver.component.SeleniumGameSquare;
-import minesweeper.solver.component.SquareValue;
-import minesweeper.solver.logging.Logger;
-import minesweeper.solver.utility.Utility;
+import main.solver.component.GameBoard;
+import main.solver.component.GameSquare;
+import main.solver.component.SeleniumGameSquare;
+import main.solver.component.SquareValue;
+import main.solver.logging.Logger;
+import main.solver.utility.Utility;
 
 // TODO: Create interfaces, ensure Element's are kept separate
 // class for auto-completing http://minesweeperonline.com/.

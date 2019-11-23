@@ -1,4 +1,4 @@
-package minesweeper.solver.logging;
+package main.solver.logging;
 
 public enum MessageType {
 	GENERAL,

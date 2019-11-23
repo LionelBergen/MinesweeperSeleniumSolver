@@ -1,9 +1,9 @@
-package minesweeper.solver.transformers;
+package main.solver.transformers;
 
 import org.openqa.selenium.WebElement;
 
-import minesweeper.solver.component.SeleniumGameSquare;
-import minesweeper.solver.component.SquareValue;
+import main.solver.component.SeleniumGameSquare;
+import main.solver.component.SquareValue;
 
 // Transforms a WebElement to a 'GameSquare'
 public class WebElementTransformer {

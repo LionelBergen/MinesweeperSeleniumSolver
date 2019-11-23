@@ -1,4 +1,4 @@
-package minesweeper.solver.utility;
+package main.solver.utility;
 
 public final class Utility {
 	private Utility() { }

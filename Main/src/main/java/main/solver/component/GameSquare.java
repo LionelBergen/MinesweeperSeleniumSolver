@@ -1,4 +1,4 @@
-package minesweeper.solver.component;
+package main.solver.component;
 
 public class GameSquare {
 	private SquareValue value;

@@ -1,4 +1,4 @@
-package minesweeper.solver.component;
+package main.solver.component;
 
 import org.openqa.selenium.WebElement;
 

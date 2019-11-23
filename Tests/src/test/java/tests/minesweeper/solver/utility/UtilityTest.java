@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import minesweeper.solver.utility.Utility;
+import main.solver.utility.Utility;
 
 public class UtilityTest {
 	@Test
