@@ -1,4 +1,4 @@
-package utility;
+package utility.util;
 
 import component.model.GameSquare;
 

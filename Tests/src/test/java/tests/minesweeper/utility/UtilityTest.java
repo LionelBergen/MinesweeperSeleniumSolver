@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import component.model.GameSquare;
-import utility.Utility;
+import utility.util.Utility;
 
 public class UtilityTest {
 	@Test

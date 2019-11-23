@@ -1,13 +1,10 @@
-package main.solver.component;
+package component.model;
 
-import static utility.Utility.isTouching;
+import static utility.util.MathUtil.getRandomNumber;
+import static utility.util.Utility.isTouching;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import component.model.GameSquare;
-import component.model.SquareValue;
-import utility.MathUtil;
 
 public class GameBoard<T extends GameSquare> {
 	private List<T> gameBoard = null;
@@ -32,7 +29,7 @@ public class GameBoard<T extends GameSquare> {
 	public T getRandomOpenElement() {
 		List<T> blankSquares = getAllBlankSquares();
 		
-		return blankSquares.get(MathUtil.getRandomNumber(0, blankSquares.size() - 1));
+		return blankSquares.get(getRandomNumber(0, blankSquares.size() - 1));
 	}
 	
 	public List<T> getAllBlankSquares() {

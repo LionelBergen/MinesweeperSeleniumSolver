@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import utility.MathUtil;
+import utility.util.MathUtil;
 
 public class MathUtilTest {
 	@Test

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.openqa.selenium.WebElement;
 
+import component.model.GameBoard;
 import main.solver.transformers.WebElementSeleniumGameSquareTransformer;
 
 /**

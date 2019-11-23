@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Utility</name>
-	<comment>Project Utility created by Buildship.</comment>
+	<name>Common</name>
+	<comment>Project Common created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>

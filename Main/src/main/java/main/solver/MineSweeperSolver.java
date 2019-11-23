@@ -15,7 +15,7 @@ import component.model.SquareValue;
 import main.solver.component.SeleniumGameBoard;
 import main.solver.component.SeleniumGameSquare;
 import main.solver.logging.Logger;
-import utility.MathUtil;
+import utility.util.MathUtil;
 
 // TODO: Create interfaces, ensure Element's are kept separate
 // class for auto-completing http://minesweeperonline.com/.
