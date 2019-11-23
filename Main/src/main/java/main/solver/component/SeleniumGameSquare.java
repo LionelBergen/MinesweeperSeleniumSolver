@@ -5,6 +5,10 @@ import org.openqa.selenium.WebElement;
 import component.model.GameSquare;
 import component.model.SquareValue;
 
+/**
+ * Game square, but with an additional WebElement property
+ * @author Lionel Bergen
+ */
 public class SeleniumGameSquare extends GameSquare {
 	private WebElement webElement;
 

@@ -22,7 +22,7 @@ import utility.MathUtil;
 public class MineSweeperSolver {
 	private static final String MINESWEEPER_ONLINE_URL = "http://minesweeperonline.com/";
 	
-	private static final float BEST_ODDS = 0.125f;
+	//private static final float BEST_ODDS = 0.125f;
 	
 	public MineSweeperSolver(WebDriver webDriver) {
 		// get URL for the website and log the time it takes
