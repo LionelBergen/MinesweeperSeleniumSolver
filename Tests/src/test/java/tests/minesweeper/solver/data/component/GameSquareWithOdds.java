@@ -1,6 +1,6 @@
 package tests.minesweeper.solver.data.component;
 
-import main.solver.component.GameSquare;
+import component.model.GameSquare;
 
 public class GameSquareWithOdds {
 	private GameSquare gameSquare;

@@ -7,10 +7,4 @@
  * in the user manual at https://docs.gradle.org/5.6.1/userguide/multi_project_builds.html
  */
 
-rootProject.name = 'MinesweeperSolver'
-
-include 'Main'
-include 'Solver'
-include 'Tests'
-include 'Utility'
-include 'Component'
+rootProject.name = 'Utility'

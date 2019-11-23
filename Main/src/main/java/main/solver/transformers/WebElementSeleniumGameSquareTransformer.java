@@ -2,11 +2,11 @@ package main.solver.transformers;
 
 import org.openqa.selenium.WebElement;
 
+import component.model.SquareValue;
 import main.solver.component.SeleniumGameSquare;
-import main.solver.component.SquareValue;
 
-// Transforms a WebElement to a 'GameSquare'
-public class WebElementTransformer {
+// Transforms a WebElement to a 'SeleniumGameSquare'
+public class WebElementSeleniumGameSquareTransformer {
 	public static SeleniumGameSquare transform(WebElement webElement) {
     	String idOfElement = webElement.getAttribute("id");
     	SquareValue value = getValueFromElement(webElement);

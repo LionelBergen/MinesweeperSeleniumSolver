@@ -23,17 +23,9 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:28.0-jre'
-	    
-    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver
-	compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '3.141.59'
-	
-	// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-support
-	compile group: 'org.seleniumhq.selenium', name: 'selenium-support', version: '3.141.59'
-	
-	// https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager
-	compile group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '3.7.1'
-	
-	// Other sub projects
-    compile project(':Utility')
+
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+    
     compile project(':Component')
 }

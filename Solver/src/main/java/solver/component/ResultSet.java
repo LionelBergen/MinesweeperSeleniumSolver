@@ -2,7 +2,7 @@ package solver.component;
 
 import java.util.List;
 
-import main.solver.component.GameSquare;
+import component.model.GameSquare;
 
 public class ResultSet {
 	List<GameSquare> gameSquares;

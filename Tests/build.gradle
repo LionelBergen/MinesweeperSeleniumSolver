@@ -29,4 +29,6 @@ dependencies {
     
     compile project(':Main')
     compile project(':Solver')
+    compile project(':Utility')
+    compile project(':Component')
 }

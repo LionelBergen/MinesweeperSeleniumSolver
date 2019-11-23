@@ -2,7 +2,7 @@ package tests.minesweeper.solver.data.component;
 
 import java.util.List;
 
-import main.solver.component.GameSquare;
+import component.model.GameSquare;
 
 public class MinesweeperTestCase {
 	private List<GameSquare> gameSquares;

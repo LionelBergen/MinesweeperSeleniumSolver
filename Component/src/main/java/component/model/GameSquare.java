@@ -1,4 +1,4 @@
-package main.solver.component;
+package component.model;
 
 public class GameSquare {
 	private SquareValue value;

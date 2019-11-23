@@ -2,6 +2,9 @@ package main.solver.component;
 
 import org.openqa.selenium.WebElement;
 
+import component.model.GameSquare;
+import component.model.SquareValue;
+
 public class SeleniumGameSquare extends GameSquare {
 	private WebElement webElement;
 

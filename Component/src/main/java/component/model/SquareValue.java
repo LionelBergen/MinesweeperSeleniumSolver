@@ -1,4 +1,4 @@
-package main.solver.component;
+package component.model;
 
 import java.util.Arrays;
 import java.util.List;

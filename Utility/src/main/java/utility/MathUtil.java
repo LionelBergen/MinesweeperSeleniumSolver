@@ -1,14 +1,12 @@
-package main.solver.utility;
+package utility;
 
-public final class Utility {
-	private Utility() { }
-	
+public class MathUtil {
 	/**
 	 * Returns a whole random number between the two numbers passed
 	 * 
 	 * @param lowerBound inclusive
 	 * @param higherBound inclusive
-	 * @return Random number between the 2 (includsive)
+	 * @return Random number between the 2 (inclusive)
 	 */
 	public static int getRandomNumber(int lowerBound, int higherBound) {
 		higherBound = higherBound + 1;
