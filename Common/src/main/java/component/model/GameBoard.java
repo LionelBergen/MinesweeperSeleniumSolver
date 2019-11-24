@@ -6,7 +6,12 @@ import static utility.util.Utility.isTouching;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GameBoard<T extends GameSquare> {
+/**
+ * Contains {@link GameSquare}'s representing a Minesweeper board.
+ *  
+ * @author Lionel Bergen
+ */
+public abstract class GameBoard<T extends GameSquare> {
 	private List<T> gameBoard = null;
 	
 	public void setGameBoard(List<T> gameSquares) {
@@ -15,6 +20,15 @@ public class GameBoard<T extends GameSquare> {
 	
 	public int getSize() {
 		return this.gameBoard.size();
+	}
+	
+	/**
+	 * Returns all GameSquare's matching {@link SquareValue#BLANK_UNTOUCHED}
+	 * 
+	 * @return List of blank squares on the board
+	 */
+	public List<T> getAllBlankSquares() {
+		return getAllSquaresOfType(SquareValue.BLANK_UNTOUCHED);
 	}
 	
 	/**
@@ -30,10 +44,6 @@ public class GameBoard<T extends GameSquare> {
 		List<T> blankSquares = getAllBlankSquares();
 		
 		return blankSquares.get(getRandomNumber(0, blankSquares.size() - 1));
-	}
-	
-	public List<T> getAllBlankSquares() {
-		return getAllSquaresOfType(SquareValue.BLANK_UNTOUCHED);
 	}
 	
 	public List<T> getAllNumberedSquares() {
