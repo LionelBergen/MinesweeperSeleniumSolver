@@ -18,8 +18,16 @@ public abstract class GameBoard<T extends GameSquare> {
 		this.gameBoard = gameSquares;
 	}
 	
+	public List<T> getGameBoard() {
+		return this.gameBoard;
+	}
+	
 	public int getSize() {
 		return this.gameBoard.size();
+	}
+	
+	public boolean isGameWon() {
+		return this.getAllBlankSquares().size() == 0;
 	}
 	
 	/**
@@ -54,6 +62,10 @@ public abstract class GameBoard<T extends GameSquare> {
 		return getAllSquaresOfType(SquareValue.FLAGGED);
 	}
 	
+	public List<T> getSurroundingSquares(GameSquare square) {
+		return this.gameBoard.stream().filter(e -> isTouching(square, e)).collect(Collectors.toList());
+	}
+	
 	public List<T> getSurroundingFlaggedSquares(GameSquare square) {
 		return getAllSquaresOfType(SquareValue.FLAGGED).stream().filter(e-> isTouching(square, e)).collect(Collectors.toList());
 	}
@@ -64,10 +76,6 @@ public abstract class GameBoard<T extends GameSquare> {
 	
 	public List<T> getSurroundingNumberedSquares(GameSquare square) {
 		return getAllNumberedSquares().stream().filter(e -> isTouching(square, e)).collect(Collectors.toList());
-	}
-	
-	public boolean isGameWon() {
-		return this.getAllBlankSquares().size() == 0;
 	}
 	
 	private List<T> getAllSquaresOfType(List<SquareValue> squareValuesToFilterBy) {

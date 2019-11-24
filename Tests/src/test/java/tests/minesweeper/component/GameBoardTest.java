@@ -1,7 +1,7 @@
 package tests.minesweeper.component;
 
 import static org.junit.Assert.assertEquals;
-import static tests.minesweeper.data.TestData.getValidGameBoard;
+import static tests.minesweeper.data.TestDataHelper.getValidGameBoard;
 
 import java.util.List;
 

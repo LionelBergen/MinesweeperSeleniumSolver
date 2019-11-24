@@ -146,7 +146,7 @@ public class MineSweeperSolver {
 		
 		// Sanity check
 		if (gameSquare.getValue() == SquareValue.FLAGGED || gameSquare.getValue() == SquareValue.ZERO 
-				|| SquareValue.NUMBERED_VALUES.contains(gameSquare.getValue())) {
+				|| gameSquare.getValue().isNumbered()) {
 			throw new RuntimeException("Something went wrong: Square of type: " + gameSquare.getValue() + " cannot be changed.");
 		}
 		

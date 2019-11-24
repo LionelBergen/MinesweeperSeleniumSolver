@@ -37,6 +37,10 @@ public enum SquareValue {
 		this.numberOfSurroundingMines = numberOfSurroundingMines;
 	}
 	
+	public boolean isNumbered() {
+		return NUMBERED_VALUES.contains(this);
+	}
+	
 	public static SquareValue fromValue(String fromValue) {
 		for (SquareValue s : values()) {
 			if (s.value.equals(fromValue)) {

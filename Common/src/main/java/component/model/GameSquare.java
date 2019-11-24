@@ -34,4 +34,27 @@ public class GameSquare {
 	public void setValue(SquareValue value) {
 		this.value = value;
 	}
+	
+	@Override
+	public boolean equals(Object other) {
+	    // self check
+	    if (this == other) {
+	        return true;
+	    }
+	    
+	    // null check
+	    if (other == null) {
+	        return false;
+	    }
+	    
+	    // type check and cast
+	    if (getClass() != other.getClass()) {
+	        return false;
+	    }
+	    
+	    GameSquare otherSquare = (GameSquare) other;
+	    
+	    // field comparison
+	    return otherSquare.getX() == this.getX() && this.getY() == otherSquare.getY() && this.getValue() == otherSquare.getValue();
+	}
 }
