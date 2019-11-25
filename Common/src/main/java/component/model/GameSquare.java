@@ -67,6 +67,8 @@ public class GameSquare {
 	// Won't ever happen in our program, but should be fixed (GameSquare should make sense on its own)
 	@Override
 	public int hashCode() {
-	    return Integer.parseInt((x + "0" + y));
+		final int primeNumber = 31;
+		
+	    return primeNumber * x + (primeNumber * y);
 	}
 }

@@ -50,29 +50,32 @@ public class TestDataHelper {
 		
 		System.out.println(gameSquares.size());
 		
-		int maxX = gameSquares.stream().max(Comparator.comparing(GameSquare::getX)).get().getX() + 1;
-		int maxY = gameSquares.stream().max(Comparator.comparing(GameSquare::getY)).get().getY() + 1;
+		int width = gameSquares.stream().max(Comparator.comparing(GameSquare::getX)).get().getX() + 1;
+		int height = gameSquares.stream().max(Comparator.comparing(GameSquare::getY)).get().getY() + 1;
 		
-		GameSquare[][] board = new GameSquare[maxX][maxY];
+		GameSquare[][] board = new GameSquare[width][height];
 		
 		for (GameSquare square : gameSquares) {
-			board[square.getY()][square.getX()] = square;
+			board[square.getX()][square.getY()] = square;
 		}
 		
 		int i = 0;
 		
+		// print the X grid at the top
 		System.out.print("  ");
-		for (int y=0; y<maxY; y++) {
-			System.out.print(y + " ");
+		for (int x=0; x<width; x++) {
+			System.out.print(x + " ");
 		}
 		System.out.println();
 		
-		for (int x=0; x<maxX; x++) {
+		for (int y=0; y<height; y++) {
+			// print the Y grid at the left
 			System.out.print(i++ + " ");
-			for (int y=0; y<maxY; y++) {
+			
+			for (int x=0; x<width; x++) {
 				System.out.print(visualizeSquareValue(board[x][y]));
 				
-				if (y != maxY -1) {
+				if (x != width -1) {
 					System.out.print(" ");
 				}
 			}

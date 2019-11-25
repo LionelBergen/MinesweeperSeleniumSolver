@@ -122,7 +122,24 @@ public class TestScenerio {
 		return gameBoard;
 	}
 	
+	/**
+	 * @return A Game board found here: https://math.stackexchange.com/questions/3447402/minesweeper-odds-for-this-scenario-2-different-calculations
+	 * We've manually calculated the odds and such
+	 */
+	public static RegularGameBoard getGameBoardScenerioSpecial01() {
+		RegularGameBoard gameBoard = getValidGameBoard(7, 6);
+		List<GameSquare> squares = gameBoard.getGameBoard();
+		
+		getGameSquare(squares, 2, 2).setValue(SquareValue.THREE);
+		getGameSquare(squares, 4, 2).setValue(SquareValue.ONE);
+		getGameSquare(squares, 3, 3).setValue(SquareValue.ONE);
+		
+		gameBoard.getGameBoard();
+		
+		return gameBoard;
+	}
+	
 	public static void main(String[] args) {
-		visualizeGameBoard(getGameBoardScenerio7());
+		visualizeGameBoard(getGameBoardScenerioSpecial01());
 	}
 }

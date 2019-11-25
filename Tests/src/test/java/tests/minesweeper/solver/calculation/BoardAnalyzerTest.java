@@ -197,6 +197,32 @@ public class BoardAnalyzerTest {
 		assertListsEqual(expectedResults2, result2.getGameSquares());
 	}
 	
+	@Test
+	public void testBreakupBoardSpecial01() {
+		RegularGameBoard gameBoard = TestScenerio.getGameBoardScenerioSpecial01();
+		
+		final List<GameSquare> expectedResults1 = 
+				Arrays.asList(new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1),
+						new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 1),
+						new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 1),
+						new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 2), new GameSquare(SquareValue.THREE, 2, 2),
+						new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 2), new GameSquare(SquareValue.ONE, 4, 2),
+						new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 2), 
+						new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3), 
+						new GameSquare(SquareValue.ONE, 3, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 3), 
+						new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 3),
+						new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 4), new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 4),
+						new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 4)
+						);
+		
+		List<ResultSet> results = BoardAnalyzer.breakupBoard(gameBoard);
+
+		assertEquals(1, results.size());
+		
+		ResultSet result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
+		assertListsEqual(expectedResults1, result1.getGameSquares());
+	}
+	
 	/**
 	 * Asserts list 1 contains all values in list2. 
 	 * Order does not matter
