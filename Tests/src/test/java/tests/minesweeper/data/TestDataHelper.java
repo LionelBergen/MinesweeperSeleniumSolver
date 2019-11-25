@@ -8,6 +8,7 @@ import java.util.List;
 import component.model.GameSquare;
 import component.model.RegularGameBoard;
 import component.model.SquareValue;
+import tests.minesweeper.data.component.TestScenerio;
 
 public class TestDataHelper {
 	public static RegularGameBoard getValidGameBoard(int numberOfNumberedSquares) {
@@ -43,6 +44,10 @@ public class TestDataHelper {
 	
 	public static GameSquare getGameSquare(List<GameSquare> gameSquares, int x, int y) {
 		return gameSquares.stream().filter(e -> e.getX() == x && e.getY() == y).findFirst().get();
+	}
+	
+	public static void visualizeGameBoard(TestScenerio scenerio) {
+		visualizeGameBoard(scenerio.getGameBoard());
 	}
 	
 	public static void visualizeGameBoard(RegularGameBoard gameBoard) {
@@ -90,7 +95,7 @@ public class TestDataHelper {
 		case BOMB:
 			return "@";
 		case FLAGGED:
-			return "+";
+			return "&";
 		case EIGHT:
 			return "8";
 		case FIVE:

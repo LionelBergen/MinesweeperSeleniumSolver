@@ -3,18 +3,17 @@ package tests.minesweeper.solver.calculation;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import org.junit.Test;
 
 import component.model.GameSquare;
 import component.model.RegularGameBoard;
-import component.model.SquareValue;
 import solver.board.analyzing.BoardAnalyzer;
 import solver.component.Section;
 import tests.minesweeper.data.TestDataHelper;
-import tests.minesweeper.data.TestScenerio;
+import tests.minesweeper.data.TestScenerios;
+import tests.minesweeper.data.component.TestScenerio;
 
 public class BoardAnalyzerTest {
 	// A board with no squares
@@ -39,209 +38,149 @@ public class BoardAnalyzerTest {
 	
 	@Test
 	public void testBreakupBoard01() {
-		RegularGameBoard gameBoard = TestScenerio.getGameBoardScenerio1();
+		TestScenerio testScenerio = TestScenerios.SCENARIO_01;
 		
-		// Based on test scenerio1, this is what we expect as our results
-		final List<GameSquare> expectedResults1 = 
-				Arrays.asList(new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 2),
-						new GameSquare(SquareValue.ONE, 2, 2), new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 2), 
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 3)
-						);
+		final RegularGameBoard gameBoard = testScenerio.getGameBoard();
+		final List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		List<Section> results = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
-		assertEquals(1, results.size());
-		
-		Section result = results.get(0);
-		assertListsEqual(expectedResults1, result.getGameSquares());
+		assertSectionListsEqual(expectedResults, actualResults);
 	}
 	
 	@Test
 	public void testBreakupBoard02() {
-		RegularGameBoard gameBoard = TestScenerio.getGameBoardScenerio2();
+		TestScenerio testScenerio = TestScenerios.SCENARIO_02;
 		
-		// Based on test scenerio2, this is what we expect as our results
-		final List<GameSquare> expectedResults1 = 
-				Arrays.asList(new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 0), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 0),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 0), new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 1),
-						new GameSquare(SquareValue.ONE, 1, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1), 
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 2), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 2),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 2)
-						);
+		RegularGameBoard gameBoard = testScenerio.getGameBoard();
+		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		final List<GameSquare> expectedResults2 = 
-				Arrays.asList(new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 2),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 1),
-						new GameSquare(SquareValue.ONE, 5, 2), new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 3), 
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 6, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 6, 2),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 6, 3)
-						);
-		
-		List<Section> results = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
-		assertEquals(2, results.size());
-		
-		Section result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
-		assertListsEqual(expectedResults1, result1.getGameSquares());
-		
-		Section result2 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults2.get(1))).findAny().get();
-		assertListsEqual(expectedResults2, result2.getGameSquares());
+		assertSectionListsEqual(expectedResults, actualResults);
 	}
 	
 	@Test
 	public void testBreakupBoard03() {
-		RegularGameBoard gameBoard = TestScenerio.getGameBoardScenerio3();
+		TestScenerio testScenerio = TestScenerios.SCENARIO_03;
 		
-		// Based on test scenerio2, this is what we expect as our results
-		final List<GameSquare> expectedResults1 = 
-				Arrays.asList(new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 0), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 0),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 0), new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 1),
-						new GameSquare(SquareValue.TWO, 1, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1), 
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 2), new GameSquare(SquareValue.THREE, 1, 2),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 2), new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 3),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3)
-						);
+		RegularGameBoard gameBoard = testScenerio.getGameBoard();
+		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		final List<GameSquare> expectedResults2 = 
-				Arrays.asList(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 4), new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 4),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 4), new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 5),
-						new GameSquare(SquareValue.THREE, 3, 5), new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 5), 
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 6), new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 6),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 6)
-						);
-		
-		List<Section> results = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
-		assertEquals(2, results.size());
-		
-		Section result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
-		assertListsEqual(expectedResults1, result1.getGameSquares());
-		
-		Section result2 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults2.get(1))).findAny().get();
-		assertListsEqual(expectedResults2, result2.getGameSquares());
+		assertSectionListsEqual(expectedResults, actualResults);
 	}
 	
 	@Test
 	public void testBreakupBoard04() {
-		RegularGameBoard gameBoard = TestScenerio.getGameBoardScenerio4();
+		TestScenerio testScenerio = TestScenerios.SCENARIO_04;
 		
-		// Based on test scenerio4, this is what we expect as our results
-		final List<GameSquare> expectedResults1 = 
-				Arrays.asList(new GameSquare(SquareValue.ONE, 0, 0), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 0),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 1)
-						);
+		RegularGameBoard gameBoard = testScenerio.getGameBoard();
+		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		final List<GameSquare> expectedResults2 = 
-				Arrays.asList(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 3),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 4),
-						new GameSquare(SquareValue.ONE, 3, 4), new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 4)
-						);
-		
-		List<Section> results = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
-		assertEquals(2, results.size());
-		
-		Section result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
-		assertListsEqual(expectedResults1, result1.getGameSquares());
-		
-		Section result2 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults2.get(1))).findAny().get();
-		assertListsEqual(expectedResults2, result2.getGameSquares());
+		assertSectionListsEqual(expectedResults, actualResults);
 	}
 	
 	@Test
 	public void testBreakupBoard05() {
-		RegularGameBoard gameBoard = TestScenerio.getGameBoardScenerio5();
+		TestScenerio testScenerio = TestScenerios.SCENARIO_05;
 		
-		// Based on test scenerio5, this is what we expect as our results
-		final List<GameSquare> expectedResults1 = 
-				Arrays.asList(new GameSquare(SquareValue.ONE, 0, 0), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 0),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 1),
-						new GameSquare(SquareValue.ONE, 0, 2), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 2),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3)
-						);
+		RegularGameBoard gameBoard = testScenerio.getGameBoard();
+		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		List<Section> results = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
-		assertEquals(1, results.size());
-		
-		Section result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
-		assertListsEqual(expectedResults1, result1.getGameSquares());
+		assertSectionListsEqual(expectedResults, actualResults);
 	}
 	
 	@Test
 	public void testBreakupBoard06() {
-		RegularGameBoard gameBoard = TestScenerio.getGameBoardScenerio6();
+		TestScenerio testScenerio = TestScenerios.SCENARIO_06;
 		
-		// Based on test scenerio6, this is what we expect as our results
-		final List<GameSquare> expectedResults1 = 
-				Arrays.asList(new GameSquare(SquareValue.ONE, 0, 0), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 0),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 1),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 1),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 2), new GameSquare(SquareValue.ONE, 2, 2),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 2), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 3)
-						);
+		RegularGameBoard gameBoard = testScenerio.getGameBoard();
+		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		List<Section> results = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
-		assertEquals(1, results.size());
-		
-		Section result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
-		assertListsEqual(expectedResults1, result1.getGameSquares());
+		assertSectionListsEqual(expectedResults, actualResults);
 	}
 	
 	@Test
 	public void testBreakupBoard07() {
-		RegularGameBoard gameBoard = TestScenerio.getGameBoardScenerio7();
+		TestScenerio testScenerio = TestScenerios.SCENARIO_07;
 		
-		// Based on test scenerio7, this is what we expect as our results
-		final List<GameSquare> expectedResults1 = 
-				Arrays.asList(new GameSquare(SquareValue.ONE, 0, 0), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 0),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 1)
-						);
+		RegularGameBoard gameBoard = testScenerio.getGameBoard();
+		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		final List<GameSquare> expectedResults2 = 
-				Arrays.asList(new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 2), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 2),
-						new GameSquare(SquareValue.ONE, 0, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3)
-						);
-		
-		List<Section> results = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
-		assertEquals(2, results.size());
+		assertSectionListsEqual(expectedResults, actualResults);
+	}
+	
+	@Test
+	public void testBreakupBoard08() {
+		TestScenerio testScenerio = TestScenerios.SCENARIO_08;
 		
-		Section result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
-		assertListsEqual(expectedResults1, result1.getGameSquares());
+		RegularGameBoard gameBoard = testScenerio.getGameBoard();
+		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		Section result2 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults2.get(0))).findAny().get();
-		assertListsEqual(expectedResults2, result2.getGameSquares());
+		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
+
+		assertSectionListsEqual(expectedResults, actualResults);
+	}
+	
+	@Test
+	public void testBreakupBoard09() {
+		TestScenerio testScenerio = TestScenerios.SCENARIO_09;
+		
+		RegularGameBoard gameBoard = testScenerio.getGameBoard();
+		List<Section> expectedResults = testScenerio.getExpectedSections();
+		
+		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
+
+		assertSectionListsEqual(expectedResults, actualResults);
 	}
 	
 	@Test
 	public void testBreakupBoardSpecial01() {
-		RegularGameBoard gameBoard = TestScenerio.getGameBoardScenerioSpecial01();
+		TestScenerio testScenerio = TestScenerios.SCENARIO_SPECIAL_01;
 		
-		final List<GameSquare> expectedResults1 = 
-				Arrays.asList(new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 1),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 1),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 2), new GameSquare(SquareValue.THREE, 2, 2),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 2), new GameSquare(SquareValue.ONE, 4, 2),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 2), 
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3), 
-						new GameSquare(SquareValue.ONE, 3, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 3), 
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 3),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 4), new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 4),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 4)
-						);
+		RegularGameBoard gameBoard = testScenerio.getGameBoard();
+		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		List<Section> results = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
-		assertEquals(1, results.size());
+		assertSectionListsEqual(expectedResults, actualResults);
+	}
+	
+	@Test
+	public void testBreakupBoardSpecial02() {
+		TestScenerio testScenerio = TestScenerios.SCENARIO_SPECIAL_02;
+		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		
-		Section result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
-		assertListsEqual(expectedResults1, result1.getGameSquares());
+		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
+		assertEquals(1, actualResults.size());
+		assertEquals(49, actualResults.get(0).getGameSquares().size());
+	}
+	
+	/**
+	 * Asserts that all of the sections are equal. 
+	 * Order does not matter
+	 */
+	private void assertSectionListsEqual(Collection<Section> expectedList, Collection<Section> actualList) {
+		assertEquals(expectedList.size(), actualList.size());
+		
+		for (Section expectedSection : expectedList) {
+			GameSquare squareFromList = expectedSection.getGameSquares().iterator().next();
+			
+			// get matching in actual results
+			Section actualSection = actualList.stream().filter(e -> e.getGameSquares().contains(squareFromList)).findAny().get();
+			
+			assertListsEqual(expectedSection.getGameSquares(), actualSection.getGameSquares());
+		}
 	}
 	
 	/**

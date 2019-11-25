@@ -15,12 +15,23 @@ public class Section {
 	// Use a Set since it doesn't allow duplicates
 	private Set<GameSquare> gameSquares = new HashSet<GameSquare>();
 	
+	public Section() {
+	}
+	
+	public Section(Set<GameSquare> gameSquares) {
+		this.gameSquares = gameSquares;
+	}
+	
 	public void add(GameSquare gameSquare) {
 		gameSquares.add(gameSquare);
 	}
 	
 	public Set<GameSquare> getGameSquares() {
 		return this.gameSquares;
+	}
+	
+	public void setGameSquares(Set<GameSquare> gameSquares) {
+		this.gameSquares = gameSquares;
 	}
 	
 	public boolean isTouching(Section resultSet) {
