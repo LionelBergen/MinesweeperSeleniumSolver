@@ -6,3 +6,4 @@ build
 
 # Ignore build stuff
 bin
+reports

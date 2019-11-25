@@ -27,3 +27,10 @@ dependencies {
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
 }
+
+reporting.baseDir = "reports"
+testResultsDirName = "$buildDir/test-results"
+
+test {
+	useJUnit()
+}
