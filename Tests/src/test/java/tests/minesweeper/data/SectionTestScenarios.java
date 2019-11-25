@@ -10,9 +10,12 @@ import solver.component.Section;
 import solver.component.SweeperSet;
 import tests.minesweeper.data.component.SectionTestScenario;
 
+import static tests.minesweeper.data.TestDataHelper.getGameSquare;
+
 public class SectionTestScenarios {
 	public static final SectionTestScenario SCENARIO_01 = getScenario01();
 	public static final SectionTestScenario SCENARIO_02 = getScenario02();
+	public static final SectionTestScenario SCENARIO_03 = getScenario03();
 	
 	private static SectionTestScenario getScenario01() {
 		Section section = GameBoardTestScenarios.SCENARIO_01.getExpectedSections().iterator().next();
@@ -56,6 +59,40 @@ public class SectionTestScenarios {
 		List<SweeperSet> expectedResults = Arrays.asList(
 				createSweeperSet(gameSquareResults1, 2),
 				createSweeperSet(gameSquareResults2, 3)
+				);
+		return new SectionTestScenario(section, expectedResults);
+	}
+	
+	// Similar as above but with 2 flags & a 4 instead of a 3
+	private static SectionTestScenario getScenario03() {
+		// setup test data
+		Section section = GameBoardTestScenarios.SCENARIO_03.getExpectedSections().iterator().next();
+		List<GameSquare> gameSquareList = new ArrayList<>(section.getGameSquares());
+		getGameSquare(gameSquareList, 1, 2).setValue(SquareValue.FOUR);
+		getGameSquare(gameSquareList, 1, 3).setValue(SquareValue.FLAGGED);
+		getGameSquare(gameSquareList, 2, 3).setValue(SquareValue.FLAGGED);
+		
+		// # 2
+		List<GameSquare> gameSquareResults1 = new ArrayList<GameSquare>();
+		gameSquareResults1.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 0));
+		gameSquareResults1.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 0));
+		gameSquareResults1.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 0));
+		gameSquareResults1.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 1));
+		gameSquareResults1.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1));
+		gameSquareResults1.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 2));
+		gameSquareResults1.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 2));
+		
+		// # 4
+		List<GameSquare> gameSquareResults2 = new ArrayList<GameSquare>();
+		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 1));
+		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1));
+		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 2));
+		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 2));
+		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 3));
+		
+		List<SweeperSet> expectedResults = Arrays.asList(
+				createSweeperSet(gameSquareResults1, 2),
+				createSweeperSet(gameSquareResults2, 1)
 				);
 		return new SectionTestScenario(section, expectedResults);
 	}

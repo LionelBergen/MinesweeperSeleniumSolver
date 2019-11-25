@@ -53,6 +53,12 @@ public class SectionAnalyzerTest {
 		testScenario(SectionTestScenarios.SCENARIO_02);
 	}
 	
+	// Tests a 2 touching a 4, surrounded by blanks & 2 flags touching the 4
+	@Test
+	public void testScenario03() {
+		testScenario(SectionTestScenarios.SCENARIO_03);
+	}
+	
 	private void testScenario(SectionTestScenario scenario) {
 		List<SweeperSet> actualResults = SectionAnalyzer.breakupSection(scenario.getSection());
 		assertEquals(scenario.getExpectedResults().size(), actualResults.size());
