@@ -31,6 +31,10 @@ dependencies {
 reporting.baseDir = "reports"
 testResultsDirName = "$buildDir/test-results"
 
-test {
-	useJUnit()
+project(":Tests"){
+    apply plugin: "java"
+
+    test{
+        useJUnit()
+    }
 }
