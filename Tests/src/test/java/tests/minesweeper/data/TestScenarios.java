@@ -12,25 +12,25 @@ import component.model.GameSquare;
 import component.model.RegularGameBoard;
 import component.model.SquareValue;
 import solver.component.Section;
-import tests.minesweeper.data.component.TestScenerio;
+import tests.minesweeper.data.component.TestScenario;
 
 public class TestScenarios {
-	public static final TestScenerio SCENARIO_01 = getGameBoardScenario1();
-	public static final TestScenerio SCENARIO_02 = getGameBoardScenario2();
-	public static final TestScenerio SCENARIO_03 = getGameBoardScenario3();
-	public static final TestScenerio SCENARIO_04 = getGameBoardScenario4();
-	public static final TestScenerio SCENARIO_05 = getGameBoardScenario5();
-	public static final TestScenerio SCENARIO_06 = getGameBoardScenario6();
-	public static final TestScenerio SCENARIO_07 = getGameBoardScenario7();
-	public static final TestScenerio SCENARIO_08 = getGameBoardScenario8();
-	public static final TestScenerio SCENARIO_09 = getGameBoardScenario9();
+	public static final TestScenario SCENARIO_01 = getGameBoardScenario1();
+	public static final TestScenario SCENARIO_02 = getGameBoardScenario2();
+	public static final TestScenario SCENARIO_03 = getGameBoardScenario3();
+	public static final TestScenario SCENARIO_04 = getGameBoardScenario4();
+	public static final TestScenario SCENARIO_05 = getGameBoardScenario5();
+	public static final TestScenario SCENARIO_06 = getGameBoardScenario6();
+	public static final TestScenario SCENARIO_07 = getGameBoardScenario7();
+	public static final TestScenario SCENARIO_08 = getGameBoardScenario8();
+	public static final TestScenario SCENARIO_09 = getGameBoardScenario9();
 	
-	public static final TestScenerio SCENARIO_SPECIAL_01 = getGameBoardScenarioSpecial01();
-	public static final TestScenerio SCENARIO_SPECIAL_02 = getGameBoardScenarioSpecial02();
+	public static final TestScenario SCENARIO_SPECIAL_01 = getGameBoardScenarioSpecial01();
+	public static final TestScenario SCENARIO_SPECIAL_02 = getGameBoardScenarioSpecial02();
 	/**
 	 * @return A Game board containing a 1 in the center
 	 */
-	private static TestScenerio getGameBoardScenario1() {
+	private static TestScenario getGameBoardScenario1() {
 		// setup a game board
 		RegularGameBoard gameBoard = getValidGameBoard(5, 5);
 		List<GameSquare> squares = gameBoard.getGameBoard();
@@ -51,7 +51,7 @@ public class TestScenarios {
 	/**
 	 * @return A Game board containing 2 seperate 1's
 	 */
-	private static TestScenerio getGameBoardScenario2() {
+	private static TestScenario getGameBoardScenario2() {
 		// setup the game board
 		RegularGameBoard gameBoard = getValidGameBoard(7, 7);
 		List<GameSquare> squares = gameBoard.getGameBoard();
@@ -82,7 +82,7 @@ public class TestScenarios {
 	/**
 	 * @return A Game board containing touching numbers & 1 untouching number
 	 */
-	private static TestScenerio getGameBoardScenario3() {
+	private static TestScenario getGameBoardScenario3() {
 		// create game board
 		RegularGameBoard gameBoard = getValidGameBoard(7, 7);
 		List<GameSquare> squares = gameBoard.getGameBoard();
@@ -114,7 +114,7 @@ public class TestScenarios {
 	/**
 	 * @return A Game board containing 2 1's, which are seperate and touching a wall or corner
 	 */
-	private static TestScenerio getGameBoardScenario4() {
+	private static TestScenario getGameBoardScenario4() {
 		RegularGameBoard gameBoard = getValidGameBoard(5, 5);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 0, 0).setValue(SquareValue.ONE);
@@ -138,7 +138,7 @@ public class TestScenarios {
 	/**
 	 * @return A Game board containing 2 numbers separated by a single blank
 	 */
-	private static TestScenerio getGameBoardScenario5() {
+	private static TestScenario getGameBoardScenario5() {
 		RegularGameBoard gameBoard = getValidGameBoard(4, 4);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 0, 0).setValue(SquareValue.ONE);
@@ -157,7 +157,7 @@ public class TestScenarios {
 	/**
 	 * @return A Game board containing 2 numbers separated by a single blank - diagonally this time
 	 */
-	private static TestScenerio getGameBoardScenario6() {
+	private static TestScenario getGameBoardScenario6() {
 		RegularGameBoard gameBoard = getValidGameBoard(4, 4);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 0, 0).setValue(SquareValue.ONE);
@@ -178,7 +178,7 @@ public class TestScenarios {
 	/**
 	 * @return A Game board containing 2 numbers separated by two spaces
 	 */
-	private static TestScenerio getGameBoardScenario7() {
+	private static TestScenario getGameBoardScenario7() {
 		RegularGameBoard gameBoard = getValidGameBoard(4, 4);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 0, 0).setValue(SquareValue.ONE);
@@ -200,7 +200,7 @@ public class TestScenarios {
 	/**
 	 * @return A Game board containing 2 numbers separated by two flags
 	 */
-	private static TestScenerio getGameBoardScenario8() {
+	private static TestScenario getGameBoardScenario8() {
 		RegularGameBoard gameBoard = getValidGameBoard(4, 4);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 0, 0).setValue(SquareValue.ONE);
@@ -224,7 +224,7 @@ public class TestScenarios {
 	/**
 	 * @return A Game board containing 2 numbers separated by a single flag
 	 */
-	private static TestScenerio getGameBoardScenario9() {
+	private static TestScenario getGameBoardScenario9() {
 		RegularGameBoard gameBoard = getValidGameBoard(4, 4);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 0, 0).setValue(SquareValue.ONE);
@@ -245,7 +245,7 @@ public class TestScenarios {
 	 * @return A Game board found here: https://math.stackexchange.com/questions/3447402/minesweeper-odds-for-this-scenario-2-different-calculations
 	 * We've manually calculated the odds and such
 	 */
-	private static TestScenerio getGameBoardScenarioSpecial01() {
+	private static TestScenario getGameBoardScenarioSpecial01() {
 		RegularGameBoard gameBoard = getValidGameBoard(7, 6);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 2, 2).setValue(SquareValue.THREE);
@@ -272,7 +272,7 @@ public class TestScenarios {
 	/**
 	 * @return A Game board containing a flag, and a full square of numbers
 	 */
-	private static TestScenerio getGameBoardScenarioSpecial02() {
+	private static TestScenario getGameBoardScenarioSpecial02() {
 		RegularGameBoard gameBoard = getValidGameBoard(9, 9);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 2, 2).setValue(SquareValue.TWO);
@@ -335,13 +335,13 @@ public class TestScenarios {
 		visualizeGameBoard(getGameBoardScenarioSpecial02());
 	}
 	
-	private static TestScenerio createTestScenario(RegularGameBoard gameBoard, List<List<GameSquare>> gameSquaresList) {
+	private static TestScenario createTestScenario(RegularGameBoard gameBoard, List<List<GameSquare>> gameSquaresList) {
 		List<Section> sections = new ArrayList<Section>();
 		
 		for (List<GameSquare> squares : gameSquaresList) {
 			sections.add(new Section(new HashSet<GameSquare>(squares)));
 		}
 		
-		return new TestScenerio(gameBoard, sections);
+		return new TestScenario(gameBoard, sections);
 	}
 }

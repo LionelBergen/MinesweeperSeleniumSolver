@@ -8,7 +8,7 @@ import java.util.List;
 import component.model.GameSquare;
 import component.model.RegularGameBoard;
 import component.model.SquareValue;
-import tests.minesweeper.data.component.TestScenerio;
+import tests.minesweeper.data.component.TestScenario;
 
 public class TestDataHelper {
 	public static RegularGameBoard getValidGameBoard(int numberOfNumberedSquares) {
@@ -46,7 +46,7 @@ public class TestDataHelper {
 		return gameSquares.stream().filter(e -> e.getX() == x && e.getY() == y).findFirst().get();
 	}
 	
-	public static void visualizeGameBoard(TestScenerio scenerio) {
+	public static void visualizeGameBoard(TestScenario scenerio) {
 		visualizeGameBoard(scenerio.getGameBoard());
 	}
 	
