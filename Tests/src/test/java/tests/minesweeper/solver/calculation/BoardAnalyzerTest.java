@@ -12,7 +12,7 @@ import component.model.RegularGameBoard;
 import solver.board.analyzing.BoardAnalyzer;
 import solver.component.Section;
 import tests.minesweeper.data.TestDataHelper;
-import tests.minesweeper.data.TestScenerios;
+import tests.minesweeper.data.TestScenarios;
 import tests.minesweeper.data.component.TestScenerio;
 
 public class BoardAnalyzerTest {
@@ -38,7 +38,7 @@ public class BoardAnalyzerTest {
 	
 	@Test
 	public void testBreakupBoard01() {
-		TestScenerio testScenerio = TestScenerios.SCENARIO_01;
+		TestScenerio testScenerio = TestScenarios.SCENARIO_01;
 		
 		final RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		final List<Section> expectedResults = testScenerio.getExpectedSections();
@@ -50,7 +50,7 @@ public class BoardAnalyzerTest {
 	
 	@Test
 	public void testBreakupBoard02() {
-		TestScenerio testScenerio = TestScenerios.SCENARIO_02;
+		TestScenerio testScenerio = TestScenarios.SCENARIO_02;
 		
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
@@ -62,7 +62,7 @@ public class BoardAnalyzerTest {
 	
 	@Test
 	public void testBreakupBoard03() {
-		TestScenerio testScenerio = TestScenerios.SCENARIO_03;
+		TestScenerio testScenerio = TestScenarios.SCENARIO_03;
 		
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
@@ -74,7 +74,7 @@ public class BoardAnalyzerTest {
 	
 	@Test
 	public void testBreakupBoard04() {
-		TestScenerio testScenerio = TestScenerios.SCENARIO_04;
+		TestScenerio testScenerio = TestScenarios.SCENARIO_04;
 		
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
@@ -86,7 +86,7 @@ public class BoardAnalyzerTest {
 	
 	@Test
 	public void testBreakupBoard05() {
-		TestScenerio testScenerio = TestScenerios.SCENARIO_05;
+		TestScenerio testScenerio = TestScenarios.SCENARIO_05;
 		
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
@@ -98,7 +98,7 @@ public class BoardAnalyzerTest {
 	
 	@Test
 	public void testBreakupBoard06() {
-		TestScenerio testScenerio = TestScenerios.SCENARIO_06;
+		TestScenerio testScenerio = TestScenarios.SCENARIO_06;
 		
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
@@ -110,7 +110,7 @@ public class BoardAnalyzerTest {
 	
 	@Test
 	public void testBreakupBoard07() {
-		TestScenerio testScenerio = TestScenerios.SCENARIO_07;
+		TestScenerio testScenerio = TestScenarios.SCENARIO_07;
 		
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
@@ -122,7 +122,7 @@ public class BoardAnalyzerTest {
 	
 	@Test
 	public void testBreakupBoard08() {
-		TestScenerio testScenerio = TestScenerios.SCENARIO_08;
+		TestScenerio testScenerio = TestScenarios.SCENARIO_08;
 		
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
@@ -134,7 +134,7 @@ public class BoardAnalyzerTest {
 	
 	@Test
 	public void testBreakupBoard09() {
-		TestScenerio testScenerio = TestScenerios.SCENARIO_09;
+		TestScenerio testScenerio = TestScenarios.SCENARIO_09;
 		
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
@@ -146,7 +146,7 @@ public class BoardAnalyzerTest {
 	
 	@Test
 	public void testBreakupBoardSpecial01() {
-		TestScenerio testScenerio = TestScenerios.SCENARIO_SPECIAL_01;
+		TestScenerio testScenerio = TestScenarios.SCENARIO_SPECIAL_01;
 		
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
@@ -158,7 +158,7 @@ public class BoardAnalyzerTest {
 	
 	@Test
 	public void testBreakupBoardSpecial02() {
-		TestScenerio testScenerio = TestScenerios.SCENARIO_SPECIAL_02;
+		TestScenerio testScenerio = TestScenarios.SCENARIO_SPECIAL_02;
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		
 		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);

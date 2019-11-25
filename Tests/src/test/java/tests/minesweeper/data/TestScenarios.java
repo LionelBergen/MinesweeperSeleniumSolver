@@ -14,7 +14,7 @@ import component.model.SquareValue;
 import solver.component.Section;
 import tests.minesweeper.data.component.TestScenerio;
 
-public class TestScenerios {
+public class TestScenarios {
 	public static final TestScenerio SCENARIO_01 = getGameBoardScenario1();
 	public static final TestScenerio SCENARIO_02 = getGameBoardScenario2();
 	public static final TestScenerio SCENARIO_03 = getGameBoardScenario3();
