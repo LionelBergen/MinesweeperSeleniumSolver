@@ -6,7 +6,7 @@ import component.model.GameSquare;
 
 /**
  * Basically just a Collection<GameSquare>, but with added features
- * Example usage: To find sections of a minesweeper board that are of interest AKA have numbers in them
+ * Example usage: To find sections of a minesweeper board that are of interest
  * 
  * @author Lionel Bergen
  *

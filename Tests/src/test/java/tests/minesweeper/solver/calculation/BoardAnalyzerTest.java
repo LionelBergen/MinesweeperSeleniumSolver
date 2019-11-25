@@ -11,11 +11,32 @@ import org.junit.Test;
 import component.model.GameSquare;
 import component.model.RegularGameBoard;
 import component.model.SquareValue;
-import solver.calculation.BoardAnalyzer;
+import solver.board.analyzing.BoardAnalyzer;
 import solver.component.Section;
+import tests.minesweeper.data.TestDataHelper;
 import tests.minesweeper.data.TestScenerio;
 
 public class BoardAnalyzerTest {
+	// A board with no squares
+	@Test
+	public void testBreakupBoardEmpty() {
+		RegularGameBoard emptyGameBoard = TestDataHelper.getValidGameBoard(0, 0, 0);
+		
+		List<Section> results = BoardAnalyzer.breakupBoard(emptyGameBoard);
+
+		assertEquals(0, results.size());
+	}
+	
+	// A board with all empty squares
+	@Test
+	public void testBreakupBoardNoResults() {
+		RegularGameBoard emptyGameBoard = TestDataHelper.getValidGameBoard(0, 10, 10);
+		
+		List<Section> results = BoardAnalyzer.breakupBoard(emptyGameBoard);
+
+		assertEquals(0, results.size());
+	}
+	
 	@Test
 	public void testBreakupBoard01() {
 		RegularGameBoard gameBoard = TestScenerio.getGameBoardScenerio1();

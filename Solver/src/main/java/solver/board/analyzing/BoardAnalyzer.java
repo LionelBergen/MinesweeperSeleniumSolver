@@ -1,4 +1,4 @@
-package solver.calculation;
+package solver.board.analyzing;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,9 +16,8 @@ import solver.component.Section;
  * @author Lionel Bergen
  */
 public class BoardAnalyzer {
-	
 	public static List<Section> breakupBoard(GameBoard<GameSquare> gameBoard) {
-		List<Section> results = new ArrayList<Section>();
+		List<Section> sectionsOfInterest = new ArrayList<Section>();
 		
 		// Get a resultset for every number
 		for (GameSquare gameSquare : gameBoard.getAllNumberedSquares()) {
@@ -26,11 +25,13 @@ public class BoardAnalyzer {
 			
 			addSquareToResultSet(gameBoard, gameSquare, rs);
 			
-			results.add(rs);
+			sectionsOfInterest.add(rs);
 		}
 		
 		// remove duplicates
-		return new ArrayList<Section>(new HashSet<Section>(results));
+		sectionsOfInterest = new ArrayList<Section>(new HashSet<Section>(sectionsOfInterest));
+		
+		return sectionsOfInterest;
 	}
 	
 	private static void addSquareToResultSet(GameBoard<GameSquare> gameBoard, GameSquare gameSquare, Section resultSet) { 
