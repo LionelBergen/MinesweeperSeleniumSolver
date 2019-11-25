@@ -5,11 +5,11 @@ import java.util.List;
 import component.model.RegularGameBoard;
 import solver.component.Section;
 
-public class TestScenario {
+public class GameBoardTestScenario {
 	private RegularGameBoard gameBoard;
 	private List<Section> expectedSections;
 	
-	public TestScenario(RegularGameBoard board, List<Section> expectedSections) {
+	public GameBoardTestScenario(RegularGameBoard board, List<Section> expectedSections) {
 		this.gameBoard = board;
 		this.expectedSections = expectedSections;
 	}

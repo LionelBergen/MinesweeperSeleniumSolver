@@ -1,6 +1,7 @@
 package tests.minesweeper.solver.calculation;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
 import java.util.List;
@@ -13,8 +14,8 @@ import component.model.SquareValue;
 import solver.board.analyzing.SectionAnalyzer;
 import solver.component.Section;
 import solver.component.SweeperSet;
-import tests.minesweeper.data.TestScenarios;
-import tests.minesweeper.data.component.TestScenario;
+import tests.minesweeper.data.SectionTestScenarios;
+import tests.minesweeper.data.component.SectionTestScenario;
 
 public class SectionAnalyzerTest {
 	@Test
@@ -40,13 +41,24 @@ public class SectionAnalyzerTest {
 		assertEquals(0, results.size());
 	}
 	
+	// Tests a simple 1 block surrounded by 8 blanks
 	@Test
 	public void testScenario01() {
-		TestScenario testScenario = TestScenarios.SCENARIO_01;
+		testScenario(SectionTestScenarios.SCENARIO_01);
+	}
+	
+	// Tests a 2 touching a 3, surrounded by blanks
+	@Test
+	public void testScenario02() {
+		testScenario(SectionTestScenarios.SCENARIO_02);
+	}
+	
+	private void testScenario(SectionTestScenario scenario) {
+		List<SweeperSet> actualResults = SectionAnalyzer.breakupSection(scenario.getSection());
+		assertEquals(scenario.getExpectedResults().size(), actualResults.size());
 		
-		Section section = testScenario.getExpectedSections().get(0);
-		
-		List<SweeperSet> results = SectionAnalyzer.breakupSection(section);
-		assertEquals(1, results.size());
+		for (SweeperSet expected : scenario.getExpectedResults()) {
+			assertTrue("Results did not contain expected: " + expected, actualResults.contains(expected));
+		}
 	}
 }

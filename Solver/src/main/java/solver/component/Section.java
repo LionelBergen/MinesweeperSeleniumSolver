@@ -75,6 +75,7 @@ public class Section {
 	    	return false;
 	    }
 	    
-	    return this.gameSquares.equals(otherResultSet.gameSquares);
+	    // Don't care about order
+	    return this.gameSquares.containsAll(otherResultSet.gameSquares);
 	}
 }

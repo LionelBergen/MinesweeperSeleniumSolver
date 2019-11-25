@@ -1,5 +1,7 @@
 package component.model;
 
+import java.util.Comparator;
+
 public class GameSquare {
 	private SquareValue value;
 	private int x;
@@ -63,12 +65,15 @@ public class GameSquare {
 		return x + " " + y + " " + value;
 	}
 	
-	// TODO: Two squares with same X,Y different value will contain same hashcode. 
-	// Won't ever happen in our program, but should be fixed (GameSquare should make sense on its own)
 	@Override
 	public int hashCode() {
 		final int primeNumber = 31;
 		
-	    return primeNumber * x + (primeNumber * y);
+	    return primeNumber * x + (primeNumber * y) + (primeNumber * value.hashCode());
+	}
+
+	// TODO: write test
+	public int compareTo(GameSquare o2) {
+		return Comparator.comparingInt(GameSquare::getX).thenComparingInt(GameSquare::getY).compare(this, o2);
 	}
 }

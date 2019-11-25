@@ -88,7 +88,7 @@ public class MineSweeperSolver {
 	 */
 	private SeleniumGameSquare getRandomSquareWithBestProbability(SeleniumGameBoard gameBoard, int startingMines) {
 		int totalBlankSquares = gameBoard.getSize();
-		int unFoundMines = startingMines - gameBoard.getallFlaggedSquares().size();
+		int unFoundMines = startingMines - gameBoard.getAllFlaggedSquares().size();
 		
 		float oddsOfRandomSquare = MathUtil.asFloat(unFoundMines, totalBlankSquares);
 		SeleniumGameSquare randomSquare = gameBoard.getRandomLonelySquare();
