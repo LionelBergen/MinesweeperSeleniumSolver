@@ -59,7 +59,16 @@ public class TestDataHelper {
 			board[square.getY()][square.getX()] = square;
 		}
 		
+		int i = 0;
+		
+		System.out.print("  ");
+		for (int y=0; y<maxY; y++) {
+			System.out.print(y + " ");
+		}
+		System.out.println();
+		
 		for (int x=0; x<maxX; x++) {
+			System.out.print(i++ + " ");
 			for (int y=0; y<maxY; y++) {
 				System.out.print(visualizeSquareValue(board[x][y]));
 				

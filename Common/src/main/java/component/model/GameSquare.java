@@ -57,4 +57,16 @@ public class GameSquare {
 	    // field comparison
 	    return otherSquare.getX() == this.getX() && this.getY() == otherSquare.getY() && this.getValue() == otherSquare.getValue();
 	}
+	
+	@Override
+	public String toString() {
+		return x + " " + y + " " + value;
+	}
+	
+	// TODO: Two squares with same X,Y different value will contain same hashcode. 
+	// Won't ever happen in our program, but should be fixed (GameSquare should make sense on its own)
+	@Override
+	public int hashCode() {
+	    return Integer.parseInt((x + "0" + y));
+	}
 }

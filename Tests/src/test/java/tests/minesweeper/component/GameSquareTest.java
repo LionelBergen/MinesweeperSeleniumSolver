@@ -20,7 +20,7 @@ public class GameSquareTest {
 		assertTrue(sqaure2.equals(sqaure1));
 	}
 	
-	// Supress warning ofr unlikley argument
+	// Suppress warning for unlikely argument
 	@Test
 	@SuppressWarnings("all")
 	public void testEqualsInvalid() {
