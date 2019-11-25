@@ -12,7 +12,7 @@ import component.model.GameSquare;
 import component.model.RegularGameBoard;
 import component.model.SquareValue;
 import solver.calculation.BoardAnalyzer;
-import solver.component.ResultSet;
+import solver.component.Section;
 import tests.minesweeper.data.TestScenerio;
 
 public class BoardAnalyzerTest {
@@ -29,11 +29,11 @@ public class BoardAnalyzerTest {
 						new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 3)
 						);
 		
-		List<ResultSet> results = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> results = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertEquals(1, results.size());
 		
-		ResultSet result = results.get(0);
+		Section result = results.get(0);
 		assertListsEqual(expectedResults1, result.getGameSquares());
 	}
 	
@@ -58,14 +58,14 @@ public class BoardAnalyzerTest {
 						new GameSquare(SquareValue.BLANK_UNTOUCHED, 6, 3)
 						);
 		
-		List<ResultSet> results = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> results = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertEquals(2, results.size());
 		
-		ResultSet result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
+		Section result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
 		assertListsEqual(expectedResults1, result1.getGameSquares());
 		
-		ResultSet result2 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults2.get(1))).findAny().get();
+		Section result2 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults2.get(1))).findAny().get();
 		assertListsEqual(expectedResults2, result2.getGameSquares());
 	}
 	
@@ -91,14 +91,14 @@ public class BoardAnalyzerTest {
 						new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 6)
 						);
 		
-		List<ResultSet> results = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> results = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertEquals(2, results.size());
 		
-		ResultSet result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
+		Section result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
 		assertListsEqual(expectedResults1, result1.getGameSquares());
 		
-		ResultSet result2 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults2.get(1))).findAny().get();
+		Section result2 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults2.get(1))).findAny().get();
 		assertListsEqual(expectedResults2, result2.getGameSquares());
 	}
 	
@@ -118,14 +118,14 @@ public class BoardAnalyzerTest {
 						new GameSquare(SquareValue.ONE, 3, 4), new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 4)
 						);
 		
-		List<ResultSet> results = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> results = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertEquals(2, results.size());
 		
-		ResultSet result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
+		Section result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
 		assertListsEqual(expectedResults1, result1.getGameSquares());
 		
-		ResultSet result2 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults2.get(1))).findAny().get();
+		Section result2 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults2.get(1))).findAny().get();
 		assertListsEqual(expectedResults2, result2.getGameSquares());
 	}
 	
@@ -141,11 +141,11 @@ public class BoardAnalyzerTest {
 						new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3)
 						);
 		
-		List<ResultSet> results = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> results = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertEquals(1, results.size());
 		
-		ResultSet result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
+		Section result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
 		assertListsEqual(expectedResults1, result1.getGameSquares());
 	}
 	
@@ -163,11 +163,11 @@ public class BoardAnalyzerTest {
 						new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 3)
 						);
 		
-		List<ResultSet> results = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> results = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertEquals(1, results.size());
 		
-		ResultSet result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
+		Section result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
 		assertListsEqual(expectedResults1, result1.getGameSquares());
 	}
 	
@@ -186,14 +186,14 @@ public class BoardAnalyzerTest {
 						new GameSquare(SquareValue.ONE, 0, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3)
 						);
 		
-		List<ResultSet> results = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> results = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertEquals(2, results.size());
 		
-		ResultSet result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
+		Section result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
 		assertListsEqual(expectedResults1, result1.getGameSquares());
 		
-		ResultSet result2 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults2.get(0))).findAny().get();
+		Section result2 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults2.get(0))).findAny().get();
 		assertListsEqual(expectedResults2, result2.getGameSquares());
 	}
 	
@@ -215,11 +215,11 @@ public class BoardAnalyzerTest {
 						new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 4)
 						);
 		
-		List<ResultSet> results = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> results = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertEquals(1, results.size());
 		
-		ResultSet result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
+		Section result1 = results.stream().filter(e -> e.getGameSquares().contains(expectedResults1.get(0))).findAny().get();
 		assertListsEqual(expectedResults1, result1.getGameSquares());
 	}
 	

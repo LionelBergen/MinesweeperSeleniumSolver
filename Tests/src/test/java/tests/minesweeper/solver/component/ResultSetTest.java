@@ -7,13 +7,13 @@ import org.junit.Test;
 
 import component.model.GameSquare;
 import component.model.SquareValue;
-import solver.component.ResultSet;
+import solver.component.Section;
 
 public class ResultSetTest {
 	@Test
 	public void testEqualsTrue() {
-		ResultSet set1 = new ResultSet();
-		ResultSet set2 = new ResultSet();
+		Section set1 = new Section();
+		Section set2 = new Section();
 		
 		set1.add(new GameSquare(SquareValue.TWO, 0, 0));
 		set2.add(new GameSquare(SquareValue.TWO, 0, 0));
@@ -28,7 +28,7 @@ public class ResultSetTest {
 	@Test
 	@SuppressWarnings("all")
 	public void testEqualsInvalid() {
-		ResultSet set1 = new ResultSet();
+		Section set1 = new Section();
 		
 		assertFalse(set1.equals(null));
 		assertFalse(set1.equals(""));
@@ -36,8 +36,8 @@ public class ResultSetTest {
 	
 	@Test
 	public void testEqualsFalse() {
-		ResultSet set1 = new ResultSet();
-		ResultSet set2 = new ResultSet();
+		Section set1 = new Section();
+		Section set2 = new Section();
 		set2.add(new GameSquare(SquareValue.ONE, 0, 0));
 		
 		// different sizes

@@ -2,11 +2,16 @@ package solver.component;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-
 import component.model.GameSquare;
 
-public class ResultSet {
+/**
+ * Basically just a Collection<GameSquare>, but with added features
+ * Example usage: To find sections of a minesweeper board that are of interest AKA have numbers in them
+ * 
+ * @author Lionel Bergen
+ *
+ */
+public class Section {
 	// Use a Set since it doesn't allow duplicates
 	private Set<GameSquare> gameSquares = new HashSet<GameSquare>();
 	
@@ -18,7 +23,7 @@ public class ResultSet {
 		return this.gameSquares;
 	}
 	
-	public boolean isTouching(ResultSet resultSet) {
+	public boolean isTouching(Section resultSet) {
 		return this.gameSquares.stream().anyMatch(e -> resultSet.gameSquares.contains(e));
 	}
 	
@@ -51,7 +56,7 @@ public class ResultSet {
 	        return false;
 	    }
 	    
-	    ResultSet otherResultSet = (ResultSet) other;
+	    Section otherResultSet = (Section) other;
 	    
 	    boolean sizesAreEqual = this.gameSquares.size() == otherResultSet.gameSquares.size();
 	    
