@@ -74,6 +74,6 @@ public abstract class GameBoard<T extends GameSquare> {
 	}
 	
 	public List<T> getSurroundingNumberedSquares(GameSquare square) {
-		return gameBoardHelper.getSurroundingBlankSquares(this.gameBoard, square);
+		return gameBoardHelper.getSurroundingNumberedSquares(this.gameBoard, square);
 	}
 }

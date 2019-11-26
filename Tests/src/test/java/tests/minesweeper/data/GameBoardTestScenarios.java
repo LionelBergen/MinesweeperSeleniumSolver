@@ -333,7 +333,7 @@ public class GameBoardTestScenarios {
 	}
 	
 	public static void main(String[] args) {
-		visualizeGameBoard(SCENARIO_03);
+		visualizeGameBoard(SCENARIO_05);
 	}
 	
 	private static GameBoardTestScenario createTestScenario(RegularGameBoard gameBoard, List<List<GameSquare>> gameSquaresList) {

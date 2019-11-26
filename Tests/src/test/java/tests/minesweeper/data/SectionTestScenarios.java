@@ -2,15 +2,18 @@ package tests.minesweeper.data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import component.model.GameSquare;
 import component.model.SquareValue;
 import solver.component.Section;
-import solver.component.SweeperSet;
+import solver.component.ResultSet;
 import tests.minesweeper.data.component.SectionTestScenario;
 
 import static tests.minesweeper.data.TestDataHelper.getGameSquare;
+import static tests.minesweeper.data.TestDataHelper.makeCopy;
 
 public class SectionTestScenarios {
 	public static final SectionTestScenario SCENARIO_01 = getScenario01();
@@ -30,7 +33,12 @@ public class SectionTestScenarios {
 		gameSquares.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3));
 		gameSquares.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 3));
 		
-		return new SectionTestScenario(section, Arrays.asList(new SweeperSet(gameSquares, 1)));
+		Map<List<ResultSet>, List<GameSquare>> expectedContents = new HashMap<>();
+		List<ResultSet> ss = new ArrayList<ResultSet>();
+		ss.add(new ResultSet(gameSquares, 1));
+		expectedContents.put(ss, gameSquares);
+		
+		return new SectionTestScenario(section, expectedContents, Arrays.asList(new ResultSet(gameSquares, 1)));
 	}
 	
 	private static SectionTestScenario getScenario02() {
@@ -56,18 +64,50 @@ public class SectionTestScenarios {
 		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3));
 		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3));
 		
-		List<SweeperSet> expectedResults = Arrays.asList(
-				createSweeperSet(gameSquareResults1, 2),
-				createSweeperSet(gameSquareResults2, 3)
+		ResultSet touchingThe2 = createSweeperSet(gameSquareResults1, 2);
+		ResultSet touchingThe3 = createSweeperSet(gameSquareResults2, 3);
+		
+		List<ResultSet> expectedResults = Arrays.asList(
+				touchingThe2,
+				touchingThe3
 				);
-		return new SectionTestScenario(section, expectedResults);
+		
+		List<GameSquare> resultSet1 = Arrays.asList(
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 0),
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 0),
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 0));
+		List<ResultSet> parentSet1 = Arrays.asList(new ResultSet(touchingThe2.getSquares(), ResultSet.UNKNOWN_VALUE));
+		
+		List<GameSquare> resultSet2 = Arrays.asList(
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 1),
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1),
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 2),
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 2));
+		List<ResultSet> parentSet2 = Arrays.asList(new ResultSet(touchingThe2.getSquares(), ResultSet.UNKNOWN_VALUE),
+				new ResultSet(touchingThe3.getSquares(), ResultSet.UNKNOWN_VALUE));
+		
+		List<GameSquare> resultSet3 = Arrays.asList(
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 3),
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3),
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3));
+		List<ResultSet> parentSet3 = Arrays.asList(new ResultSet(touchingThe3.getSquares(), ResultSet.UNKNOWN_VALUE));
+		
+		Map<List<ResultSet>, List<GameSquare>> expectedContents = new HashMap<>();
+		
+		expectedContents.put(parentSet1, resultSet1);
+		expectedContents.put(parentSet2, resultSet2);
+		expectedContents.put(parentSet3, resultSet3);
+		
+		return new SectionTestScenario(section, expectedContents, expectedResults);
 	}
 	
 	// Similar as above but with 2 flags & a 4 instead of a 3
 	private static SectionTestScenario getScenario03() {
 		// setup test data
-		Section section = GameBoardTestScenarios.SCENARIO_03.getExpectedSections().iterator().next();
-		List<GameSquare> gameSquareList = new ArrayList<>(section.getGameSquares());
+		// make a copy so we don't mess up the original data
+		Section section = makeCopy(GameBoardTestScenarios.SCENARIO_03.getExpectedSections().iterator().next());
+		List<GameSquare> gameSquareList = new ArrayList<GameSquare>(section.getGameSquares());
+		
 		getGameSquare(gameSquareList, 1, 2).setValue(SquareValue.FOUR);
 		getGameSquare(gameSquareList, 1, 3).setValue(SquareValue.FLAGGED);
 		getGameSquare(gameSquareList, 2, 3).setValue(SquareValue.FLAGGED);
@@ -90,14 +130,42 @@ public class SectionTestScenarios {
 		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 2));
 		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 3));
 		
-		List<SweeperSet> expectedResults = Arrays.asList(
-				createSweeperSet(gameSquareResults1, 2),
-				createSweeperSet(gameSquareResults2, 1)
+		ResultSet touchingThe2 = createSweeperSet(gameSquareResults1, 2);
+		ResultSet touchingThe4 = createSweeperSet(gameSquareResults2, 2);
+		
+		List<ResultSet> expectedResults = Arrays.asList(
+				touchingThe2,
+				touchingThe4
 				);
-		return new SectionTestScenario(section, expectedResults);
+		
+		List<GameSquare> resultSet1 = Arrays.asList(
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 0),
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 0),
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 0));
+		List<ResultSet> parentSet1 = Arrays.asList(new ResultSet(touchingThe2.getSquares(), ResultSet.UNKNOWN_VALUE));
+		
+		List<GameSquare> resultSet2 = Arrays.asList(
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 1),
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1),
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 2),
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 2));
+		List<ResultSet> parentSet2 = Arrays.asList(new ResultSet(touchingThe2.getSquares(), ResultSet.UNKNOWN_VALUE),
+				new ResultSet(touchingThe4.getSquares(), ResultSet.UNKNOWN_VALUE));
+		
+		List<GameSquare> resultSet3 = Arrays.asList(
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 3));
+		List<ResultSet> parentSet3 = Arrays.asList(new ResultSet(touchingThe4.getSquares(), ResultSet.UNKNOWN_VALUE));
+		
+		Map<List<ResultSet>, List<GameSquare>> expectedContents = new HashMap<>();
+		
+		expectedContents.put(parentSet1, resultSet1);
+		expectedContents.put(parentSet2, resultSet2);
+		expectedContents.put(parentSet3, resultSet3);
+		
+		return new SectionTestScenario(section, expectedContents, expectedResults);
 	}
 	
-	private static SweeperSet createSweeperSet(List<GameSquare> gameSquares, int expectedNumberOfMines) {
-		return new SweeperSet(gameSquares, expectedNumberOfMines);
+	private static ResultSet createSweeperSet(List<GameSquare> gameSquares, int expectedNumberOfMines) {
+		return new ResultSet(gameSquares, expectedNumberOfMines);
 	}
 }

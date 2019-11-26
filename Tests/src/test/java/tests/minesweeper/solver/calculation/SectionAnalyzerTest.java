@@ -3,8 +3,10 @@ package tests.minesweeper.solver.calculation;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.junit.Test;
@@ -13,7 +15,8 @@ import component.model.GameSquare;
 import component.model.SquareValue;
 import solver.board.analyzing.SectionAnalyzer;
 import solver.component.Section;
-import solver.component.SweeperSet;
+import solver.component.SectionAnalyzedResults;
+import solver.component.ResultSet;
 import tests.minesweeper.data.SectionTestScenarios;
 import tests.minesweeper.data.component.SectionTestScenario;
 
@@ -22,9 +25,12 @@ public class SectionAnalyzerTest {
 	public void testEmptySection() {
 		Section section = new Section();
 		
-		List<SweeperSet> results = SectionAnalyzer.breakupSection(section);
+		SectionAnalyzedResults result = SectionAnalyzer.breakupSection(section);
+		List<ResultSet> origResults = result.getOriginalSet();
+		Collection<List<ResultSet>> contents = result.getResultSets();
 		
-		assertEquals(0, results.size());
+		assertEquals(0, origResults.size());
+		assertEquals(0, contents.size());
 	}
 	
 	@Test
@@ -37,8 +43,12 @@ public class SectionAnalyzerTest {
 		
 		Section section = new Section(blankSquareSet);
 		
-		List<SweeperSet> results = SectionAnalyzer.breakupSection(section);
-		assertEquals(0, results.size());
+		SectionAnalyzedResults result = SectionAnalyzer.breakupSection(section);
+		List<ResultSet> origResults = result.getOriginalSet();
+		Collection<List<ResultSet>> contents = result.getResultSets();
+		
+		assertEquals(0, origResults.size());
+		assertEquals(0, contents.size());
 	}
 	
 	// Tests a simple 1 block surrounded by 8 blanks
@@ -60,11 +70,24 @@ public class SectionAnalyzerTest {
 	}
 	
 	private void testScenario(SectionTestScenario scenario) {
-		List<SweeperSet> actualResults = SectionAnalyzer.breakupSection(scenario.getSection());
-		assertEquals(scenario.getExpectedResults().size(), actualResults.size());
+		SectionAnalyzedResults actualResult = SectionAnalyzer.breakupSection(scenario.getSection());
 		
-		for (SweeperSet expected : scenario.getExpectedResults()) {
-			assertTrue("Results did not contain expected: " + expected, actualResults.contains(expected));
+		// assert originalSet
+		List<ResultSet> actualOriginalSets = actualResult.getOriginalSet();
+		assertEquals(scenario.getExpectedOrigResults().size(), actualOriginalSets.size());
+		for (ResultSet expected : scenario.getExpectedOrigResults()) {
+			assertTrue("Results did not contain expected: " + expected, actualOriginalSets.contains(expected));
+		}
+		
+		// assert contents
+		List<List<ResultSet>> actualContents = actualResult.getResultSets();
+		assertEquals(scenario.getExpectedContents().size(), actualContents.size());
+		
+		for (Entry<List<ResultSet>, List<GameSquare>> expected : scenario.getExpectedContents().entrySet()) {
+			List<GameSquare> x = actualResult.get(expected.getKey());
+			
+			//int y = expected.getKey();
+			assertTrue("Results did not contain expected value from: " + expected, x.containsAll(expected.getValue()));
 		}
 	}
 }

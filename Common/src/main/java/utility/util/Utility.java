@@ -1,9 +1,22 @@
 package utility.util;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import component.model.GameSquare;
 
 public final class Utility {
 	private Utility() { }
+	
+	// TODO: write test
+	public static List<GameSquare> sortList(List<GameSquare> unsortedList) {
+		return unsortedList.stream().sorted((o1, o2) -> o1.compareTo(o2)).collect(Collectors.toList());
+	}
+	
+	public static List<GameSquare> sortList(Set<GameSquare> unsortedList) {
+		return unsortedList.stream().sorted((o1, o2) -> o1.compareTo(o2)).collect(Collectors.toList());
+	}
 	
 	/**
 	 *  Returns true if the 2 squares are 'touching' according to MineSweeper rules (corners, left, right, up, down)

@@ -3,6 +3,7 @@ package solver.component;
 import java.util.HashSet;
 import java.util.Set;
 import component.model.GameSquare;
+import utility.util.Utility;
 
 /**
  * Basically just a Collection<GameSquare>, but with added features
@@ -34,16 +35,12 @@ public class Section {
 		this.gameSquares = gameSquares;
 	}
 	
-	public boolean isTouching(Section resultSet) {
-		return this.gameSquares.stream().anyMatch(e -> resultSet.gameSquares.contains(e));
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 92821;
 		int hashCode = 1;
 		
-		for (GameSquare square : this.gameSquares) {
+		for (GameSquare square : Utility.sortList(this.gameSquares)) {
 			hashCode = hashCode * prime + square.hashCode();
 		}
 		

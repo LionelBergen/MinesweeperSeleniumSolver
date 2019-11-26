@@ -17,7 +17,7 @@ import solver.component.Section;
  */
 public class BoardAnalyzer {
 	public static List<Section> breakupBoard(GameBoard<GameSquare> gameBoard) {
-		List<Section> sectionsOfInterest = new ArrayList<Section>();
+		final List<Section> sectionsOfInterest = new ArrayList<Section>();
 		
 		// Get a resultset for every number
 		for (GameSquare gameSquare : gameBoard.getAllNumberedSquares()) {
@@ -29,9 +29,7 @@ public class BoardAnalyzer {
 		}
 		
 		// remove duplicates
-		sectionsOfInterest = new ArrayList<Section>(new HashSet<Section>(sectionsOfInterest));
-		
-		return sectionsOfInterest;
+		return new ArrayList<Section> (new HashSet<Section>(sectionsOfInterest));
 	}
 	
 	private static void addSquareToResultSet(GameBoard<GameSquare> gameBoard, GameSquare gameSquare, Section resultSet) { 
@@ -51,7 +49,7 @@ public class BoardAnalyzer {
 				}
 			} else {
 				List<GameSquare> touchingSquaresNotInResults = getTouchingSquaresNotInResults(gameBoard, resultSet, touchingSquare);
-				
+				// If the squares are all blank, no need to process touching squares (it's a 'border' square)
 				if (numberOfBlankSquares(touchingSquaresNotInResults) == touchingSquaresNotInResults.size()) {
 					resultSet.add(touchingSquare);
 				} else {

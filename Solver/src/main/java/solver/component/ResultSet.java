@@ -4,20 +4,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import component.model.GameSquare;
+import utility.util.Utility;
 
 // TODO: write .contains() and equals() tests for this & Section. Not sure if we'll be keeping these classes so I didn't write tests..
-// TODO: Rename. Don't use 'set', maybe 'ResultSet'
 /**
  * 
  * Example usage: Breaking up a {@link Section} into parts based on same odds 
  * 
  * @author Lionel Bergen
  */
-public class SweeperSet {
+public class ResultSet {
 	private List<GameSquare> squares;
 	private final int resultsEqual;
 	
-	public SweeperSet(List<GameSquare> squares, int resultsEqual) {
+	public static final int UNKNOWN_VALUE = -1;
+	
+	public ResultSet(List<GameSquare> squares, int resultsEqual) {
 		this.squares = squares; 
 		this.resultsEqual = resultsEqual;
 	}
@@ -37,12 +39,12 @@ public class SweeperSet {
 	// Used for debugging
 	@Override
 	public String toString() {
-		return "#:" + resultsEqual + " " + squares.stream().sorted((o1, o2) -> o1.compareTo(o2)).map(Object::toString).collect(Collectors.joining(", "));
+		return "#:" + resultsEqual + " " + Utility.sortList(squares).stream().map(Object::toString).collect(Collectors.joining(", "));
 	}
 	
 	@Override
 	public int hashCode() {
-		final int prime = 92821;
+		final int prime = 31;
 		int hashCode = 1;
 		
 		for (GameSquare square : this.squares) {
@@ -69,7 +71,7 @@ public class SweeperSet {
 	        return false;
 	    }
 	    
-	    SweeperSet otherResultSet = (SweeperSet) other;
+	    ResultSet otherResultSet = (ResultSet) other;
 	    
 	    boolean sizesAreEqual = this.squares.size() == otherResultSet.squares.size();
 	    

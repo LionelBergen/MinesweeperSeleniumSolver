@@ -1,13 +1,16 @@
 package tests.minesweeper.data;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 
 import component.model.GameSquare;
 import component.model.RegularGameBoard;
 import component.model.SquareValue;
+import solver.component.Section;
 import tests.minesweeper.data.component.GameBoardTestScenario;
 
 public class TestDataHelper {
@@ -86,6 +89,20 @@ public class TestDataHelper {
 			}
 			System.out.println();
 		}
+	}
+	
+	public static Section makeCopy(Section section) {
+		return new Section(new HashSet<GameSquare>(makeCopy(section.getGameSquares())));
+	}
+	
+	public static List<GameSquare> makeCopy(Collection<GameSquare> originalList) {
+		List<GameSquare> newList = new ArrayList<GameSquare>();
+		
+		for (GameSquare gs : originalList) {
+			newList.add(new GameSquare(gs.getValue(), gs.getX(), gs.getY()));
+		}
+		
+		return newList;
 	}
 	
 	private static String visualizeSquareValue(GameSquare gameSquare) {

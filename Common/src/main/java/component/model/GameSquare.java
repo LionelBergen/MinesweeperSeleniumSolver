@@ -74,6 +74,6 @@ public class GameSquare {
 
 	// TODO: write test
 	public int compareTo(GameSquare o2) {
-		return Comparator.comparingInt(GameSquare::getX).thenComparingInt(GameSquare::getY).compare(this, o2);
+		return Comparator.comparingInt(GameSquare::getX).thenComparingInt(GameSquare::getY).thenComparing(GameSquare::getValue).compare(this, o2);
 	}
 }
