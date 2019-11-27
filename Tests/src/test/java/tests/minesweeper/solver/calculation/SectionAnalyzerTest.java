@@ -69,6 +69,11 @@ public class SectionAnalyzerTest {
 		testScenario(SectionTestScenarios.SCENARIO_03);
 	}
 	
+	@Test
+	public void testSpecial101() {
+		testScenario(SectionTestScenarios.SCENARIO_SPECIAL_01);
+	}
+	
 	private void testScenario(SectionTestScenario scenario) {
 		SectionAnalyzedResults actualResult = SectionAnalyzer.breakupSection(scenario.getSection());
 		
@@ -76,7 +81,7 @@ public class SectionAnalyzerTest {
 		List<ResultSet> actualOriginalSets = actualResult.getOriginalSet();
 		assertEquals(scenario.getExpectedOrigResults().size(), actualOriginalSets.size());
 		for (ResultSet expected : scenario.getExpectedOrigResults()) {
-			assertTrue("Results did not contain expected: " + expected, actualOriginalSets.contains(expected));
+			assertTrue("Original Results did not contain expected: " + expected, actualOriginalSets.contains(expected));
 		}
 		
 		// assert contents
