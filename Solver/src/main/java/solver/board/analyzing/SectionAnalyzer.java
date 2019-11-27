@@ -15,13 +15,11 @@ import static utility.util.GameBoardHelper.GameBoardHelper;
 public class SectionAnalyzer {
 	public static SectionAnalyzedResults breakupSection(Section section) {
 		SectionAnalyzedResults result = null;
+		Set<GameSquare> squaresInSectionList = section.getGameSquares();
 		
-		Set<GameSquare> squaresInSection = section.getGameSquares();
 		List<ResultSet> set = new ArrayList<ResultSet>();
-		// TODO:
-		List<GameSquare> squaresInSectionList = new ArrayList<GameSquare>(squaresInSection);
 		
-		for (GameSquare square : squaresInSection) {
+		for (GameSquare square : squaresInSectionList) {
 			if (square.getValue().isNumbered()) {
 				List<GameSquare> surroundingBlankSquares = GameBoardHelper.getSurroundingBlankSquares(squaresInSectionList, square);
 				// TODO: This logic should be in another class

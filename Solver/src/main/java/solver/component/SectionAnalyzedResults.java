@@ -19,6 +19,20 @@ public class SectionAnalyzedResults {
 		contents = new HashMap<>();
 		this.originalSet = new ResultSetCollection(set);
 	}
+	
+	public List<ResultSet> get(ResultSet resultSet) {
+		List<ResultSet> results = new ArrayList<ResultSet>();
+		
+		for (ResultSetCollection rsc : this.contents.keySet()) {
+			for (ResultSet rs : rsc.getResultSets()) {
+				if (rs.getSquares().containsAll(resultSet.getSquares())) {
+					results.add(rs);
+				}
+			}
+		}
+		
+		return results;
+	}
 
 	public List<GameSquare> get(List<ResultSet> otherSetsThisSquareIsAPartOf) {
 		for (ResultSetCollection rsc : this.contents.keySet()) {
