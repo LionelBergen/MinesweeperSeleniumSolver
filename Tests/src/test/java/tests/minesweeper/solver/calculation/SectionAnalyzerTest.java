@@ -70,6 +70,7 @@ public class SectionAnalyzerTest {
 		testScenario(SectionTestScenarios.SCENARIO_03);
 	}
 	
+	// https://math.stackexchange.com/questions/3447402/minesweeper-odds-for-this-scenario-2-different-calculations
 	@Test
 	public void testSpecial101() {
 		testScenario(SectionTestScenarios.SCENARIO_SPECIAL_01);
