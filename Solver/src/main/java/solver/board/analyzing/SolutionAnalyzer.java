@@ -11,21 +11,6 @@ import solver.calculation.MathCombinationCalculator;
 import solver.component.KeyValue;
 
 public final class SolutionAnalyzer {
-	public static final SolutionAnalyzer SOLUTION_ANALYZER = new SolutionAnalyzer();
-	
-	private class KeyValueWithMax extends KeyValue {
-		private int maxValue = 0;
-		
-		public KeyValueWithMax(int maxValue, int value, Object key) {
-			super(value, key);
-			this.maxValue = maxValue;
-		}
-
-		public int getMaxValue() {
-			return maxValue;
-		}
-	}
-	
 	private SolutionAnalyzer() { };
 	
 	/**
@@ -34,12 +19,13 @@ public final class SolutionAnalyzer {
 	 * @param objects
 	 * @return
 	 */
-	public List<List<KeyValue>> getAllPossibilities(final int sumOfAllLists, final List<KeyValue> objects) {
+	public static List<List<KeyValue>> getAllPossibilities(final int sumOfAllLists, final List<KeyValue> objects) {
 		if (objects.size() <= 1) {
 			return Arrays.asList(objects);
 		}
 		
-		List<KeyValueWithMax> x = objects.stream().map(e -> transform(e, 0)).collect(Collectors.toList());
+		// Each 'object's value is it's max value. Meaning the value should never be more than its max
+		List<KeyValue> x = objects.stream().map(e -> transform(e, 0)).collect(Collectors.toList());
 		
 		Set<List<Integer>> allNumberCombinations = MathCombinationCalculator.getAllNumberCombinations(sumOfAllLists, objects.size());
 		Set<List<Integer>> allNumberCombinationsInAllOrders = new HashSet<>();
@@ -68,7 +54,7 @@ public final class SolutionAnalyzer {
 		return transformedResults;
 	}
 	
-	private List<KeyValue> transform(List<Integer> keys, List<KeyValueWithMax> values) {
+	private static List<KeyValue> transform(List<Integer> keys, List<KeyValue> values) {
 		List<KeyValue> transformedResult = new ArrayList<>();
 		for (int i=0; i<values.size(); i++) {
 			int value = keys.get(i);
@@ -84,7 +70,7 @@ public final class SolutionAnalyzer {
 		return transformedResult;
 	}
 	
-	public <E> List<List<E>> generatePerm(List<E> original) {
+	private static <E> List<List<E>> generatePerm(List<E> original) {
 		if (original.size() == 0) {
     		List<List<E>> result = new ArrayList<List<E>>(); 
     		result.add(new ArrayList<E>()); 
@@ -103,7 +89,7 @@ public final class SolutionAnalyzer {
     	return returnValue;
     }
 	
-	private KeyValueWithMax transform(KeyValue original, int newValue) {
-		return new KeyValueWithMax(original.getValue(), newValue, original.getKey());
+	private static KeyValue transform(KeyValue original, int newValue) {
+		return new KeyValue(newValue, original.getMaxValue(), original.getKey());
 	}
 }

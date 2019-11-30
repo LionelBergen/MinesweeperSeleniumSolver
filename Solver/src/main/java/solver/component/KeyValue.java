@@ -2,10 +2,16 @@ package solver.component;
 
 public class KeyValue {
 	private int value;
+	private int maxValue;
 	private Object key;
 	
-	public KeyValue(int value, Object key) {
+	public KeyValue(int maxValue, Object key) {
+		this(0, maxValue, key);
+	}
+	
+	public KeyValue(int value, int maxValue, Object key) {
 		this.value = value;
+		this.maxValue = maxValue;
 		this.key = key;
 	}
 	
@@ -50,5 +56,13 @@ public class KeyValue {
 	@Override
 	public String toString() {
 		return this.key + " = " + this.value;
+	}
+
+	public int getMaxValue() {
+		return maxValue;
+	}
+
+	public void setMaxValue(int maxValue) {
+		this.maxValue = maxValue;
 	}
 }

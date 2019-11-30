@@ -6,7 +6,7 @@ import solver.component.KeyValue;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static solver.board.analyzing.SolutionAnalyzer.SOLUTION_ANALYZER;
+import static solver.board.analyzing.SolutionAnalyzer.getAllPossibilities;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +45,7 @@ public class SolutionAnalyzerTest {
 				new KeyValue(0, "K"),
 				new KeyValue(1, "LHED"));
 		
-		List<List<KeyValue>> results = SOLUTION_ANALYZER.getAllPossibilities(1, gameSquares);
+		List<List<KeyValue>> results = getAllPossibilities(1, gameSquares);
 		
 		// We don't care about the order
 		assertTrue(results.contains(expectedResult1));
@@ -113,7 +113,7 @@ public class SolutionAnalyzerTest {
 				new KeyValue(1, "G"),
 				new KeyValue(1, "J"));
 		
-		List<List<KeyValue>> results = SOLUTION_ANALYZER.getAllPossibilities(3, gameSquares);
+		List<List<KeyValue>> results = getAllPossibilities(3, gameSquares);
 		
 		assertTrue(results.contains(expectedResult1));
 		assertTrue(results.contains(expectedResult2));
