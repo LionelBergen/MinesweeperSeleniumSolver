@@ -2,7 +2,6 @@ package tests.minesweeper.solver.calculation;
 
 import org.junit.Test;
 
-import solver.board.analyzing.SolutionAnalyzer;
 import solver.component.KeyValue;
 
 import static org.junit.Assert.assertEquals;
@@ -13,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SolutionAnalyzerTest {
+	// (G) + (C) + (D+E+H+L) + (K) = 1
 	@Test
 	public void testGetAllPossibilities01() {
 		List<KeyValue> gameSquares = Arrays.asList(
@@ -47,6 +47,7 @@ public class SolutionAnalyzerTest {
 		
 		List<List<KeyValue>> results = SOLUTION_ANALYZER.getAllPossibilities(1, gameSquares);
 		
+		// We don't care about the order
 		assertTrue(results.contains(expectedResult1));
 		assertTrue(results.contains(expectedResult2));
 		assertTrue(results.contains(expectedResult3));
@@ -55,6 +56,7 @@ public class SolutionAnalyzerTest {
 		assertEquals(4, results.size());
 	}
 	
+	// (A+B+F+I) + (C) + (G) + (J) = 3
 	@Test
 	public void testGetAllPossibilities02() {
 		List<KeyValue> gameSquares = Arrays.asList(
@@ -121,5 +123,7 @@ public class SolutionAnalyzerTest {
 		assertTrue(results.contains(expectedResult6));
 		assertTrue(results.contains(expectedResult7));
 		assertTrue(results.contains(expectedResult8));
+		
+		assertEquals(8, results.size());
 	}
 }

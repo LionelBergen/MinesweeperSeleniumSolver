@@ -2,10 +2,12 @@ package solver.board.analyzing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import solver.calculation.MathCombinationCalculator;
 import solver.component.KeyValue;
 
 public final class SolutionAnalyzer {
@@ -22,75 +24,86 @@ public final class SolutionAnalyzer {
 		public int getMaxValue() {
 			return maxValue;
 		}
-
-		public void setMaxValue(int maxValue) {
-			this.maxValue = maxValue;
-		}
 	}
 	
 	private SolutionAnalyzer() { };
 	
-	public List<List<KeyValue>> getAllPossibilities(int maxValue, List<KeyValue> objects) {
+	/**
+	 * 
+	 * @param sumOfAllLists Sum of all objects must equal this
+	 * @param objects
+	 * @return
+	 */
+	public List<List<KeyValue>> getAllPossibilities(final int sumOfAllLists, final List<KeyValue> objects) {
 		if (objects.size() <= 1) {
 			return Arrays.asList(objects);
 		}
 		
-		List<List<Integer>> combinations = new ArrayList<>();
+		List<KeyValueWithMax> x = objects.stream().map(e -> transform(e, 0)).collect(Collectors.toList());
 		
-		Iterator<KeyValue> objectsIter = objects.iterator();
+		Set<List<Integer>> allNumberCombinations = MathCombinationCalculator.getAllNumberCombinations(sumOfAllLists, objects.size());
+		Set<List<Integer>> allNumberCombinationsInAllOrders = new HashSet<>();
 		
-		for (int i = maxValue; i > 0; i--) {
-			int other = 1;
+		for (List<Integer> result : allNumberCombinations) {
 			
-			List<Integer> resultList = new ArrayList<>();
-			resultList.add(i);
-			
-			while (other-- > maxValue - i) {
-				resultList.add(other);
-			}
-			
-			while (resultList.size() < objects.size()) {
-				resultList.add(0);
-			}
-			
-			List<List<Integer>> allPossibilities = generatePerm(resultList);
-			System.out.println(allPossibilities.stream().map(e -> e.toString()).collect(Collectors.joining("\n")));
-			//System.out.println(resultList);
+			List<List<Integer>> allPossibilities = generatePerm(result);
+
+			// "generatePerm" produces lots of duplicates. But since we use a Set, we'll lose all duplicates
+			allNumberCombinationsInAllOrders.addAll(allPossibilities);
 		}
 		
-		return null;
+		// remove empty lists
+		allNumberCombinationsInAllOrders = allNumberCombinationsInAllOrders.stream().filter(e -> !e.isEmpty()).collect(Collectors.toSet());
+		
+		List<List<KeyValue>> transformedResults = new ArrayList<>();
+		
+		for (List<Integer> result : allNumberCombinationsInAllOrders) {
+			List<KeyValue> transformedResult = transform(result, x);
+			
+			if (transformedResult != null) {
+				transformedResults.add(transformedResult);
+			}
+		}
+		
+		return transformedResults;
+	}
+	
+	private List<KeyValue> transform(List<Integer> keys, List<KeyValueWithMax> values) {
+		List<KeyValue> transformedResult = new ArrayList<>();
+		for (int i=0; i<values.size(); i++) {
+			int value = keys.get(i);
+			
+			if (value <= values.get(i).getMaxValue()) {
+				transformedResult.add(new KeyValue(value, values.get(i).getKey()));
+			}
+			else {
+				return null;
+			}
+		}
+		
+		return transformedResult;
 	}
 	
 	public <E> List<List<E>> generatePerm(List<E> original) {
-     if (original.size() == 0) {
-       List<List<E>> result = new ArrayList<List<E>>(); 
-       result.add(new ArrayList<E>()); 
-       return result; 
-     }
-     E firstElement = original.remove(0);
-     List<List<E>> returnValue = new ArrayList<List<E>>();
-     List<List<E>> permutations = generatePerm(original);
-     for (List<E> smallerPermutated : permutations) {
-       for (int index=0; index <= smallerPermutated.size(); index++) {
-         List<E> temp = new ArrayList<E>(smallerPermutated);
-         temp.add(index, firstElement);
-         returnValue.add(temp);
-       }
-     }
-     return returnValue;
-   }
+		if (original.size() == 0) {
+    		List<List<E>> result = new ArrayList<List<E>>(); 
+    		result.add(new ArrayList<E>()); 
+    		return result; 
+    	}
+		E firstElement = original.remove(0);
+		List<List<E>> returnValue = new ArrayList<List<E>>();
+		List<List<E>> permutations = generatePerm(original);
+		for (List<E> smallerPermutated : permutations) {
+			for (int index=0; index <= smallerPermutated.size(); index++) {
+				List<E> temp = new ArrayList<E>(smallerPermutated);
+				temp.add(index, firstElement);
+				returnValue.add(temp);
+			}
+		}
+    	return returnValue;
+    }
 	
 	private KeyValueWithMax transform(KeyValue original, int newValue) {
 		return new KeyValueWithMax(original.getValue(), newValue, original.getKey());
-	}
-	
-	private List<KeyValue> createCopy(List<KeyValue> original) {
-		List<KeyValue> result = new ArrayList<>();
-		
-		for (KeyValue value : original) {
-			result.add(new KeyValue(value.getValue(), value.getKey()));
-		}
-		
-		return result;
 	}
 }

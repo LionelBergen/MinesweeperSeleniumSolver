@@ -44,6 +44,7 @@ public class SectionAnalyzerTest {
 		Section section = new Section(blankSquareSet);
 		
 		SectionAnalyzedResults result = SectionAnalyzer.breakupSection(section);
+		
 		List<ResultSet> origResults = result.getOriginalSet();
 		Collection<List<ResultSet>> contents = result.getResultSets();
 		

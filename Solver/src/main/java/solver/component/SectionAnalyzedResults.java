@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import component.model.GameSquare;
+import component.model.SquareValue;
 
 public class SectionAnalyzedResults {
 	// TODO: rename
@@ -105,7 +106,9 @@ public class SectionAnalyzedResults {
 	}
 
 	private void put(final List<ResultSet> otherSetsThisSquareIsAPartOf, Set<GameSquare> otherSquaresInSameSet) {
-		contents.put(new ResultSetCollection(otherSetsThisSquareIsAPartOf), createSection(otherSquaresInSameSet));
+		if (!otherSetsThisSquareIsAPartOf.isEmpty()) {
+			contents.put(new ResultSetCollection(otherSetsThisSquareIsAPartOf), createSection(otherSquaresInSameSet));
+		}
 	}
 	
 	private Section createSection(Set<GameSquare> squares) { 
