@@ -7,10 +7,18 @@ public class GameSquare {
 	private int x;
 	private int y;
 	
-	public GameSquare(SquareValue value, int x, int y) {
+	// Used for debugging / testing
+	private String name;
+	
+	public GameSquare(String name, SquareValue value, int x, int y) {
+		this.name = name;
 		this.value = value;
 		this.x = x;
 		this.y = y;
+	}
+	
+	public GameSquare(SquareValue value, int x, int y) {
+		this(null, value, x, y);
 	}
 
 	public int getX() {
@@ -33,8 +41,17 @@ public class GameSquare {
 		return value;
 	}
 
-	public void setValue(SquareValue value) {
+	public GameSquare setValue(SquareValue value) {
 		this.value = value;
+		return this;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	@Override
@@ -62,7 +79,7 @@ public class GameSquare {
 	
 	@Override
 	public String toString() {
-		return x + " " + y + " " + value;
+		return name == null ? (x + " " + y + " " + value) : name;
 	}
 	
 	@Override

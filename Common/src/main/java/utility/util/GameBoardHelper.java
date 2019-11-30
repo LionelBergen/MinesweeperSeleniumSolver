@@ -47,6 +47,10 @@ public final class GameBoardHelper<T extends GameSquare> {
 		return getAllSquaresOfType(gameSquares, SquareValue.FLAGGED);
 	}
 	
+	public int getNumberOfMinesSurroundingSquare(Collection<T> gameSquares, GameSquare gameSquare) {
+		return gameSquare.getValue().getNumberOfSurroundingMines() - getSurroundingFlaggedSquares(gameSquares, gameSquare).size();
+	}
+	
 	private List<T> getAllSquaresOfType(List<T> gameSquares, List<SquareValue> squareValuesToFilterBy) {
 		return gameSquares.stream().filter(e -> squareValuesToFilterBy.contains(e.getValue())).collect(Collectors.toList());
 	}

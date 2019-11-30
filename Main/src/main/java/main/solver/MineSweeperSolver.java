@@ -117,6 +117,7 @@ public class MineSweeperSolver {
 			List<GameSquare> blankSquaresSurroundingSquare = gameBoard.getSurroundingBlankSquares(gameSquare);
 			
 			if (blankSquaresSurroundingSquare.size() > 0) {
+				// TODO: switch to new method 'getNumber'
 				int minesSurroundingSquare = gameSquare.getValue().getNumberOfSurroundingMines();
 				
 				float chancesOfHittingAMine = Utility.asFloat(minesSurroundingSquare, blankSquaresSurroundingSquare.size());

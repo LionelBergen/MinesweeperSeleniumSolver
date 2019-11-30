@@ -39,6 +39,12 @@ public class ResultSet {
 	// Used for debugging
 	@Override
 	public String toString() {
+		boolean allContainName = squares.stream().filter(e -> e.getName() == null).count() == 0;
+		
+		if (allContainName) {
+			return squares.stream().map(e -> e.getName()).collect(Collectors.joining("+"));
+		}
+		
 		return "#:" + resultsEqual + " " + Utility.sortList(squares).stream().map(Object::toString).collect(Collectors.joining(", "));
 	}
 	

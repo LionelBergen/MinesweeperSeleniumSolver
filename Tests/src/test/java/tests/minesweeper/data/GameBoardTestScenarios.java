@@ -249,22 +249,22 @@ public class GameBoardTestScenarios {
 	private static GameBoardTestScenario getGameBoardScenarioSpecial01() {
 		RegularGameBoard gameBoard = getValidGameBoard(7, 6);
 		List<GameSquare> squares = gameBoard.getGameBoard();
-		getGameSquare(squares, 2, 2).setValue(SquareValue.THREE);
-		getGameSquare(squares, 4, 2).setValue(SquareValue.ONE);
-		getGameSquare(squares, 3, 3).setValue(SquareValue.ONE);	
+		getGameSquare(squares, 2, 2).setValue(SquareValue.THREE).setName("3");
+		getGameSquare(squares, 4, 2).setValue(SquareValue.ONE).setName("1");
+		getGameSquare(squares, 3, 3).setValue(SquareValue.ONE).setName("1");
 		
 		final List<GameSquare> expectedResults = 
-				Arrays.asList(new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 1),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 1),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 2), new GameSquare(SquareValue.THREE, 2, 2),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 2), new GameSquare(SquareValue.ONE, 4, 2),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 2), 
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3), 
-						new GameSquare(SquareValue.ONE, 3, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 3), 
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 3),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 4), new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 4),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 4)
+				Arrays.asList(new GameSquare("A", SquareValue.BLANK_UNTOUCHED, 1, 1), new GameSquare("B", SquareValue.BLANK_UNTOUCHED, 2, 1),
+						new GameSquare("C", SquareValue.BLANK_UNTOUCHED, 3, 1), new GameSquare("D", SquareValue.BLANK_UNTOUCHED, 4, 1),
+						new GameSquare("E", SquareValue.BLANK_UNTOUCHED, 5, 1),
+						new GameSquare("F", SquareValue.BLANK_UNTOUCHED, 1, 2), new GameSquare("3", SquareValue.THREE, 2, 2),
+						new GameSquare("G", SquareValue.BLANK_UNTOUCHED, 3, 2), new GameSquare("1", SquareValue.ONE, 4, 2),
+						new GameSquare("H", SquareValue.BLANK_UNTOUCHED, 5, 2), 
+						new GameSquare("I", SquareValue.BLANK_UNTOUCHED, 1, 3), new GameSquare("J", SquareValue.BLANK_UNTOUCHED, 2, 3), 
+						new GameSquare("1", SquareValue.ONE, 3, 3), new GameSquare("K", SquareValue.BLANK_UNTOUCHED, 4, 3), 
+						new GameSquare("L", SquareValue.BLANK_UNTOUCHED, 5, 3),
+						new GameSquare("N", SquareValue.BLANK_UNTOUCHED, 2, 4), new GameSquare("O", SquareValue.BLANK_UNTOUCHED, 3, 4),
+						new GameSquare("P", SquareValue.BLANK_UNTOUCHED, 4, 4)
 						);
 
 		return createTestScenario(gameBoard, Arrays.asList(expectedResults));

@@ -89,7 +89,7 @@ public class SectionAnalyzerTest {
 		assertEquals(scenario.getExpectedContents().size(), actualContents.size());
 		
 		for (Entry<List<ResultSet>, List<GameSquare>> expected : scenario.getExpectedContents().entrySet()) {
-			List<GameSquare> x = actualResult.get(expected.getKey());
+			Set<GameSquare> x = actualResult.get(expected.getKey());
 			
 			assertTrue("Results did not contain expected value from: " + expected, x.containsAll(expected.getValue()));
 		}

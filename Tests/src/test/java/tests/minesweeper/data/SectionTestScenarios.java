@@ -173,32 +173,32 @@ public class SectionTestScenarios {
 		
 		// # 3 (2. 2)
 		List<GameSquare> gameSquareResults1 = new ArrayList<GameSquare>();
-		gameSquareResults1.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 1));
-		gameSquareResults1.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1));
-		gameSquareResults1.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 1));
-		gameSquareResults1.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 2));
+		gameSquareResults1.add(new GameSquare("A", SquareValue.BLANK_UNTOUCHED, 1, 1));
+		gameSquareResults1.add(new GameSquare("B", SquareValue.BLANK_UNTOUCHED, 2, 1));
+		gameSquareResults1.add(new GameSquare("C", SquareValue.BLANK_UNTOUCHED, 3, 1));
+		gameSquareResults1.add(new GameSquare("F", SquareValue.BLANK_UNTOUCHED, 1, 2));
 		gameSquareResults1.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 2));
-		gameSquareResults1.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3));
-		gameSquareResults1.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3));
+		gameSquareResults1.add(new GameSquare("I", SquareValue.BLANK_UNTOUCHED, 1, 3));
+		gameSquareResults1.add(new GameSquare("J", SquareValue.BLANK_UNTOUCHED, 2, 3));
 		
 		// # 1 (4, 2)
 		List<GameSquare> gameSquareResults2 = new ArrayList<GameSquare>();
 		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 1));
-		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 1));
-		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 1));
-		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 2));
-		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 2));
-		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 3));
-		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 3));
+		gameSquareResults2.add(new GameSquare("D", SquareValue.BLANK_UNTOUCHED, 4, 1));
+		gameSquareResults2.add(new GameSquare("E", SquareValue.BLANK_UNTOUCHED, 5, 1));
+		gameSquareResults2.add(new GameSquare("G", SquareValue.BLANK_UNTOUCHED, 3, 2));
+		gameSquareResults2.add(new GameSquare("H", SquareValue.BLANK_UNTOUCHED, 5, 2));
+		gameSquareResults2.add(new GameSquare("K", SquareValue.BLANK_UNTOUCHED, 4, 3));
+		gameSquareResults2.add(new GameSquare("L", SquareValue.BLANK_UNTOUCHED, 5, 3));
 		
 		// # 1 (3, 3)
 		List<GameSquare> gameSquareResults3 = new ArrayList<GameSquare>();
 		gameSquareResults3.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 2));
 		gameSquareResults3.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3));
 		gameSquareResults3.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 3));
-		gameSquareResults3.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 4));
-		gameSquareResults3.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 4));
-		gameSquareResults3.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 4));
+		gameSquareResults3.add(new GameSquare("N", SquareValue.BLANK_UNTOUCHED, 2, 4));
+		gameSquareResults3.add(new GameSquare("O", SquareValue.BLANK_UNTOUCHED, 3, 4));
+		gameSquareResults3.add(new GameSquare("P", SquareValue.BLANK_UNTOUCHED, 4, 4));
 
 		ResultSet touchingThe3 = createSweeperSet(gameSquareResults1, 3);
 		ResultSet touchingThe11 = createSweeperSet(gameSquareResults2, 1);
