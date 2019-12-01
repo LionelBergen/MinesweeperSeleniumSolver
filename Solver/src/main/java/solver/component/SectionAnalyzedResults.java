@@ -12,8 +12,7 @@ import component.model.GameSquare;
 
 public class SectionAnalyzedResults {
 	private RuleSet sectionRules;
-	// TODO: Maybe get rid of 'ResultSetCollection' class and use lists
-	// private Map<ResultSetCollection, List<GameSquare>> contents;
+	// TODO: 'RuleSet' is incorrect here. It's actually just a list of Sections. The value is lost / doesn't matter.
 	private Map<RuleSet, Section> contents;
 	
 	public SectionAnalyzedResults() {
@@ -27,21 +26,6 @@ public class SectionAnalyzedResults {
 	
 	public Map<RuleSet, Section> getContents() {
 		return contents;
-	}
-	
-	public List<Rule> get(GameSquare square) {
-		List<Rule> results = new ArrayList<Rule>();
-		
-		for (RuleSet rsc : this.contents.keySet()) {
-			for (Rule rs : rsc.getResultSets()) {
-				if (rs.getSquares().contains(square)) {
-					results.add(rs);
-				}
-			}
-		}
-		
-		// TODO: Why does this have a bunch of duplicates
-		return new ArrayList<Rule>(new HashSet<Rule>(results));
 	}
 	
 	public void put(GameSquare gameSquare) {
