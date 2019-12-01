@@ -9,7 +9,7 @@ import component.model.GameSquare;
 import component.model.SquareValue;
 import solver.component.Section;
 
-public class ResultSetTest {
+public class SectionTest {
 	@Test
 	public void testEqualsTrue() {
 		Section set1 = new Section();

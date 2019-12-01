@@ -12,12 +12,7 @@ import component.model.GameSquare;
 
 public class SectionAnalyzedResults {
 	private RuleSet sectionRules;
-	// TODO: 'RuleSet' is incorrect here. It's actually just a list of Sections. The value is lost / doesn't matter.
 	private Map<RuleSet, Section> contents;
-	
-	public SectionAnalyzedResults() {
-		this(new ArrayList<Rule>());
-	}
 
 	public SectionAnalyzedResults(List<Rule> set) {
 		contents = new HashMap<>();
