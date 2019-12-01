@@ -16,7 +16,7 @@ import component.model.SquareValue;
 import solver.board.analyzing.SectionAnalyzer;
 import solver.component.Section;
 import solver.component.SectionAnalyzedResults;
-import solver.component.ResultSet;
+import solver.component.Rule;
 import tests.minesweeper.data.SectionTestScenarios;
 import tests.minesweeper.data.component.SectionTestScenario;
 
@@ -26,8 +26,8 @@ public class SectionAnalyzerTest {
 		Section section = new Section();
 		
 		SectionAnalyzedResults result = SectionAnalyzer.breakupSection(section);
-		List<ResultSet> origResults = result.getOriginalSet();
-		Collection<List<ResultSet>> contents = result.getResultSets();
+		List<Rule> origResults = result.getOriginalSet();
+		Collection<List<Rule>> contents = result.getResultSets();
 		
 		assertEquals(0, origResults.size());
 		assertEquals(0, contents.size());
@@ -45,8 +45,8 @@ public class SectionAnalyzerTest {
 		
 		SectionAnalyzedResults result = SectionAnalyzer.breakupSection(section);
 		
-		List<ResultSet> origResults = result.getOriginalSet();
-		Collection<List<ResultSet>> contents = result.getResultSets();
+		List<Rule> origResults = result.getOriginalSet();
+		Collection<List<Rule>> contents = result.getResultSets();
 		
 		assertEquals(0, origResults.size());
 		assertEquals(0, contents.size());
@@ -80,17 +80,17 @@ public class SectionAnalyzerTest {
 		SectionAnalyzedResults actualResult = SectionAnalyzer.breakupSection(scenario.getSection());
 		
 		// assert originalSet
-		List<ResultSet> actualOriginalSets = actualResult.getOriginalSet();
+		List<Rule> actualOriginalSets = actualResult.getOriginalSet();
 		assertEquals(scenario.getExpectedOrigResults().size(), actualOriginalSets.size());
-		for (ResultSet expected : scenario.getExpectedOrigResults()) {
+		for (Rule expected : scenario.getExpectedOrigResults()) {
 			assertTrue("Original Results did not contain expected: " + expected, actualOriginalSets.contains(expected));
 		}
 		
 		// assert contents
-		List<List<ResultSet>> actualContents = actualResult.getResultSets();
+		List<List<Rule>> actualContents = actualResult.getResultSets();
 		assertEquals(scenario.getExpectedContents().size(), actualContents.size());
 		
-		for (Entry<List<ResultSet>, List<GameSquare>> expected : scenario.getExpectedContents().entrySet()) {
+		for (Entry<List<Rule>, List<GameSquare>> expected : scenario.getExpectedContents().entrySet()) {
 			Set<GameSquare> x = actualResult.get(expected.getKey());
 			
 			assertTrue("Results did not contain expected value from: " + expected, x.containsAll(expected.getValue()));

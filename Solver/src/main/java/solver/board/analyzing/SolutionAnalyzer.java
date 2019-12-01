@@ -23,7 +23,7 @@ public final class SolutionAnalyzer {
 		if (objects.size() <= 1) {
 			return Arrays.asList(objects);
 		}
-		
+		// TODO: change this comment / mapping, we no longer transform class. However creating a new KeyValue may be necessary (pointers)
 		// Each 'object's value is it's max value. Meaning the value should never be more than its max
 		List<KeyValue> x = objects.stream().map(e -> transform(e, 0)).collect(Collectors.toList());
 		
@@ -60,7 +60,7 @@ public final class SolutionAnalyzer {
 			int value = keys.get(i);
 			
 			if (value <= values.get(i).getMaxValue()) {
-				transformedResult.add(new KeyValue(value, values.get(i).getKey()));
+				transformedResult.add(new KeyValue(value, values.get(i).getMaxValue(), values.get(i).getKey()));
 			}
 			else {
 				return null;

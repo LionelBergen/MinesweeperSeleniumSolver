@@ -13,26 +13,25 @@ import component.model.GameSquare;
 import component.model.SquareValue;
 
 public class SectionAnalyzedResults {
-	// TODO: rename
-	private ResultSetCollection originalSet;
+	private RuleSet sectionRules;
 	// TODO: Maybe get rid of 'ResultSetCollection' class and use lists
 	// private Map<ResultSetCollection, List<GameSquare>> contents;
-	private Map<ResultSetCollection, Section> contents;
+	private Map<RuleSet, Section> contents;
 	
 	public SectionAnalyzedResults() {
-		this(new ArrayList<ResultSet>());
+		this(new ArrayList<Rule>());
 	}
 
-	public SectionAnalyzedResults(List<ResultSet> set) {
+	public SectionAnalyzedResults(List<Rule> set) {
 		contents = new HashMap<>();
-		this.originalSet = new ResultSetCollection(set);
+		this.sectionRules = new RuleSet(set);
 	}
 	
-	public List<ResultSet> get(ResultSet resultSet) {
-		List<ResultSet> results = new ArrayList<ResultSet>();
+	public List<Rule> get(Rule resultSet) {
+		List<Rule> results = new ArrayList<Rule>();
 		
-		for (ResultSetCollection rsc : this.contents.keySet()) {
-			for (ResultSet rs : rsc.getResultSets()) {
+		for (RuleSet rsc : this.contents.keySet()) {
+			for (Rule rs : rsc.getResultSets()) {
 				if (rs.getSquares().containsAll(resultSet.getSquares())) {
 					results.add(rs);
 				}
@@ -42,15 +41,15 @@ public class SectionAnalyzedResults {
 		return results;
 	}
 	
-	public Map<ResultSetCollection, Section> getContents() {
+	public Map<RuleSet, Section> getContents() {
 		return contents;
 	}
 	
-	public List<ResultSet> get(GameSquare square) {
-		List<ResultSet> results = new ArrayList<ResultSet>();
+	public List<Rule> get(GameSquare square) {
+		List<Rule> results = new ArrayList<Rule>();
 		
-		for (ResultSetCollection rsc : this.contents.keySet()) {
-			for (ResultSet rs : rsc.getResultSets()) {
+		for (RuleSet rsc : this.contents.keySet()) {
+			for (Rule rs : rsc.getResultSets()) {
 				if (rs.getSquares().contains(square)) {
 					results.add(rs);
 				}
@@ -58,11 +57,11 @@ public class SectionAnalyzedResults {
 		}
 		
 		// TODO: Why does this have a bunch of duplicates
-		return new ArrayList<ResultSet>(new HashSet<ResultSet>(results));
+		return new ArrayList<Rule>(new HashSet<Rule>(results));
 	}
 	
 	public void put(GameSquare gameSquare) {
-		List<ResultSet> setsThisSquareIsAPartOf = this.originalSet.getResultSets().stream().filter(e -> e.getSquares().contains(gameSquare)).collect(Collectors.toList());
+		List<Rule> setsThisSquareIsAPartOf = this.sectionRules.getResultSets().stream().filter(e -> e.getSquares().contains(gameSquare)).collect(Collectors.toList());
 		
 		Set<GameSquare> otherSquaresInSameSet = this.get(setsThisSquareIsAPartOf);
 		
@@ -75,8 +74,8 @@ public class SectionAnalyzedResults {
 		otherSquaresInSameSet.add(gameSquare);
 	}
 
-	public Set<GameSquare> get(List<ResultSet> otherSetsThisSquareIsAPartOf) {
-		for (ResultSetCollection rsc : this.contents.keySet()) {
+	public Set<GameSquare> get(List<Rule> otherSetsThisSquareIsAPartOf) {
+		for (RuleSet rsc : this.contents.keySet()) {
 			if (rsc.getResultSets().size() == otherSetsThisSquareIsAPartOf.size() && rsc.getResultSets().containsAll(otherSetsThisSquareIsAPartOf)) {
 				Set<GameSquare> resultts = contents.get(rsc).getGameSquares();
 				
@@ -91,23 +90,23 @@ public class SectionAnalyzedResults {
 		return null;
 	}
 	
-	public List<ResultSet> getOriginalSet() {
-		return this.originalSet.getResultSets();
+	public List<Rule> getOriginalSet() {
+		return this.sectionRules.getResultSets();
 	}
 	
-	public List<List<ResultSet>> getResultSets() {
-		List<List<ResultSet>> results = new ArrayList<>();
+	public List<List<Rule>> getResultSets() {
+		List<List<Rule>> results = new ArrayList<>();
 		
-		for (ResultSetCollection resultCollection : contents.keySet()) {
+		for (RuleSet resultCollection : contents.keySet()) {
 			results.add(resultCollection.getResultSets());
 		}
 		
 		return results;
 	}
 
-	private void put(final List<ResultSet> otherSetsThisSquareIsAPartOf, Set<GameSquare> otherSquaresInSameSet) {
+	private void put(final List<Rule> otherSetsThisSquareIsAPartOf, Set<GameSquare> otherSquaresInSameSet) {
 		if (!otherSetsThisSquareIsAPartOf.isEmpty()) {
-			contents.put(new ResultSetCollection(otherSetsThisSquareIsAPartOf), createSection(otherSquaresInSameSet));
+			contents.put(new RuleSet(otherSetsThisSquareIsAPartOf), createSection(otherSquaresInSameSet));
 		}
 	}
 	

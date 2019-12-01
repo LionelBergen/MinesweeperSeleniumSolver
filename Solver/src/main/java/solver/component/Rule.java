@@ -8,18 +8,17 @@ import utility.util.Utility;
 
 // TODO: write .contains() and equals() tests for this & Section. Not sure if we'll be keeping these classes so I didn't write tests..
 /**
- * 
- * Example usage: Breaking up a {@link Section} into parts based on same odds 
+ * A class containing Squares, and the value the sum of the squares must equal
  * 
  * @author Lionel Bergen
  */
-public class ResultSet {
+public class Rule {
 	private List<GameSquare> squares;
 	private final int resultsEqual;
 	
 	public static final int UNKNOWN_VALUE = -1;
 	
-	public ResultSet(List<GameSquare> squares, int resultsEqual) {
+	public Rule(List<GameSquare> squares, int resultsEqual) {
 		this.squares = squares; 
 		this.resultsEqual = resultsEqual;
 	}
@@ -77,7 +76,7 @@ public class ResultSet {
 	        return false;
 	    }
 	    
-	    ResultSet otherResultSet = (ResultSet) other;
+	    Rule otherResultSet = (Rule) other;
 	    
 	    boolean sizesAreEqual = this.squares.size() == otherResultSet.squares.size();
 	    

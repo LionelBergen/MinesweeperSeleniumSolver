@@ -6,7 +6,7 @@ import java.util.Set;
 import component.model.GameSquare;
 import solver.component.Section;
 import solver.component.SectionAnalyzedResults;
-import solver.component.ResultSet;
+import solver.component.Rule;
 import static utility.util.GameBoardHelper.GameBoardHelper;
 
 public class SectionAnalyzer {
@@ -14,19 +14,17 @@ public class SectionAnalyzer {
 		SectionAnalyzedResults result = null;
 		Set<GameSquare> squaresInSectionList = section.getGameSquares();
 		
-		List<ResultSet> set = new ArrayList<ResultSet>();
+		List<Rule> ruleSet = new ArrayList<Rule>();
 		
 		for (GameSquare square : squaresInSectionList) {
 			if (square.getValue().isNumbered()) {
 				List<GameSquare> surroundingBlankSquares = GameBoardHelper.getSurroundingBlankSquares(squaresInSectionList, square);
 				int numberOfMines = GameBoardHelper.getNumberOfMinesSurroundingSquare(squaresInSectionList, square);
 				
-				ResultSet sweeperSet = new ResultSet(surroundingBlankSquares, numberOfMines);
-				
-				set.add(sweeperSet);
+				ruleSet.add(new Rule(surroundingBlankSquares, numberOfMines));
 			}
 		}
-		result = new SectionAnalyzedResults(set);
+		result = new SectionAnalyzedResults(ruleSet);
 		
 		for (GameSquare gs : squaresInSectionList) {
 			result.put(gs);

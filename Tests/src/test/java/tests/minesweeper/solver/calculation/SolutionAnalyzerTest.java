@@ -22,28 +22,28 @@ public class SolutionAnalyzerTest {
 				new KeyValue(4, "LHED"));
 		
 		List<KeyValue> expectedResult1 = Arrays.asList(
-				new KeyValue(1, "G"), 
-				new KeyValue(0, "C"), 
-				new KeyValue(0, "K"),
-				new KeyValue(0, "LHED"));
+				new KeyValue(1, 0, "G"), 
+				new KeyValue(0, 0, "C"), 
+				new KeyValue(0, 0, "K"),
+				new KeyValue(0, 0, "LHED"));
 		
 		List<KeyValue> expectedResult2 = Arrays.asList(
-				new KeyValue(0, "G"), 
-				new KeyValue(1, "C"), 
-				new KeyValue(0, "K"),
-				new KeyValue(0, "LHED"));
+				new KeyValue(0, 0, "G"), 
+				new KeyValue(1, 0, "C"), 
+				new KeyValue(0, 0, "K"),
+				new KeyValue(0, 0, "LHED"));
 		
 		List<KeyValue> expectedResult3 = Arrays.asList(
-				new KeyValue(0, "G"), 
+				new KeyValue(0, 0, "G"), 
 				new KeyValue(0, "C"), 
-				new KeyValue(1, "K"),
-				new KeyValue(0, "LHED"));
+				new KeyValue(1, 0, "K"),
+				new KeyValue(0, 0, "LHED"));
 		
 		List<KeyValue> expectedResult4 = Arrays.asList(
-				new KeyValue(0, "G"), 
-				new KeyValue(0, "C"), 
-				new KeyValue(0, "K"),
-				new KeyValue(1, "LHED"));
+				new KeyValue(0, 0, "G"), 
+				new KeyValue(0, 0, "C"), 
+				new KeyValue(0, 0, "K"),
+				new KeyValue(1, 0, "LHED"));
 		
 		List<List<KeyValue>> results = getAllPossibilities(1, gameSquares);
 		
@@ -66,52 +66,52 @@ public class SolutionAnalyzerTest {
 				new KeyValue(1, "J"));
 		
 		List<KeyValue> expectedResult1 = Arrays.asList(
-				new KeyValue(3, "ABFI"),
-				new KeyValue(0, "C"),
-				new KeyValue(0, "G"),
-				new KeyValue(0, "J"));
+				new KeyValue(3, 0, "ABFI"),
+				new KeyValue(0, 0, "C"),
+				new KeyValue(0, 0, "G"),
+				new KeyValue(0, 0, "J"));
 		
 		List<KeyValue> expectedResult2 = Arrays.asList(
-				new KeyValue(2, "ABFI"),
-				new KeyValue(1, "C"),
-				new KeyValue(0, "G"),
-				new KeyValue(0, "J"));
+				new KeyValue(2, 0, "ABFI"),
+				new KeyValue(1, 0, "C"),
+				new KeyValue(0, 0, "G"),
+				new KeyValue(0, 0, "J"));
 		
 		List<KeyValue> expectedResult3 = Arrays.asList(
-				new KeyValue(2, "ABFI"),
-				new KeyValue(0, "C"),
-				new KeyValue(1, "G"),
-				new KeyValue(0, "J"));
+				new KeyValue(2, 0, "ABFI"),
+				new KeyValue(0, 0, "C"),
+				new KeyValue(1, 0, "G"),
+				new KeyValue(0, 0, "J"));
 		
 		List<KeyValue> expectedResult4 = Arrays.asList(
-				new KeyValue(2, "ABFI"),
-				new KeyValue(0, "C"),
-				new KeyValue(0, "G"),
-				new KeyValue(1, "J"));
+				new KeyValue(2, 0, "ABFI"),
+				new KeyValue(0, 0, "C"),
+				new KeyValue(0, 0, "G"),
+				new KeyValue(1, 0, "J"));
 		
 		List<KeyValue> expectedResult5 = Arrays.asList(
-				new KeyValue(1, "ABFI"),
-				new KeyValue(1, "C"),
-				new KeyValue(1, "G"),
-				new KeyValue(0, "J"));
+				new KeyValue(1, 0, "ABFI"),
+				new KeyValue(1, 0, "C"),
+				new KeyValue(1, 0, "G"),
+				new KeyValue(0, 0, "J"));
 		
 		List<KeyValue> expectedResult6 = Arrays.asList(
-				new KeyValue(1, "ABFI"),
-				new KeyValue(1, "C"),
-				new KeyValue(0, "G"),
-				new KeyValue(1, "J"));
+				new KeyValue(1, 0, "ABFI"),
+				new KeyValue(1, 0, "C"),
+				new KeyValue(0, 0, "G"),
+				new KeyValue(1, 0, "J"));
 		
 		List<KeyValue> expectedResult7 = Arrays.asList(
-				new KeyValue(1, "ABFI"),
-				new KeyValue(0, "C"),
-				new KeyValue(1, "G"),
-				new KeyValue(1, "J"));
+				new KeyValue(1, 0, "ABFI"),
+				new KeyValue(0, 0, "C"),
+				new KeyValue(1, 0, "G"),
+				new KeyValue(1, 0, "J"));
 		
 		List<KeyValue> expectedResult8 = Arrays.asList(
-				new KeyValue(0, "ABFI"),
-				new KeyValue(1, "C"),
-				new KeyValue(1, "G"),
-				new KeyValue(1, "J"));
+				new KeyValue(0, 0, "ABFI"),
+				new KeyValue(1, 0, "C"),
+				new KeyValue(1, 0, "G"),
+				new KeyValue(1, 0, "J"));
 		
 		List<List<KeyValue>> results = getAllPossibilities(3, gameSquares);
 		

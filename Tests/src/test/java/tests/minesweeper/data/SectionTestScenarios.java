@@ -9,7 +9,7 @@ import java.util.Map;
 import component.model.GameSquare;
 import component.model.SquareValue;
 import solver.component.Section;
-import solver.component.ResultSet;
+import solver.component.Rule;
 import tests.minesweeper.data.component.SectionTestScenario;
 
 import static tests.minesweeper.data.TestDataHelper.getGameSquare;
@@ -35,12 +35,12 @@ public class SectionTestScenarios {
 		gameSquares.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3));
 		gameSquares.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 3));
 		
-		Map<List<ResultSet>, List<GameSquare>> expectedContents = new HashMap<>();
-		List<ResultSet> ss = new ArrayList<ResultSet>();
-		ss.add(new ResultSet(gameSquares, 1));
+		Map<List<Rule>, List<GameSquare>> expectedContents = new HashMap<>();
+		List<Rule> ss = new ArrayList<Rule>();
+		ss.add(new Rule(gameSquares, 1));
 		expectedContents.put(ss, gameSquares);
 		
-		return new SectionTestScenario(section, expectedContents, Arrays.asList(new ResultSet(gameSquares, 1)));
+		return new SectionTestScenario(section, expectedContents, Arrays.asList(new Rule(gameSquares, 1)));
 	}
 	
 	private static SectionTestScenario getScenario02() {
@@ -66,10 +66,10 @@ public class SectionTestScenarios {
 		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3));
 		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3));
 		
-		ResultSet touchingThe2 = createSweeperSet(gameSquareResults1, 2);
-		ResultSet touchingThe3 = createSweeperSet(gameSquareResults2, 3);
+		Rule touchingThe2 = createSweeperSet(gameSquareResults1, 2);
+		Rule touchingThe3 = createSweeperSet(gameSquareResults2, 3);
 		
-		List<ResultSet> expectedResults = Arrays.asList(
+		List<Rule> expectedResults = Arrays.asList(
 				touchingThe2,
 				touchingThe3
 				);
@@ -78,23 +78,23 @@ public class SectionTestScenarios {
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 0),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 0),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 0));
-		List<ResultSet> parentSet1 = Arrays.asList(new ResultSet(touchingThe2.getSquares(), ResultSet.UNKNOWN_VALUE));
+		List<Rule> parentSet1 = Arrays.asList(new Rule(touchingThe2.getSquares(), Rule.UNKNOWN_VALUE));
 		
 		List<GameSquare> resultSet2 = Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 1),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 2),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 2));
-		List<ResultSet> parentSet2 = Arrays.asList(new ResultSet(touchingThe2.getSquares(), ResultSet.UNKNOWN_VALUE),
-				new ResultSet(touchingThe3.getSquares(), ResultSet.UNKNOWN_VALUE));
+		List<Rule> parentSet2 = Arrays.asList(new Rule(touchingThe2.getSquares(), Rule.UNKNOWN_VALUE),
+				new Rule(touchingThe3.getSquares(), Rule.UNKNOWN_VALUE));
 		
 		List<GameSquare> resultSet3 = Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 3),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3));
-		List<ResultSet> parentSet3 = Arrays.asList(new ResultSet(touchingThe3.getSquares(), ResultSet.UNKNOWN_VALUE));
+		List<Rule> parentSet3 = Arrays.asList(new Rule(touchingThe3.getSquares(), Rule.UNKNOWN_VALUE));
 		
-		Map<List<ResultSet>, List<GameSquare>> expectedContents = new HashMap<>();
+		Map<List<Rule>, List<GameSquare>> expectedContents = new HashMap<>();
 		
 		expectedContents.put(parentSet1, resultSet1);
 		expectedContents.put(parentSet2, resultSet2);
@@ -132,10 +132,10 @@ public class SectionTestScenarios {
 		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 2));
 		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 3));
 		
-		ResultSet touchingThe2 = createSweeperSet(gameSquareResults1, 2);
-		ResultSet touchingThe4 = createSweeperSet(gameSquareResults2, 2);
+		Rule touchingThe2 = createSweeperSet(gameSquareResults1, 2);
+		Rule touchingThe4 = createSweeperSet(gameSquareResults2, 2);
 		
-		List<ResultSet> expectedResults = Arrays.asList(
+		List<Rule> expectedResults = Arrays.asList(
 				touchingThe2,
 				touchingThe4
 				);
@@ -144,21 +144,21 @@ public class SectionTestScenarios {
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 0),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 0),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 0));
-		List<ResultSet> parentSet1 = Arrays.asList(new ResultSet(touchingThe2.getSquares(), ResultSet.UNKNOWN_VALUE));
+		List<Rule> parentSet1 = Arrays.asList(new Rule(touchingThe2.getSquares(), Rule.UNKNOWN_VALUE));
 		
 		List<GameSquare> resultSet2 = Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 1),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 2),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 2));
-		List<ResultSet> parentSet2 = Arrays.asList(new ResultSet(touchingThe2.getSquares(), ResultSet.UNKNOWN_VALUE),
-				new ResultSet(touchingThe4.getSquares(), ResultSet.UNKNOWN_VALUE));
+		List<Rule> parentSet2 = Arrays.asList(new Rule(touchingThe2.getSquares(), Rule.UNKNOWN_VALUE),
+				new Rule(touchingThe4.getSquares(), Rule.UNKNOWN_VALUE));
 		
 		List<GameSquare> resultSet3 = Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 3));
-		List<ResultSet> parentSet3 = Arrays.asList(new ResultSet(touchingThe4.getSquares(), ResultSet.UNKNOWN_VALUE));
+		List<Rule> parentSet3 = Arrays.asList(new Rule(touchingThe4.getSquares(), Rule.UNKNOWN_VALUE));
 		
-		Map<List<ResultSet>, List<GameSquare>> expectedContents = new HashMap<>();
+		Map<List<Rule>, List<GameSquare>> expectedContents = new HashMap<>();
 		
 		expectedContents.put(parentSet1, resultSet1);
 		expectedContents.put(parentSet2, resultSet2);
@@ -200,11 +200,11 @@ public class SectionTestScenarios {
 		gameSquareResults3.add(new GameSquare("O", SquareValue.BLANK_UNTOUCHED, 3, 4));
 		gameSquareResults3.add(new GameSquare("P", SquareValue.BLANK_UNTOUCHED, 4, 4));
 
-		ResultSet touchingThe3 = createSweeperSet(gameSquareResults1, 3);
-		ResultSet touchingThe11 = createSweeperSet(gameSquareResults2, 1);
-		ResultSet touchingThe12 = createSweeperSet(gameSquareResults3, 1);
+		Rule touchingThe3 = createSweeperSet(gameSquareResults1, 3);
+		Rule touchingThe11 = createSweeperSet(gameSquareResults2, 1);
+		Rule touchingThe12 = createSweeperSet(gameSquareResults3, 1);
 		
-		List<ResultSet> expectedResults = Arrays.asList(
+		List<Rule> expectedResults = Arrays.asList(
 				touchingThe3,
 				touchingThe11,
 				touchingThe12
@@ -216,39 +216,39 @@ public class SectionTestScenarios {
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 2),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3));
-		List<ResultSet> parentSet1 = Arrays.asList(new ResultSet(touchingThe3.getSquares(), ResultSet.UNKNOWN_VALUE));
+		List<Rule> parentSet1 = Arrays.asList(new Rule(touchingThe3.getSquares(), Rule.UNKNOWN_VALUE));
 		
 		// Yellow
 		List<GameSquare> resultSet2 = Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3));
-		List<ResultSet> parentSet2 = Arrays.asList(new ResultSet(touchingThe3.getSquares(), ResultSet.UNKNOWN_VALUE),
-				new ResultSet(touchingThe12.getSquares(), ResultSet.UNKNOWN_VALUE));
+		List<Rule> parentSet2 = Arrays.asList(new Rule(touchingThe3.getSquares(), Rule.UNKNOWN_VALUE),
+				new Rule(touchingThe12.getSquares(), Rule.UNKNOWN_VALUE));
 		
 		// Light-blue
 		List<GameSquare> resultSet3 = Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 4),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 4),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 4));
-		List<ResultSet> parentSet3 = Arrays.asList(new ResultSet(touchingThe12.getSquares(), ResultSet.UNKNOWN_VALUE));
+		List<Rule> parentSet3 = Arrays.asList(new Rule(touchingThe12.getSquares(), Rule.UNKNOWN_VALUE));
 		
 		// Pink
 		List<GameSquare> resultSet4 = Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 1));
-		List<ResultSet> parentSet4 = Arrays.asList(new ResultSet(touchingThe11.getSquares(), ResultSet.UNKNOWN_VALUE),
-				new ResultSet(touchingThe3.getSquares(), ResultSet.UNKNOWN_VALUE));
+		List<Rule> parentSet4 = Arrays.asList(new Rule(touchingThe11.getSquares(), Rule.UNKNOWN_VALUE),
+				new Rule(touchingThe3.getSquares(), Rule.UNKNOWN_VALUE));
 		
 		// Brown
 		List<GameSquare> resultSet5 = Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 2));
-		List<ResultSet> parentSet5 = Arrays.asList(new ResultSet(touchingThe11.getSquares(), ResultSet.UNKNOWN_VALUE),
-				new ResultSet(touchingThe3.getSquares(), ResultSet.UNKNOWN_VALUE),
-				new ResultSet(touchingThe12.getSquares(), ResultSet.UNKNOWN_VALUE));
+		List<Rule> parentSet5 = Arrays.asList(new Rule(touchingThe11.getSquares(), Rule.UNKNOWN_VALUE),
+				new Rule(touchingThe3.getSquares(), Rule.UNKNOWN_VALUE),
+				new Rule(touchingThe12.getSquares(), Rule.UNKNOWN_VALUE));
 		
 		// Purple
 		List<GameSquare> resultSet6 = Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 3));
-		List<ResultSet> parentSet6 = Arrays.asList(new ResultSet(touchingThe11.getSquares(), ResultSet.UNKNOWN_VALUE),
-				new ResultSet(touchingThe12.getSquares(), ResultSet.UNKNOWN_VALUE));
+		List<Rule> parentSet6 = Arrays.asList(new Rule(touchingThe11.getSquares(), Rule.UNKNOWN_VALUE),
+				new Rule(touchingThe12.getSquares(), Rule.UNKNOWN_VALUE));
 		
 		// Orange
 		List<GameSquare> resultSet7 = Arrays.asList(
@@ -256,9 +256,9 @@ public class SectionTestScenarios {
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 1),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 2),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 3));
-		List<ResultSet> parentSet7 = Arrays.asList(new ResultSet(touchingThe11.getSquares(), ResultSet.UNKNOWN_VALUE));
+		List<Rule> parentSet7 = Arrays.asList(new Rule(touchingThe11.getSquares(), Rule.UNKNOWN_VALUE));
 		
-		Map<List<ResultSet>, List<GameSquare>> expectedContents = new HashMap<>();
+		Map<List<Rule>, List<GameSquare>> expectedContents = new HashMap<>();
 		
 		expectedContents.put(parentSet1, resultSet1);
 		expectedContents.put(parentSet2, resultSet2);
@@ -271,7 +271,7 @@ public class SectionTestScenarios {
 		return new SectionTestScenario(section, expectedContents, expectedResults);
 	}
 	
-	private static ResultSet createSweeperSet(List<GameSquare> gameSquares, int expectedNumberOfMines) {
-		return new ResultSet(gameSquares, expectedNumberOfMines);
+	private static Rule createSweeperSet(List<GameSquare> gameSquares, int expectedNumberOfMines) {
+		return new Rule(gameSquares, expectedNumberOfMines);
 	}
 }

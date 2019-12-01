@@ -2,20 +2,25 @@ package solver.component;
 
 import java.util.List;
 
-public class ResultSetCollection {
-	private List<ResultSet> resultSets;
+/**
+ * A class containing a set of rules
+ * 
+ * @author Lionel Bergen
+ */
+public class RuleSet {
+	private List<Rule> resultSets;
 	private final int hashCode;
 	
-	public ResultSetCollection(List<ResultSet> resultSets) {
+	public RuleSet(List<Rule> resultSets) {
 		this.resultSets = resultSets;
 		this.hashCode = getHashCode(resultSets);
 	}
 
-	public List<ResultSet> getResultSets() {
+	public List<Rule> getResultSets() {
 		return resultSets;
 	}
 
-	public void setResultSets(List<ResultSet> resultSets) {
+	public void setResultSets(List<Rule> resultSets) {
 		this.resultSets = resultSets;
 	}
 	
@@ -41,7 +46,7 @@ public class ResultSetCollection {
 	        return false;
 	    }
 	    
-	    ResultSetCollection otherResultSetCollection = (ResultSetCollection) other;
+	    RuleSet otherResultSetCollection = (RuleSet) other;
 	    
 	    boolean sizesAreEqual = this.resultSets.size() == otherResultSetCollection.resultSets.size();
 	    
@@ -53,11 +58,11 @@ public class ResultSetCollection {
 	    return this.resultSets.containsAll(otherResultSetCollection.resultSets);
 	}
 	
-	private int getHashCode(List<ResultSet> list) {
+	private int getHashCode(List<Rule> list) {
 		final int prime = 31;
 		int hashCode = 1;
 		
-		for (ResultSet ss : list) {
+		for (Rule ss : list) {
 			hashCode = hashCode * prime + ss.hashCode();
 		}
 		
