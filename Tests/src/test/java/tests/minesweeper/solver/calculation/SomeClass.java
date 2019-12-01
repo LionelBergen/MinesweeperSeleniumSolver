@@ -25,7 +25,6 @@ public class SomeClass {
 		
 		for (Entry<RuleSet, Section> results : input.getContents().entrySet()) {
 			Set<GameSquare> gameSquares = results.getValue().getGameSquares();
-			System.out.println(gameSquares + " = " + results.getKey().getResultSets());
 			unique.add(new KeyValue(0, gameSquares.size(), gameSquares));
 		}
 		

@@ -1,7 +1,6 @@
 package solver.component;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import component.model.GameSquare;
-import component.model.SquareValue;
 
 public class SectionAnalyzedResults {
 	private RuleSet sectionRules;
@@ -25,20 +23,6 @@ public class SectionAnalyzedResults {
 	public SectionAnalyzedResults(List<Rule> set) {
 		contents = new HashMap<>();
 		this.sectionRules = new RuleSet(set);
-	}
-	
-	public List<Rule> get(Rule resultSet) {
-		List<Rule> results = new ArrayList<Rule>();
-		
-		for (RuleSet rsc : this.contents.keySet()) {
-			for (Rule rs : rsc.getResultSets()) {
-				if (rs.getSquares().containsAll(resultSet.getSquares())) {
-					results.add(rs);
-				}
-			}
-		}
-		
-		return results;
 	}
 	
 	public Map<RuleSet, Section> getContents() {

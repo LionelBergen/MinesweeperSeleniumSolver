@@ -5,13 +5,10 @@ import java.util.Set;
 import component.model.GameSquare;
 import utility.util.Utility;
 
-// TODO: re-do javadoc, class is used for different things
 /**
  * Basically just a Collection<GameSquare>, but with added features
- * Example usage: To find sections of a minesweeper board that are of interest
  * 
  * @author Lionel Bergen
- *
  */
 public class Section {
 	// Use a Set since it doesn't allow duplicates
