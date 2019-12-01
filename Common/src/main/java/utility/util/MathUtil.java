@@ -1,5 +1,7 @@
 package utility.util;
 
+import org.apache.commons.math3.util.CombinatoricsUtils;
+
 public class MathUtil {
 	/**
 	 * Returns a whole random number between the two numbers passed
@@ -24,6 +26,10 @@ public class MathUtil {
 	public static String asFraction(long a, long b) {
 	    long gcm = gcm(a, b);
 	    return (a / gcm) + "/" + (b / gcm);
+	}
+	
+	public static long nCr(int n, int r) {
+	    return CombinatoricsUtils.binomialCoefficient(n, r);
 	}
 	
 	private static long gcm(long a, long b) {

@@ -1,13 +1,10 @@
 package tests.minesweeper.solver.calculation;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.stream.Collectors;
-
 import org.junit.Test;
 
 import component.model.GameSquare;
@@ -19,6 +16,7 @@ import solver.component.RuleSet;
 import solver.component.Section;
 import solver.component.SectionAnalyzedResults;
 import tests.minesweeper.data.SectionTestScenarios;
+import utility.util.MathUtil;
 
 // TODO: Rename
 public class SomeClass {
@@ -33,58 +31,83 @@ public class SomeClass {
 		
 		System.out.println();
 		
-		final int sum = input.getOriginalSet().stream().mapToInt(Rule::getResultsEqual).sum();
+		final int maxSum = input.getOriginalSet().stream().mapToInt(Rule::getResultsEqual).sum();
+		final int minSum = input.getOriginalSet().stream().mapToInt(Rule::getResultsEqual).max().getAsInt();
 		
 		System.out.println(unique);
-		System.out.println(sum);
+		System.out.println(maxSum);
+		System.out.println(minSum);
 		System.out.println();
 		
-		List<List<KeyValue>> resultz = SolutionAnalyzer.getAllPossibilities(sum, new ArrayList<KeyValue>(unique));
+		// Get all possible solutions
+		Set<List<KeyValue>> uniqueResults = new HashSet<>();
+		for (int i = minSum; i<=maxSum; i++) {
+			uniqueResults.addAll(SolutionAnalyzer.getAllPossibilities(i, new ArrayList<KeyValue>(unique)));
+		}
 		
-		for (List<KeyValue> resul : resultz) {
-			// resul = [[D, E, H, L] = 1, [N, O, P] = 3, [C] = 0, [G] = 0, [K] = 0, [A, B, F, I] = 1, [J] = 0]
-			System.out.println(resul);
+		Set<List<KeyValue>> results = new HashSet<>();
+		
+		// Filter solutions that do not follow the 'Rules'. For example, if [K+NOP+J] = 1, then J and K cannot both be 1.
+		for (List<KeyValue> resul : uniqueResults) {
+			boolean valid = true;
 			
-			// rs = (A+B+F+I) + (C) + (G) + (J) = 3, ...
 			for (Rule rs : input.getOriginalSet()) {
+				int actualResult = 0;
 				for (KeyValue values : resul) {
 					@SuppressWarnings("unchecked")
-					HashSet<KeyValue> rez = (HashSet<KeyValue>) values.getKey();
+					HashSet<GameSquare> rez = (HashSet<GameSquare>) values.getKey();
 					
-					//System.out.println(rez);
-					/*if (rs.getSquares().equals(values.getKey())) {
-						System.out.println("yolo");
-					}*/
+					if (rs.getSquares().containsAll(rez)) {
+						actualResult += values.getValue();
+					}
 				}
+				
+				if (actualResult != rs.getResultsEqual()) {
+					valid = false;
+					break;
+				}
+			}
+			
+			if (valid) {
+				results.add(resul);
 			}
 		}
 		
-		for (Rule rs : input.getOriginalSet()) {
-			List<Section> secs = new ArrayList<Section>();
-			
-			for (Entry<RuleSet, Section> results : input.getContents().entrySet()) {
-				if (results.getKey().getResultSets().contains(rs)) {
-					secs.add(results.getValue());
-				}
-			}
+		long[] ncrs = new long[results.iterator().next().size()];
+		
+		// 2d array
+		KeyValue[] keys = new KeyValue[results.iterator().next().size()];
+		double[] values = new double[results.iterator().next().size()];
 
-			int results = rs.getResultsEqual();
-			List<List<GameSquare>> ggg = secs.stream().map(e -> e.getGameSquares().stream().collect(Collectors.toList()))
-				.collect(Collectors.toList());
-			
-			List<KeyValue> objects = new ArrayList<>();
-			
-			// Transform
-			for (List<GameSquare> x : ggg) {
-				KeyValue newKeyValue = new KeyValue(0, x.size(), x);
-				objects.add(newKeyValue);
+		long totalCombinations = 0;
+		for (List<KeyValue> x : results) {
+			for (int i=0; i < x.size(); i++) {
+				KeyValue keyValue = x.get(i);
+				
+				long totalCombinationsForSquareOnRow = MathUtil.nCr(keyValue.getMaxValue(), keyValue.getValue());
+				ncrs[i] = totalCombinationsForSquareOnRow;
 			}
 			
-			System.out.println(rs.getResultsEqual() + " = " + secs.stream().map(e -> e.getGameSquares().stream().collect(Collectors.toList()))
-					.collect(Collectors.toList()));
+			long totalCombinationsForResult = 1;
+			for (long z : ncrs) {
+				totalCombinationsForResult *= z;
+			}
+			System.out.println("total combinations: " + totalCombinationsForResult);
+			totalCombinations += totalCombinationsForResult;
+			
+			for (int i=0; i < x.size(); i++) {
+				KeyValue keyValue = x.get(i);
+				double oddsInSection = ((double) keyValue.getValue() / keyValue.getMaxValue()) * totalCombinationsForResult;
+				values[i] += oddsInSection;
+				keys[i] = keyValue;
+			}
 		}
 		
-		Integer y = 2;
+		System.out.println("total combinations: " + totalCombinations);
+		
+		for (int i=0; i<values.length; i++) {
+			System.out.println(keys[i] + " = " + ((values[i] / totalCombinations) / keys[i].getMaxValue()));
+		}
 	}
 	
 	@Test
