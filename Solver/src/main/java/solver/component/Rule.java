@@ -1,5 +1,6 @@
 package solver.component;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import component.model.GameSquare;
 
@@ -10,7 +11,7 @@ import component.model.GameSquare;
  * @author Lionel Bergen
  */
 public class Rule {
-	private final Collection<GameSquare> squares;
+	private final Collection<? extends GameSquare> squares;
 	private final int resultsEqual;
 	
 	public static final int UNKNOWN_VALUE = -1;
@@ -21,7 +22,7 @@ public class Rule {
 	}
 
 	public Collection<GameSquare> getSquares() {
-		return squares;
+		return new ArrayList<GameSquare>(squares);
 	}
 
 	public int getResultsEqual() {

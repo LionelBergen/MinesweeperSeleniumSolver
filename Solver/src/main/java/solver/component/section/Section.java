@@ -5,11 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 import component.model.GameSquare;
 
-/**
- * Basically just a Collection<GameSquare>, but with added features
- * 
- * @author Lionel Bergen
- */
 public class Section extends GenericSection<GameSquare> {
 	private Set<GameSquare> gameSquares = new HashSet<GameSquare>();
 	

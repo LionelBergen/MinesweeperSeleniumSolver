@@ -5,6 +5,11 @@ import java.util.Set;
 import component.model.GameSquare;
 import utility.util.Utility;
 
+/**
+ * Basically just a Collection<GameSquare>, but with added features
+ * 
+ * @author Lionel Bergen
+ */
 public abstract class GenericSection<T extends GameSquare> {
 	public abstract void add(T gameSquare);
 	

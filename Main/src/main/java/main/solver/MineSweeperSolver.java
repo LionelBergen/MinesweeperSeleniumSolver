@@ -18,6 +18,7 @@ import component.model.GameSquare;
 import component.model.SquareValue;
 import main.solver.component.SeleniumGameBoard;
 import main.solver.component.SeleniumGameSquare;
+import main.solver.component.SeleniumSection;
 import main.solver.logging.Logger;
 import solver.board.analyzing.BoardAnalyzer;
 import solver.board.analyzing.SectionAnalyzer;
@@ -120,7 +121,8 @@ public class MineSweeperSolver {
 		// TODO: This isn't working. Perhaps it's counting cleared squares?
 		// TODO: cannot use <? extends GmaeSquare> for everything.
 		// Step 1: Get Sections from Board
-		List<? extends GenericSection<? extends GameSquare>> sections = BoardAnalyzer.breakupBoard(gameBoard);
+		@SuppressWarnings("unchecked")
+		List<SeleniumSection> sections = (List<SeleniumSection>) BoardAnalyzer.breakupBoard(gameBoard);
 		
 		Map<Section, Double> odds = new HashMap<>();
 		
