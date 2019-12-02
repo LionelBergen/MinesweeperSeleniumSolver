@@ -1,10 +1,7 @@
 package solver.component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import java.util.Collection;
 import component.model.GameSquare;
-import utility.util.Utility;
 
 // TODO: write .contains() and equals() tests for this & Section. Not sure if we'll be keeping these classes so I didn't write tests..
 /**
@@ -13,30 +10,27 @@ import utility.util.Utility;
  * @author Lionel Bergen
  */
 public class Rule {
-	private List<GameSquare> squares;
+	private final Collection<GameSquare> squares;
 	private final int resultsEqual;
 	
 	public static final int UNKNOWN_VALUE = -1;
 	
-	public Rule(List<GameSquare> squares, int resultsEqual) {
+	public Rule(Collection<GameSquare> squares, int resultsEqual) {
 		this.squares = squares; 
 		this.resultsEqual = resultsEqual;
 	}
 
-	public List<GameSquare> getSquares() {
+	public Collection<GameSquare> getSquares() {
 		return squares;
-	}
-
-	public void setSquares(List<GameSquare> squares) {
-		this.squares = squares;
 	}
 
 	public int getResultsEqual() {
 		return resultsEqual;
 	}
 	
+	// TODO: remove
 	// Used for debugging
-	@Override
+	/*@Override
 	public String toString() {
 		boolean allContainName = squares.stream().filter(e -> e.getName() == null).count() == 0;
 		
@@ -45,7 +39,7 @@ public class Rule {
 		}
 		
 		return "#:" + resultsEqual + " " + Utility.sortList(squares).stream().map(Object::toString).collect(Collectors.joining(", "));
-	}
+	}*/
 	
 	@Override
 	public int hashCode() {

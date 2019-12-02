@@ -12,9 +12,9 @@ import solver.board.analyzing.SectionAnalyzer;
 import solver.board.analyzing.SolutionAnalyzer;
 import solver.component.KeyValue;
 import solver.component.Rule;
-import solver.component.RuleSet;
 import solver.component.Section;
 import solver.component.SectionAnalyzedResults;
+import solver.component.SectionSet;
 import tests.minesweeper.data.SectionTestScenarios;
 import utility.util.MathUtil;
 
@@ -23,7 +23,7 @@ public class SomeClass {
 	public static void stuff(SectionAnalyzedResults input) {
 		Set<KeyValue> unique = new HashSet<KeyValue>();
 		
-		for (Entry<RuleSet, Section> results : input.getContents().entrySet()) {
+		for (Entry<SectionSet, Section> results : input.getContents().entrySet()) {
 			Set<GameSquare> gameSquares = results.getValue().getGameSquares();
 			unique.add(new KeyValue(0, gameSquares.size(), gameSquares));
 		}

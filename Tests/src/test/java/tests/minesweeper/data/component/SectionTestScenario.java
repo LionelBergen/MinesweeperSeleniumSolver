@@ -10,9 +10,9 @@ import solver.component.Rule;
 public class SectionTestScenario {
 	private Section section;
 	private List<Rule> expectedOrigResults;
-	private Map<List<Rule>, List<GameSquare>> expectedContents;
+	private Map<List<Section>, List<GameSquare>> expectedContents;
 	
-	public SectionTestScenario(Section section, Map<List<Rule>, List<GameSquare>> expectedContents, List<Rule> expectedOrigResults) {
+	public SectionTestScenario(Section section, Map<List<Section>, List<GameSquare>> expectedContents, List<Rule> expectedOrigResults) {
 		this.section = section;
 		this.expectedOrigResults = expectedOrigResults;
 		this.expectedContents = expectedContents;
@@ -34,11 +34,11 @@ public class SectionTestScenario {
 		this.expectedOrigResults = expectedOrigResults;
 	}
 
-	public Map<List<Rule>, List<GameSquare>> getExpectedContents() {
+	public Map<List<Section>, List<GameSquare>> getExpectedContents() {
 		return expectedContents;
 	}
 
-	public void setExpectedContents(Map<List<Rule>, List<GameSquare>> expectedContents) {
+	public void setExpectedContents(Map<List<Section>, List<GameSquare>> expectedContents) {
 		this.expectedContents = expectedContents;
 	}
 }

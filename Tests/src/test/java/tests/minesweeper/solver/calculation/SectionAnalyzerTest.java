@@ -27,7 +27,7 @@ public class SectionAnalyzerTest {
 		
 		SectionAnalyzedResults result = SectionAnalyzer.breakupSection(section);
 		List<Rule> origResults = result.getOriginalSet();
-		Collection<List<Rule>> contents = result.getResultSets();
+		Collection<Set<Section>> contents = result.getResultSets();
 		
 		assertEquals(0, origResults.size());
 		assertEquals(0, contents.size());
@@ -46,7 +46,7 @@ public class SectionAnalyzerTest {
 		SectionAnalyzedResults result = SectionAnalyzer.breakupSection(section);
 		
 		List<Rule> origResults = result.getOriginalSet();
-		Collection<List<Rule>> contents = result.getResultSets();
+		Collection<Set<Section>> contents = result.getResultSets();
 		
 		assertEquals(0, origResults.size());
 		assertEquals(0, contents.size());
@@ -87,10 +87,10 @@ public class SectionAnalyzerTest {
 		}
 		
 		// assert contents
-		List<List<Rule>> actualContents = actualResult.getResultSets();
+		List<Set<Section>> actualContents = actualResult.getResultSets();
 		assertEquals(scenario.getExpectedContents().size(), actualContents.size());
 		
-		for (Entry<List<Rule>, List<GameSquare>> expected : scenario.getExpectedContents().entrySet()) {
+		for (Entry<List<Section>, List<GameSquare>> expected : scenario.getExpectedContents().entrySet()) {
 			Set<GameSquare> x = actualResult.get(expected.getKey());
 			
 			assertTrue("Results did not contain expected value from: " + expected, x.containsAll(expected.getValue()));

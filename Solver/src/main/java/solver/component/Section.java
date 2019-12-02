@@ -1,6 +1,8 @@
 package solver.component;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import component.model.GameSquare;
 import utility.util.Utility;
@@ -11,7 +13,6 @@ import utility.util.Utility;
  * @author Lionel Bergen
  */
 public class Section {
-	// Use a Set since it doesn't allow duplicates
 	private Set<GameSquare> gameSquares = new HashSet<GameSquare>();
 	
 	public Section() {
@@ -19,6 +20,11 @@ public class Section {
 	
 	public Section(Set<GameSquare> gameSquares) {
 		this.gameSquares = gameSquares;
+	}
+	
+	// TODO: remove
+	public Section(Collection<GameSquare> gameSquares) {
+		this.gameSquares = new HashSet<>(gameSquares);
 	}
 	
 	public void add(GameSquare gameSquare) {
