@@ -1,6 +1,8 @@
 package tests.minesweeper.solver.component;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -49,5 +51,51 @@ public class SectionTest {
 		// Same size, different squares
 		assertFalse(set1.equals(set2));
 		assertFalse(set2.equals(set1));
+	}
+	
+	@Test
+	public void testHashCodeEquals() {
+		Section set1 = new Section();
+		Section set2 = new Section();
+		
+		set1.add(new GameSquare(SquareValue.TWO, 0, 0));
+		set2.add(new GameSquare(SquareValue.TWO, 0, 0));
+		
+		// Two different objects, but they are the "Same" so this should be equal
+		assertEquals(set1.hashCode(), set2.hashCode());
+	}
+	
+	@Test
+	public void testHashCodeNotEquals01() {
+		Section set1 = new Section();
+		Section set2 = new Section();
+		
+		set1.add(new GameSquare(SquareValue.TWO, 0, 2));
+		set2.add(new GameSquare(SquareValue.TWO, 0, 0));
+		
+		assertNotEquals(set1.hashCode(), set2.hashCode());
+	}
+	
+	@Test
+	public void testHashCodeNotEquals02() {
+		Section set1 = new Section();
+		Section set2 = new Section();
+		
+		set1.add(new GameSquare(SquareValue.TWO, 1, 2));
+		set2.add(new GameSquare(SquareValue.TWO, 0, 2));
+		
+		assertNotEquals(set1.hashCode(), set2.hashCode());
+	}
+	
+	@Test
+	public void testHashCodeNotEquals03() {
+		Section set1 = new Section();
+		Section set2 = new Section();
+		
+		set1.add(new GameSquare(SquareValue.TWO, 0, 2));
+		set1.add(new GameSquare(SquareValue.TWO, 0, 0));
+		set2.add(new GameSquare(SquareValue.TWO, 0, 2));
+		
+		assertNotEquals(set1.hashCode(), set2.hashCode());
 	}
 }
