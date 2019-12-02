@@ -1,9 +1,9 @@
 package tests.minesweeper.solver.calculation;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Set;
 import org.junit.Test;
 
@@ -13,25 +13,23 @@ import solver.board.analyzing.SolutionAnalyzer;
 import solver.component.KeyValue;
 import solver.component.Rule;
 import solver.component.Section;
-import solver.component.SectionAnalyzedResults;
-import solver.component.SectionSet;
 import tests.minesweeper.data.SectionTestScenarios;
 import utility.util.MathUtil;
 
 // TODO: Rename
 public class SomeClass {
-	public static void stuff(SectionAnalyzedResults input) {
+	public static void stuff(List<Rule> rules, Collection<Section> sections) {
 		Set<KeyValue> unique = new HashSet<KeyValue>();
 		
-		for (Entry<SectionSet, Section> results : input.getContents().entrySet()) {
-			Set<GameSquare> gameSquares = results.getValue().getGameSquares();
+		for (Section section : sections) {
+			Set<GameSquare> gameSquares = section.getGameSquares();
 			unique.add(new KeyValue(0, gameSquares.size(), gameSquares));
 		}
 		
 		System.out.println();
 		
-		final int maxSum = input.getOriginalSet().stream().mapToInt(Rule::getResultsEqual).sum();
-		final int minSum = input.getOriginalSet().stream().mapToInt(Rule::getResultsEqual).max().getAsInt();
+		final int maxSum = rules.stream().mapToInt(Rule::getResultsEqual).sum();
+		final int minSum = rules.stream().mapToInt(Rule::getResultsEqual).max().getAsInt();
 		
 		System.out.println(unique);
 		System.out.println(maxSum);
@@ -50,7 +48,7 @@ public class SomeClass {
 		for (List<KeyValue> resul : uniqueResults) {
 			boolean valid = true;
 			
-			for (Rule rs : input.getOriginalSet()) {
+			for (Rule rs : rules) {
 				int actualResult = 0;
 				for (KeyValue values : resul) {
 					@SuppressWarnings("unchecked")
@@ -111,8 +109,11 @@ public class SomeClass {
 	
 	@Test
 	public void stuffTest() {
-		SectionAnalyzedResults actualResult = SectionAnalyzer.breakupSection(SectionTestScenarios.SCENARIO_SPECIAL_01.getSection());
+		Section section = SectionTestScenarios.SCENARIO_SPECIAL_01.getSection();
 		
-		stuff(actualResult);
+		List<Rule> rules = SectionAnalyzer.breakupSectionIntoRules(section);
+		Collection<Section> allSubSectionsFromRules = SectionAnalyzer.getSections(rules, section.getGameSquares());
+		
+		stuff(rules, allSubSectionsFromRules);
 	}
 }

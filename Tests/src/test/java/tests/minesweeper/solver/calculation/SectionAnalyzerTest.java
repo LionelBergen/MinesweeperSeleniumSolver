@@ -25,12 +25,13 @@ public class SectionAnalyzerTest {
 	public void testEmptySection() {
 		Section section = new Section();
 		
-		SectionAnalyzedResults result = SectionAnalyzer.breakupSection(section);
-		List<Rule> origResults = result.getOriginalSet();
-		Collection<Set<Section>> contents = result.getResultSets();
+		// test rules
+		List<Rule> resultRules = SectionAnalyzer.breakupSectionIntoRules(section);
+		assertEquals(0, resultRules.size());
 		
-		assertEquals(0, origResults.size());
-		assertEquals(0, contents.size());
+		// test sections
+		Collection<Section> resultSections = SectionAnalyzer.getSections(resultRules, section.getGameSquares());
+		assertEquals(0, resultSections.size());
 	}
 	
 	@Test
@@ -43,13 +44,13 @@ public class SectionAnalyzerTest {
 		
 		Section section = new Section(blankSquareSet);
 		
-		SectionAnalyzedResults result = SectionAnalyzer.breakupSection(section);
+		// test rules
+		List<Rule> resultRules = SectionAnalyzer.breakupSectionIntoRules(section);
+		assertEquals(0, resultRules.size());
 		
-		List<Rule> origResults = result.getOriginalSet();
-		Collection<Set<Section>> contents = result.getResultSets();
-		
-		assertEquals(0, origResults.size());
-		assertEquals(0, contents.size());
+		// test sections
+		Collection<Section> resultSections = SectionAnalyzer.getSections(resultRules, section.getGameSquares());
+		assertEquals(0, resultSections.size());
 	}
 	
 	// Tests a simple 1 block surrounded by 8 blanks
@@ -77,20 +78,24 @@ public class SectionAnalyzerTest {
 	}
 	
 	private void testScenario(SectionTestScenario scenario) {
+		// TODO: delete the 'breakupSection' method...
 		SectionAnalyzedResults actualResult = SectionAnalyzer.breakupSection(scenario.getSection());
+		List<Rule> resultRules = SectionAnalyzer.breakupSectionIntoRules(scenario.getSection());
 		
-		// assert originalSet
-		List<Rule> actualOriginalSets = actualResult.getOriginalSet();
-		assertEquals(scenario.getExpectedOrigResults().size(), actualOriginalSets.size());
+		// assert rules found
+		assertEquals(scenario.getExpectedOrigResults().size(), resultRules.size());
 		for (Rule expected : scenario.getExpectedOrigResults()) {
-			assertTrue("Original Results did not contain expected: " + expected, actualOriginalSets.contains(expected));
+			assertTrue("Original Results did not contain expected: " + expected, resultRules.contains(expected));
 		}
 		
 		// assert contents
-		List<Set<Section>> actualContents = actualResult.getResultSets();
-		assertEquals(scenario.getExpectedContents().size(), actualContents.size());
+		Collection<Section> resultContents = SectionAnalyzer.getSections(resultRules, scenario.getSection().getGameSquares());
+		//List<Set<Section>> actualContents = actualResult.getResultSets();
+		assertEquals(scenario.getExpectedContents().size(), resultContents.size());
 		
 		for (Entry<List<Section>, List<GameSquare>> expected : scenario.getExpectedContents().entrySet()) {
+			// List<Section> resultList = new ArrayList<Section>(resultContents);
+			//Section y = resultContents.stream().filter(e -> expected.getKey().contains(e)).findAny().get();
 			Set<GameSquare> x = actualResult.get(expected.getKey());
 			
 			assertTrue("Results did not contain expected value from: " + expected, x.containsAll(expected.getValue()));
