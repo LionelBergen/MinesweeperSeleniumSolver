@@ -49,9 +49,13 @@ public class MineSweeperSolver {
     	// The in-game timer used for highscores begins here, on first click
     	Logger.setCurrentTime();
     	
+    	// select a random square & update game board
+    	List<SeleniumGameSquare> surroundingSquaresToUpdate = selectARandomSquare(webDriver, gameBoard, startingMines);
+		surroundingSquaresToUpdate = updateAllNumberedSquares(webDriver, gameBoard, surroundingSquaresToUpdate);
+    	
     	while (!gameBoard.isGameWon()) {
-    		// Select a randomSquare
-	    	List<SeleniumGameSquare> surroundingSquaresToUpdate = selectARandomSquare(webDriver, gameBoard, startingMines);
+    		// Select a best square based on probability
+	    	surroundingSquaresToUpdate = getRandomSquareWithBestProbability(webDriver, gameBoard, startingMines);
 
 	    	do
 	    	{
@@ -101,7 +105,7 @@ public class MineSweeperSolver {
 	 * Selects a random square, given the best odds. 
 	 * Does simple calculations, does not go into anything complicated such as calculating odds of each surrounding square around 2+ touching numbers
 	 */
-	private SeleniumGameSquare getRandomSquareWithBestProbability(SeleniumGameBoard gameBoard, int startingMines) {
+	private List<SeleniumGameSquare> getRandomSquareWithBestProbability(WebDriver webDriver, SeleniumGameBoard gameBoard, int startingMines) {
 		int totalBlankSquares = gameBoard.getSize();
 		int unFoundMines = startingMines - gameBoard.getAllFlaggedSquares().size();
 		
@@ -109,7 +113,12 @@ public class MineSweeperSolver {
 		SeleniumGameSquare randomSquare = gameBoard.getRandomLonelySquare();
 
     	Logger.logMessage("Found random square. Odds of hitting a mine: " + oddsOfRandomSquare + "%");
-		return randomSquare;
+    	
+    	SquareValue newValue = selectSquareWithWait(webDriver, randomSquare);
+    	
+    	// handle the new value change
+    	return updateSquare(webDriver, gameBoard, randomSquare, newValue);
+    	
 		/*int totalBlankSquares = gameBoard.getSize();
 		int unFoundMines = startingMines - gameBoard.getallFlaggedSquares().size();
 		
