@@ -26,7 +26,7 @@ public final class GameBoardHelper<T extends GameSquare> {
 		return getAllBlankSquares(gameSquares).stream().filter(e -> isTouching(square, e)).collect(Collectors.toList());
 	}
 	
-	public List<T> getSurroundingNumberedSquares(List<T> gameSquares, GameSquare square) {
+	public List<T> getSurroundingNumberedSquares(Collection<T> gameSquares, GameSquare square) {
 		return getAllNumberedSquares(gameSquares).stream().filter(e -> isTouching(square, e)).collect(Collectors.toList());
 	}
 	
@@ -39,11 +39,11 @@ public final class GameBoardHelper<T extends GameSquare> {
 		return getAllSquaresOfType(gameSquares, SquareValue.BLANK_UNTOUCHED);
 	}
 	
-	public List<T> getAllNumberedSquares(List<T> gameSquares) {
+	public List<T> getAllNumberedSquares(Collection<T> gameSquares) {
 		return getAllSquaresOfType(gameSquares, SquareValue.NUMBERED_VALUES);
 	}
 	
-	public List<T> getAllFlaggedSquares(List<T> gameSquares) {
+	public List<T> getAllFlaggedSquares(Collection<T> gameSquares) {
 		return getAllSquaresOfType(gameSquares, SquareValue.FLAGGED);
 	}
 	
@@ -51,7 +51,7 @@ public final class GameBoardHelper<T extends GameSquare> {
 		return gameSquare.getValue().getNumberOfSurroundingMines() - getSurroundingFlaggedSquares(gameSquares, gameSquare).size();
 	}
 	
-	private List<T> getAllSquaresOfType(List<T> gameSquares, List<SquareValue> squareValuesToFilterBy) {
+	private List<T> getAllSquaresOfType(Collection<T> gameSquares, List<SquareValue> squareValuesToFilterBy) {
 		return gameSquares.stream().filter(e -> squareValuesToFilterBy.contains(e.getValue())).collect(Collectors.toList());
 	}
 	

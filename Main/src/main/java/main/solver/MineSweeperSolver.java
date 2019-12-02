@@ -118,6 +118,7 @@ public class MineSweeperSolver {
 	 */
 	private List<SeleniumGameSquare> getRandomSquareWithBestProbability(WebDriver webDriver, SeleniumGameBoard gameBoard, int startingMines) {
 		// TODO: This isn't working. Perhaps it's counting cleared squares?
+		// TODO: cannot use <? extends GmaeSquare> for everything.
 		// Step 1: Get Sections from Board
 		List<? extends GenericSection<? extends GameSquare>> sections = BoardAnalyzer.breakupBoard(gameBoard);
 		
