@@ -50,10 +50,12 @@ public class MineSweeperSolver {
     	Logger.setCurrentTime();
     	
     	while (!gameBoard.isGameWon()) {
+    		// Select a randomSquare
 	    	List<SeleniumGameSquare> surroundingSquaresToUpdate = selectARandomSquare(webDriver, gameBoard, startingMines);
 
 	    	do
 	    	{
+	    		// Update all the squares that need to be updated
 	    		surroundingSquaresToUpdate = updateAllNumberedSquares(webDriver, gameBoard, surroundingSquaresToUpdate);
 	    		
 	        	Logger.logTimeTook("updating batch. Next round contains: " + surroundingSquaresToUpdate.size());
@@ -72,13 +74,26 @@ public class MineSweeperSolver {
 		return squaresToUpdate2;
 	}
 
+	/**
+	 * Selects a random square and returns all squares which now need to be updated
+	 */
 	private List<SeleniumGameSquare> selectARandomSquare(WebDriver webDriver, SeleniumGameBoard gameBoard, int startingMines) {
-		// Get a random square and click it
-		SeleniumGameSquare randomSquare = getRandomSquareWithBestProbability(gameBoard, startingMines);
+		int totalBlankSquares = gameBoard.getSize();
+		int unFoundMines = startingMines - gameBoard.getAllFlaggedSquares().size();
+		
+		float oddsOfRandomSquare = MathUtil.asFloat(unFoundMines, totalBlankSquares);
+		SeleniumGameSquare randomSquare = getARandomSquare(gameBoard);
+
+    	Logger.logMessage("Found random square. Odds of hitting a mine: " + oddsOfRandomSquare + "%");
+    	
     	SquareValue newValue = selectSquareWithWait(webDriver, randomSquare);
     	
     	// handle the new value change
     	return updateSquare(webDriver, gameBoard, randomSquare, newValue);
+	}
+	
+	private SeleniumGameSquare getARandomSquare(SeleniumGameBoard gameBoard) {
+		return gameBoard.getRandomLonelySquare();
 	}
 	
 	// TODO: Do the complicated calculations. Get every (unique) blank square surrounding known area and calculate the odds. 
@@ -136,6 +151,12 @@ public class MineSweeperSolver {
 	/**
 	 * Updates the value on the square. If the new value is a bomb, ends the game.
 	 * Otherwise, returns the squares which need to be updated
+	 *
+	 * @param webDriver
+	 * @param gameBoard
+	 * @param gameSquare
+	 * @param newSquareValue
+	 * @return All squares which now need to be updated
 	 */
 	private List<SeleniumGameSquare> updateSquare(WebDriver webDriver, SeleniumGameBoard gameBoard, GameSquare gameSquare, SquareValue newSquareValue) {
 		List<SeleniumGameSquare> squaresWhichNeedToBeUpdated = new ArrayList<SeleniumGameSquare>();
