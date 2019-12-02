@@ -2,7 +2,6 @@ package solver.component;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import component.model.GameSquare;
 import utility.util.Utility;
