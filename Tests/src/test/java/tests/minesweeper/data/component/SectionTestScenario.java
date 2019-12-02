@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import component.model.GameSquare;
-import solver.component.Section;
 import solver.component.Rule;
+import solver.component.section.Section;
 
 public class SectionTestScenario {
 	private Section section;

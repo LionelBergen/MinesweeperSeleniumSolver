@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import component.model.GameSquare;
+import solver.component.section.Section;
 
 public class SectionAnalyzedResults {
 	private RuleSet sectionRules;

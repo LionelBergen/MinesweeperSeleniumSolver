@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import solver.board.analyzing.SolutionAnalyzer;
 import solver.component.KeyValue;
 import solver.component.Rule;
-import solver.component.Section;
+import solver.component.section.Section;
 import utility.util.MathUtil;
 
 /**

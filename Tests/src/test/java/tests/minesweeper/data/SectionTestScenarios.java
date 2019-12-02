@@ -9,8 +9,8 @@ import java.util.Map;
 
 import component.model.GameSquare;
 import component.model.SquareValue;
-import solver.component.Section;
 import solver.component.Rule;
+import solver.component.section.Section;
 import tests.minesweeper.data.component.SectionTestScenario;
 
 import static tests.minesweeper.data.TestDataHelper.getGameSquare;

@@ -1,4 +1,4 @@
-package solver.component;
+package solver.component.section;
 
 import java.util.Collection;
 import java.util.HashSet;

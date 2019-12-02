@@ -10,7 +10,7 @@ import org.junit.Test;
 import component.model.GameSquare;
 import component.model.RegularGameBoard;
 import solver.board.analyzing.BoardAnalyzer;
-import solver.component.Section;
+import solver.component.section.Section;
 import tests.minesweeper.data.TestDataHelper;
 import tests.minesweeper.data.GameBoardTestScenarios;
 import tests.minesweeper.data.component.GameBoardTestScenario;

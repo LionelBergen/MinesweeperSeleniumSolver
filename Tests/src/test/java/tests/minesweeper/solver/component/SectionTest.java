@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import component.model.GameSquare;
 import component.model.SquareValue;
-import solver.component.Section;
+import solver.component.section.Section;
 
 public class SectionTest {
 	@Test

@@ -2,6 +2,8 @@ package solver.component;
 
 import java.util.Set;
 
+import solver.component.section.Section;
+
 // TODO: make immutable
 /**
  * Basically just a Collection<Section>

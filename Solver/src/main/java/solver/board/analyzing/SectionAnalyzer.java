@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import component.model.GameSquare;
-import solver.component.Section;
 import solver.component.SectionAnalyzedResults;
 import solver.component.SectionSet;
+import solver.component.section.Section;
 import solver.component.Rule;
 import static utility.util.GameBoardHelper.GameBoardHelper;
 

@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import component.model.GameBoard;
 import component.model.GameSquare;
 import component.model.SquareValue;
-import solver.component.Section;
+import solver.component.section.Section;
 
 /**
  * Utilizes {@link GameBoard} methods to get {@link Section}s which can be used in calculations

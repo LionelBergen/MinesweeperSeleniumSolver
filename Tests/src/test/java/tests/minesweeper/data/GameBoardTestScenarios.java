@@ -11,7 +11,7 @@ import java.util.List;
 import component.model.GameSquare;
 import component.model.RegularGameBoard;
 import component.model.SquareValue;
-import solver.component.Section;
+import solver.component.section.Section;
 import tests.minesweeper.data.component.GameBoardTestScenario;
 
 public class GameBoardTestScenarios {

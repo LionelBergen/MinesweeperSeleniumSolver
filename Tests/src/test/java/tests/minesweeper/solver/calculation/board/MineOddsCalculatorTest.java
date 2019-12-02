@@ -13,7 +13,7 @@ import component.model.SquareValue;
 import solver.board.analyzing.SectionAnalyzer;
 import solver.calculation.board.MineOddsCalculator;
 import solver.component.Rule;
-import solver.component.Section;
+import solver.component.section.Section;
 import tests.minesweeper.data.SectionTestScenarios;
 
 public class MineOddsCalculatorTest {
