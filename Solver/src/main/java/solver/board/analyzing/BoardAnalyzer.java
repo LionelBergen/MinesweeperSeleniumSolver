@@ -16,7 +16,7 @@ import solver.component.section.Section;
  * @author Lionel Bergen
  */
 public class BoardAnalyzer {
-	public static List<Section> breakupBoard(GameBoard<GameSquare> gameBoard) {
+	public static List<Section> breakupBoard(GameBoard<? extends GameSquare> gameBoard) {
 		final List<Section> sectionsOfInterest = new ArrayList<Section>();
 		
 		// Get a resultset for every number
@@ -32,14 +32,14 @@ public class BoardAnalyzer {
 		return new ArrayList<Section> (new HashSet<Section>(sectionsOfInterest));
 	}
 	
-	private static void addSquareToResultSet(GameBoard<GameSquare> gameBoard, GameSquare gameSquare, Section resultSet) { 
+	private static void addSquareToResultSet(GameBoard<? extends GameSquare> gameBoard, GameSquare gameSquare, Section resultSet) { 
 		addSquareToResultSet(gameBoard, gameSquare, resultSet, false);
 	}
 	
-	private static void addSquareToResultSet(GameBoard<GameSquare> gameBoard, GameSquare gameSquare, Section resultSet, boolean numberedOnly) {
+	private static void addSquareToResultSet(GameBoard<? extends GameSquare> gameBoard, GameSquare gameSquare, Section resultSet, boolean numberedOnly) {
 		resultSet.add(gameSquare);
 		
-		final List<GameSquare> squaresToProcess = numberedOnly ? gameBoard.getSurroundingNumberedSquares(gameSquare) : gameBoard.getSurroundingSquares(gameSquare);
+		final List<? extends GameSquare> squaresToProcess = numberedOnly ? gameBoard.getSurroundingNumberedSquares(gameSquare) : gameBoard.getSurroundingSquares(gameSquare);
 		
 		// doesn't matter if duplicates are added, ResultSet should handle that
 		for (GameSquare touchingSquare : squaresToProcess) {
@@ -65,7 +65,7 @@ public class BoardAnalyzer {
 		return (int) gameSquares.stream().filter(e -> e.getValue().equals(SquareValue.BLANK_UNTOUCHED)).count();
 	}
 	
-	private static List<GameSquare> getTouchingSquaresNotInResults(GameBoard<GameSquare> gameBoard, Section resultSet, GameSquare square) {
+	private static List<GameSquare> getTouchingSquaresNotInResults(GameBoard<? extends GameSquare> gameBoard, Section resultSet, GameSquare square) {
 		return gameBoard.getSurroundingSquares(square).stream().filter(e -> !resultSet.getGameSquares().contains(e)).collect(Collectors.toList());
 	}
 }
