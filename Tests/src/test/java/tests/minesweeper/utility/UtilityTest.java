@@ -3,6 +3,9 @@ package tests.minesweeper.utility;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import component.model.GameSquare;

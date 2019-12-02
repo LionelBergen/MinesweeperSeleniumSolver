@@ -1,7 +1,7 @@
 package utility.util;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import component.model.GameSquare;
@@ -10,12 +10,7 @@ public final class Utility {
 	private Utility() { }
 	
 	// TODO: write test
-	public static List<? extends GameSquare> sortList(List<? extends GameSquare> unsortedList) {
-		return unsortedList.stream().sorted((o1, o2) -> o1.compareTo(o2)).collect(Collectors.toList());
-	}
-	
-	// TODO: Remove these duplicate methods and just use 'Collection'
-	public static List<? extends GameSquare> sortList(Set<? extends GameSquare> unsortedList) {
+	public static List<? extends GameSquare> sortList(Collection<? extends GameSquare> unsortedList) {
 		return unsortedList.stream().sorted((o1, o2) -> o1.compareTo(o2)).collect(Collectors.toList());
 	}
 	
