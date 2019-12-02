@@ -1,45 +1,23 @@
 package solver.component.section;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 import component.model.GameSquare;
 import utility.util.Utility;
 
 public abstract class GenericSection<T extends GameSquare> {
-	private Set<T> gameSquares = new HashSet<>();
+	public abstract void add(T gameSquare);
 	
-	protected GenericSection() {
-	}
+	public abstract Set<T> getGameSquares();
 	
-	protected GenericSection(Set<T> gameSquares) {
-		this.gameSquares = gameSquares;
-	}
-	
-	// TODO: remove
-	public GenericSection(Collection<T> gameSquares) {
-		this.gameSquares = new HashSet<>(gameSquares);
-	}
-	
-	public void add(T gameSquare) {
-		gameSquares.add(gameSquare);
-	}
-	
-	public Set<T> getGameSquares() {
-		return this.gameSquares;
-	}
-	
-	public void setGameSquares(Set<T> gameSquares) {
-		this.gameSquares = gameSquares;
-	}
+	public abstract void setGameSquares(Set<T> gameSquares);
 	
 	@Override
 	public int hashCode() {
 		final int prime = 92821;
 		int hashCode = 1;
 		
-		for (GameSquare square : Utility.sortList(this.gameSquares)) {
+		for (GameSquare square : Utility.sortList(this.getGameSquares())) {
 			hashCode = hashCode * prime + square.hashCode();
 		}
 		
@@ -66,13 +44,13 @@ public abstract class GenericSection<T extends GameSquare> {
 	    @SuppressWarnings("unchecked")
 		GenericSection<T> otherResultSet = (GenericSection<T>) other;
 	    
-	    boolean sizesAreEqual = this.gameSquares.size() == otherResultSet.gameSquares.size();
+	    boolean sizesAreEqual = this.getGameSquares().size() == otherResultSet.getGameSquares().size();
 	    
 	    if (!sizesAreEqual) {
 	    	return false;
 	    }
 	    
 	    // Don't care about order
-	    return this.gameSquares.containsAll(otherResultSet.gameSquares);
+	    return this.getGameSquares().containsAll(otherResultSet.getGameSquares());
 	}
 }

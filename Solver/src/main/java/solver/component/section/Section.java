@@ -21,19 +21,22 @@ public class Section extends GenericSection<GameSquare> {
 		this.gameSquares = gameSquares;
 	}
 	
-	// TODO: remove
+	// TODO: remove duplicate
 	public Section(Collection<GameSquare> gameSquares) {
 		this.gameSquares = new HashSet<>(gameSquares);
 	}
-	
+
+	@Override
 	public void add(GameSquare gameSquare) {
 		gameSquares.add(gameSquare);
 	}
-	
+
+	@Override
 	public Set<GameSquare> getGameSquares() {
 		return this.gameSquares;
 	}
-	
+
+	@Override
 	public void setGameSquares(Set<GameSquare> gameSquares) {
 		this.gameSquares = gameSquares;
 	}
