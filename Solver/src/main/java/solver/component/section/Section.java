@@ -11,7 +11,7 @@ import utility.util.Utility;
  * 
  * @author Lionel Bergen
  */
-public class Section {
+public class Section extends GenericSection<GameSquare> {
 	private Set<GameSquare> gameSquares = new HashSet<GameSquare>();
 	
 	public Section() {

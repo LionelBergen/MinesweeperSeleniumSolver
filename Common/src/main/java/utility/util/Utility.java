@@ -10,11 +10,12 @@ public final class Utility {
 	private Utility() { }
 	
 	// TODO: write test
-	public static List<GameSquare> sortList(List<GameSquare> unsortedList) {
+	public static List<? extends GameSquare> sortList(List<? extends GameSquare> unsortedList) {
 		return unsortedList.stream().sorted((o1, o2) -> o1.compareTo(o2)).collect(Collectors.toList());
 	}
 	
-	public static List<GameSquare> sortList(Set<GameSquare> unsortedList) {
+	// TODO: Remove these duplicate methods and just use 'Collection'
+	public static List<? extends GameSquare> sortList(Set<? extends GameSquare> unsortedList) {
 		return unsortedList.stream().sorted((o1, o2) -> o1.compareTo(o2)).collect(Collectors.toList());
 	}
 	
