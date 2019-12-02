@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import component.model.GameBoard;
 import component.model.GameSquare;
 import component.model.SquareValue;
+import solver.component.section.GenericSection;
 import solver.component.section.Section;
 
 /**
@@ -16,7 +17,7 @@ import solver.component.section.Section;
  * @author Lionel Bergen
  */
 public class BoardAnalyzer {
-	public static List<Section> breakupBoard(GameBoard<? extends GameSquare> gameBoard) {
+	public static List<? extends GenericSection<? extends GameSquare>> breakupBoard(GameBoard<? extends GameSquare> gameBoard) {
 		final List<Section> sectionsOfInterest = new ArrayList<Section>();
 		
 		// Get a resultset for every number

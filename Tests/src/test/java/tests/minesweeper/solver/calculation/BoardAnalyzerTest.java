@@ -5,11 +5,14 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+
 import org.junit.Test;
 
 import component.model.GameSquare;
 import component.model.RegularGameBoard;
 import solver.board.analyzing.BoardAnalyzer;
+import solver.component.section.GenericSection;
 import solver.component.section.Section;
 import tests.minesweeper.data.TestDataHelper;
 import tests.minesweeper.data.GameBoardTestScenarios;
@@ -21,7 +24,7 @@ public class BoardAnalyzerTest {
 	public void testBreakupBoardEmpty() {
 		RegularGameBoard emptyGameBoard = TestDataHelper.getValidGameBoard(0, 0, 0);
 		
-		List<Section> results = BoardAnalyzer.breakupBoard(emptyGameBoard);
+		List<? extends GenericSection<? extends GameSquare>> results = BoardAnalyzer.breakupBoard(emptyGameBoard);
 
 		assertEquals(0, results.size());
 	}
@@ -31,7 +34,7 @@ public class BoardAnalyzerTest {
 	public void testBreakupBoardNoResults() {
 		RegularGameBoard emptyGameBoard = TestDataHelper.getValidGameBoard(0, 10, 10);
 		
-		List<Section> results = BoardAnalyzer.breakupBoard(emptyGameBoard);
+		List<? extends GenericSection<? extends GameSquare>> results = BoardAnalyzer.breakupBoard(emptyGameBoard);
 
 		assertEquals(0, results.size());
 	}
@@ -43,7 +46,7 @@ public class BoardAnalyzerTest {
 		final RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		final List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
+		List<? extends GenericSection<? extends GameSquare>> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertSectionListsEqual(expectedResults, actualResults);
 	}
@@ -55,7 +58,7 @@ public class BoardAnalyzerTest {
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
+		List<? extends GenericSection<? extends GameSquare>> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertSectionListsEqual(expectedResults, actualResults);
 	}
@@ -67,7 +70,7 @@ public class BoardAnalyzerTest {
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
+		List<? extends GenericSection<? extends GameSquare>> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertSectionListsEqual(expectedResults, actualResults);
 	}
@@ -79,7 +82,7 @@ public class BoardAnalyzerTest {
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
+		List<? extends GenericSection<? extends GameSquare>> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertSectionListsEqual(expectedResults, actualResults);
 	}
@@ -91,7 +94,7 @@ public class BoardAnalyzerTest {
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
+		List<? extends GenericSection<? extends GameSquare>> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertSectionListsEqual(expectedResults, actualResults);
 	}
@@ -103,7 +106,7 @@ public class BoardAnalyzerTest {
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
+		List<? extends GenericSection<? extends GameSquare>> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertSectionListsEqual(expectedResults, actualResults);
 	}
@@ -115,7 +118,7 @@ public class BoardAnalyzerTest {
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
+		List<? extends GenericSection<? extends GameSquare>> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertSectionListsEqual(expectedResults, actualResults);
 	}
@@ -127,7 +130,7 @@ public class BoardAnalyzerTest {
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
+		List<? extends GenericSection<? extends GameSquare>> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertSectionListsEqual(expectedResults, actualResults);
 	}
@@ -139,7 +142,7 @@ public class BoardAnalyzerTest {
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
+		List<? extends GenericSection<? extends GameSquare>> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertSectionListsEqual(expectedResults, actualResults);
 	}
@@ -151,7 +154,7 @@ public class BoardAnalyzerTest {
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
+		List<? extends GenericSection<? extends GameSquare>> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertSectionListsEqual(expectedResults, actualResults);
 	}
@@ -161,7 +164,7 @@ public class BoardAnalyzerTest {
 		GameBoardTestScenario testScenerio = GameBoardTestScenarios.SCENARIO_SPECIAL_02;
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		
-		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
+		List<? extends GenericSection<? extends GameSquare>> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 		assertEquals(1, actualResults.size());
 		assertEquals(49, actualResults.get(0).getGameSquares().size());
 	}
@@ -170,14 +173,14 @@ public class BoardAnalyzerTest {
 	 * Asserts that all of the sections are equal. 
 	 * Order does not matter
 	 */
-	private void assertSectionListsEqual(Collection<Section> expectedList, Collection<Section> actualList) {
-		assertEquals(expectedList.size(), actualList.size());
+	private void assertSectionListsEqual(Collection<Section> expectedList, List<? extends GenericSection<? extends GameSquare>> actualResults) {
+		assertEquals(expectedList.size(), actualResults.size());
 		
 		for (Section expectedSection : expectedList) {
 			GameSquare squareFromList = expectedSection.getGameSquares().iterator().next();
 			
 			// get matching in actual results
-			Section actualSection = actualList.stream().filter(e -> e.getGameSquares().contains(squareFromList)).findAny().get();
+			GenericSection<? extends GameSquare> actualSection = actualResults.stream().filter(e -> e.getGameSquares().contains(squareFromList)).findAny().get();
 			
 			assertListsEqual(expectedSection.getGameSquares(), actualSection.getGameSquares());
 		}
@@ -187,11 +190,11 @@ public class BoardAnalyzerTest {
 	 * Asserts list 1 contains all values in list2. 
 	 * Order does not matter
 	 */
-	private void assertListsEqual(Collection<GameSquare> expectedList, Collection<GameSquare> actualList) {
-		assertEquals(expectedList.size(), actualList.size());
+	private void assertListsEqual(Collection<GameSquare> expectedList, Set<? extends GameSquare> set) {
+		assertEquals(expectedList.size(), set.size());
 		
 		for (GameSquare expectedSquare : expectedList) {
-			assertTrue("Results did not contain expected: " + expectedSquare, actualList.contains(expectedSquare));
+			assertTrue("Results did not contain expected: " + expectedSquare, set.contains(expectedSquare));
 		}
 	}
 }

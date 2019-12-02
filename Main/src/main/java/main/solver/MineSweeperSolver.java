@@ -1,7 +1,11 @@
 package main.solver;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
@@ -16,6 +20,10 @@ import main.solver.component.SeleniumGameBoard;
 import main.solver.component.SeleniumGameSquare;
 import main.solver.logging.Logger;
 import solver.board.analyzing.BoardAnalyzer;
+import solver.board.analyzing.SectionAnalyzer;
+import solver.calculation.board.MineOddsCalculator;
+import solver.component.Rule;
+import solver.component.section.GenericSection;
 import solver.component.section.Section;
 import utility.util.MathUtil;
 
@@ -24,7 +32,8 @@ import utility.util.MathUtil;
 public class MineSweeperSolver {
 	private static final String MINESWEEPER_ONLINE_URL = "http://minesweeperonline.com/";
 	
-	//private static final float BEST_ODDS = 0.125f;
+	// Minimum odds for an early exit
+	private static final float MIN_ODDS = 0.125f;
 	
 	public MineSweeperSolver(WebDriver webDriver) {
 		// get URL for the website and log the time it takes
@@ -108,8 +117,25 @@ public class MineSweeperSolver {
 	 * Does simple calculations, does not go into anything complicated such as calculating odds of each surrounding square around 2+ touching numbers
 	 */
 	private List<SeleniumGameSquare> getRandomSquareWithBestProbability(WebDriver webDriver, SeleniumGameBoard gameBoard, int startingMines) {
+		// TODO: This isn't working. Perhaps it's counting cleared squares?
 		// Step 1: Get Sections from Board
-		List<Section> sections = BoardAnalyzer.breakupBoard(gameBoard);
+		List<? extends GenericSection<? extends GameSquare>> sections = BoardAnalyzer.breakupBoard(gameBoard);
+		
+		Map<Section, Double> odds = new HashMap<>();
+		
+		/*for (GenericSection<? extends GameSquare> section : sections) {
+			// Step 2:
+			List<Rule> rules = SectionAnalyzer.breakupSectionIntoRules(section);
+			
+			// Step 3: get subSections
+			Collection<Section> subSections = SectionAnalyzer.getSections(rules, section.getGameSquares());
+			
+			odds.putAll(MineOddsCalculator.calculateOdds(rules, subSections));
+			
+			for (Entry<Section, Double> entry : odds.entrySet()) {
+				System.out.println(entry.getKey() + " " + entry.getValue());
+			}
+		}*/
 		
 		int totalBlankSquares = gameBoard.getSize();
 		int unFoundMines = startingMines - gameBoard.getAllFlaggedSquares().size();
