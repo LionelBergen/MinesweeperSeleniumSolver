@@ -35,4 +35,5 @@ dependencies {
 	
 	// Other sub projects
     compile project(':Common')
+    compile project(':Solver')
 }

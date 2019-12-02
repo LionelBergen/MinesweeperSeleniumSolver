@@ -15,6 +15,7 @@ import component.model.SquareValue;
 import main.solver.component.SeleniumGameBoard;
 import main.solver.component.SeleniumGameSquare;
 import main.solver.logging.Logger;
+import solver.board.analyzing.BoardAnalyzer;
 import utility.util.MathUtil;
 
 // TODO: Create interfaces, ensure Element's are kept separate
@@ -106,6 +107,9 @@ public class MineSweeperSolver {
 	 * Does simple calculations, does not go into anything complicated such as calculating odds of each surrounding square around 2+ touching numbers
 	 */
 	private List<SeleniumGameSquare> getRandomSquareWithBestProbability(WebDriver webDriver, SeleniumGameBoard gameBoard, int startingMines) {
+		// Step 1: Get Sections from Board
+		//BoardAnalyzer.breakupBoard(gameBoard);
+		
 		int totalBlankSquares = gameBoard.getSize();
 		int unFoundMines = startingMines - gameBoard.getAllFlaggedSquares().size();
 		
