@@ -8,20 +8,16 @@ import java.util.List;
  * @author Lionel Bergen
  */
 public class RuleSet {
-	private List<Rule> resultSets;
+	private List<Rule> rules;
 	private final int hashCode;
 	
 	public RuleSet(List<Rule> resultSets) {
-		this.resultSets = resultSets;
+		this.rules = resultSets;
 		this.hashCode = getHashCode(resultSets);
 	}
 
-	public List<Rule> getResultSets() {
-		return resultSets;
-	}
-
-	public void setResultSets(List<Rule> resultSets) {
-		this.resultSets = resultSets;
+	public List<Rule> getRules() {
+		return rules;
 	}
 	
 	@Override
@@ -48,14 +44,14 @@ public class RuleSet {
 	    
 	    RuleSet otherResultSetCollection = (RuleSet) other;
 	    
-	    boolean sizesAreEqual = this.resultSets.size() == otherResultSetCollection.resultSets.size();
+	    boolean sizesAreEqual = this.rules.size() == otherResultSetCollection.rules.size();
 	    
 	    if (!sizesAreEqual) {
 	    	return false;
 	    }
 	    
 	    // Don't care about order
-	    return this.resultSets.containsAll(otherResultSetCollection.resultSets);
+	    return this.rules.containsAll(otherResultSetCollection.rules);
 	}
 	
 	private int getHashCode(List<Rule> list) {

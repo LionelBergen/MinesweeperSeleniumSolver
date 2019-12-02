@@ -24,7 +24,7 @@ public class SectionAnalyzedResults {
 	}
 	
 	public void put(GameSquare gameSquare) {
-		List<Rule> setsThisSquareIsAPartOf = this.sectionRules.getResultSets().stream().filter(e -> e.getSquares().contains(gameSquare)).collect(Collectors.toList());
+		List<Rule> setsThisSquareIsAPartOf = this.sectionRules.getRules().stream().filter(e -> e.getSquares().contains(gameSquare)).collect(Collectors.toList());
 		
 		Set<GameSquare> otherSquaresInSameSet = this.get(setsThisSquareIsAPartOf);
 		
@@ -39,7 +39,7 @@ public class SectionAnalyzedResults {
 
 	public Set<GameSquare> get(List<Rule> otherSetsThisSquareIsAPartOf) {
 		for (RuleSet rsc : this.contents.keySet()) {
-			if (rsc.getResultSets().size() == otherSetsThisSquareIsAPartOf.size() && rsc.getResultSets().containsAll(otherSetsThisSquareIsAPartOf)) {
+			if (areEqual(rsc, otherSetsThisSquareIsAPartOf)) {
 				Set<GameSquare> resultts = contents.get(rsc).getGameSquares();
 				
 				if (resultts == null) {
@@ -53,15 +53,23 @@ public class SectionAnalyzedResults {
 		return null;
 	}
 	
+	private boolean areEqual(RuleSet object1, List<Rule> object2) {
+		if (object1.getRules().size() == object2.size()) {
+			return object1.getRules().containsAll(object2);
+		}
+		
+		return false;
+	}
+	
 	public List<Rule> getOriginalSet() {
-		return this.sectionRules.getResultSets();
+		return this.sectionRules.getRules();
 	}
 	
 	public List<List<Rule>> getResultSets() {
 		List<List<Rule>> results = new ArrayList<>();
 		
 		for (RuleSet resultCollection : contents.keySet()) {
-			results.add(resultCollection.getResultSets());
+			results.add(resultCollection.getRules());
 		}
 		
 		return results;
