@@ -1,37 +1,43 @@
-package tests.minesweeper.solver.calculation;
+package solver.calculation.board;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-import org.junit.Test;
+import java.util.stream.Collectors;
 
-import component.model.GameSquare;
-import solver.board.analyzing.SectionAnalyzer;
 import solver.board.analyzing.SolutionAnalyzer;
 import solver.component.KeyValue;
 import solver.component.Rule;
 import solver.component.Section;
-import tests.minesweeper.data.SectionTestScenarios;
 import utility.util.MathUtil;
 
-// TODO: Rename
-public class SomeClass {
-	public static void stuff(List<Rule> rules, Collection<Section> sections) {
-		Set<KeyValue> unique = new HashSet<KeyValue>();
-		
-		for (Section section : sections) {
-			Set<GameSquare> gameSquares = section.getGameSquares();
-			unique.add(new KeyValue(0, gameSquares.size(), gameSquares));
-		}
+/**
+ * Calculates the odds of hitting a mine for every section, given a set of {@link Rule}s.
+ * 
+ * @author Lionel Bergen
+ */
+public class MineOddsCalculator {
+	/**
+	 * Calculates the odds of a mine being in any of the squares in each section
+	 * Note: The odds will be for any 1 (ONE) mine in the section. All mines in the section are the same
+	 * 
+	 * @param rules
+	 * @param sections
+	 * @return
+	 */
+	public static Map<Section, Double> calculateOdds(List<Rule> rules, Collection<Section> sections) {
+		Collection<KeyValue> keyValues = transformSectionsToKeyValues(sections);
 		
 		System.out.println();
 		
 		final int maxSum = rules.stream().mapToInt(Rule::getResultsEqual).sum();
 		final int minSum = rules.stream().mapToInt(Rule::getResultsEqual).max().getAsInt();
 		
-		System.out.println(unique);
+		System.out.println(keyValues);
 		System.out.println(maxSum);
 		System.out.println(minSum);
 		System.out.println();
@@ -39,7 +45,7 @@ public class SomeClass {
 		// Get all possible solutions
 		Set<List<KeyValue>> uniqueResults = new HashSet<>();
 		for (int i = minSum; i<=maxSum; i++) {
-			uniqueResults.addAll(SolutionAnalyzer.getAllPossibilities(i, new ArrayList<KeyValue>(unique)));
+			uniqueResults.addAll(SolutionAnalyzer.getAllPossibilities(i, new ArrayList<KeyValue>(keyValues)));
 		}
 		
 		Set<List<KeyValue>> results = new HashSet<>();
@@ -51,10 +57,9 @@ public class SomeClass {
 			for (Rule rs : rules) {
 				int actualResult = 0;
 				for (KeyValue values : resul) {
-					@SuppressWarnings("unchecked")
-					HashSet<GameSquare> rez = (HashSet<GameSquare>) values.getKey();
+					Section section = (Section) values.getKey();
 					
-					if (rs.getSquares().containsAll(rez)) {
+					if (rs.getSquares().containsAll(section.getGameSquares())) {
 						actualResult += values.getValue();
 					}
 				}
@@ -102,18 +107,17 @@ public class SomeClass {
 		
 		System.out.println("total combinations: " + totalCombinations);
 		
+		Map<Section, Double> returnValue = new HashMap<>();
+		
 		for (int i=0; i<values.length; i++) {
-			System.out.println(keys[i] + " = " + ((values[i] / totalCombinations) / keys[i].getMaxValue()));
+			double oddsOfMineForASingleSquareInSection = (values[i] / totalCombinations) / keys[i].getMaxValue();
+			returnValue.put((Section) keys[i].getKey(), oddsOfMineForASingleSquareInSection);
 		}
+		
+		return returnValue;
 	}
 	
-	@Test
-	public void stuffTest() {
-		Section section = SectionTestScenarios.SCENARIO_SPECIAL_01.getSection();
-		
-		List<Rule> rules = SectionAnalyzer.breakupSectionIntoRules(section);
-		Collection<Section> allSubSectionsFromRules = SectionAnalyzer.getSections(rules, section.getGameSquares());
-		
-		stuff(rules, allSubSectionsFromRules);
+	private static Collection<KeyValue> transformSectionsToKeyValues(Collection<Section> sections) {
+		return sections.stream().map(e -> new KeyValue(0, e.getGameSquares().size(), e)).collect(Collectors.toList());
 	}
 }
