@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -20,11 +21,24 @@ public class GameBoardTestScenerioCreator {
 	
 	public static void main(String[] args) throws Exception {
 		final File outputDirectory = new File(OUTPUT_DIRECTORY);
+		
+		// Delete the folder
 		deleteFolder(outputDirectory);
 		System.out.println("Deleted: " + outputDirectory);
 		
-		//File htmlFile = System.getd
-		System.out.println(getFileContentsFromAssets("minesweeper.html"));
+		String htmlFileContents =  getFileContentsFromAssets("minesweeper.html");
+		htmlFileContents = htmlFileContents.replace("${title}", "test122");
+		
+		createFile(outputDirectory, "minesweeper.html", htmlFileContents);
+		createFile(outputDirectory, "minesweeper.css", getFileContentsFromAssets("minesweeper.css"));
+		
+		// Print link to the HTML file we created
+		System.out.println("Created: " + OUTPUT_DIRECTORY + "minesweeper.html");
+	}
+	
+	private static void createFile(File folder, String fileName, String contents) throws IOException {
+		File newFile = new File(folder + File.separator + fileName);
+		FileUtils.writeStringToFile(newFile, contents, StandardCharsets.UTF_8);
 	}
 	
 	private static void deleteFolder(File folder) throws IOException {
