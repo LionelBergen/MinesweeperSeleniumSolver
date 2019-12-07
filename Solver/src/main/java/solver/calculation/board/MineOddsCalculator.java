@@ -48,32 +48,7 @@ public class MineOddsCalculator {
 			uniqueResults.addAll(SolutionAnalyzer.getAllPossibilities(i, new ArrayList<KeyValue>(keyValues)));
 		}
 		
-		Set<List<KeyValue>> results = new HashSet<>();
-		
-		// Filter solutions that do not follow the 'Rules'. For example, if [K+NOP+J] = 1, then J and K cannot both be 1.
-		for (List<KeyValue> resul : uniqueResults) {
-			boolean valid = true;
-			
-			for (Rule rs : rules) {
-				int actualResult = 0;
-				for (KeyValue values : resul) {
-					Section section = (Section) values.getKey();
-					
-					if (rs.getSquares().containsAll(section.getGameSquares())) {
-						actualResult += values.getValue();
-					}
-				}
-				
-				if (actualResult != rs.getResultsEqual()) {
-					valid = false;
-					break;
-				}
-			}
-			
-			if (valid) {
-				results.add(resul);
-			}
-		}
+		Set<List<KeyValue>> results = calculateAllPossibilities(rules, sections);
 		
 		long[] ncrs = new long[results.iterator().next().size()];
 		
@@ -115,6 +90,55 @@ public class MineOddsCalculator {
 		}
 		
 		return returnValue;
+	}
+	
+	public static Set<List<KeyValue>> calculateAllPossibilities(List<Rule> rules, Collection<Section> sections) {
+		Collection<KeyValue> keyValues = transformSectionsToKeyValues(sections);
+		
+		System.out.println();
+		
+		final int maxSum = rules.stream().mapToInt(Rule::getResultsEqual).sum();
+		final int minSum = rules.stream().mapToInt(Rule::getResultsEqual).max().getAsInt();
+		
+		System.out.println(keyValues);
+		System.out.println(maxSum);
+		System.out.println(minSum);
+		System.out.println();
+		
+		// Get all possible solutions
+		Set<List<KeyValue>> uniqueResults = new HashSet<>();
+		for (int i = minSum; i<=maxSum; i++) {
+			uniqueResults.addAll(SolutionAnalyzer.getAllPossibilities(i, new ArrayList<KeyValue>(keyValues)));
+		}
+		
+		Set<List<KeyValue>> results = new HashSet<>();
+		
+		// Filter solutions that do not follow the 'Rules'. For example, if [K+NOP+J] = 1, then J and K cannot both be 1.
+		for (List<KeyValue> resul : uniqueResults) {
+			boolean valid = true;
+			
+			for (Rule rs : rules) {
+				int actualResult = 0;
+				for (KeyValue values : resul) {
+					Section section = (Section) values.getKey();
+					
+					if (rs.getSquares().containsAll(section.getGameSquares())) {
+						actualResult += values.getValue();
+					}
+				}
+				
+				if (actualResult != rs.getResultsEqual()) {
+					valid = false;
+					break;
+				}
+			}
+			
+			if (valid) {
+				results.add(resul);
+			}
+		}
+		
+		return results;
 	}
 	
 	private static Collection<KeyValue> transformSectionsToKeyValues(Collection<Section> sections) {

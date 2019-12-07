@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import component.model.GameSquare;
@@ -150,6 +151,19 @@ public class BoardAnalyzerTest {
 	@Test
 	public void testBreakupBoardSpecial01() {
 		GameBoardTestScenario testScenerio = GameBoardTestScenarios.SCENARIO_SPECIAL_01;
+		
+		RegularGameBoard gameBoard = testScenerio.getGameBoard();
+		List<Section> expectedResults = testScenerio.getExpectedSections();
+		
+		List<? extends GenericSection<? extends GameSquare>> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
+
+		assertSectionListsEqual(expectedResults, actualResults);
+	}
+	
+	@Ignore
+	@Test
+	public void testBreakupBoardSpecial03() {
+		GameBoardTestScenario testScenerio = GameBoardTestScenarios.SCENARIO_SPECIAL_03;
 		
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();

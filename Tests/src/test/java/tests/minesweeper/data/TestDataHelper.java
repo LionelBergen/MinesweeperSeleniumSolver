@@ -72,7 +72,7 @@ public class TestDataHelper {
 		// print the X grid at the top
 		System.out.print("  ");
 		for (int x=0; x<width; x++) {
-			System.out.print(x + " ");
+			System.out.print(x + ( x < 10 ? "  " : " "));
 		}
 		System.out.println();
 		
@@ -84,7 +84,7 @@ public class TestDataHelper {
 				System.out.print(visualizeSquareValue(board[x][y]));
 				
 				if (x != width -1) {
-					System.out.print(" ");
+					System.out.print("  ");
 				}
 			}
 			System.out.println();
@@ -106,6 +106,9 @@ public class TestDataHelper {
 	}
 	
 	private static String visualizeSquareValue(GameSquare gameSquare) {
+		if (gameSquare.getName() != null) {
+			return gameSquare.getName();
+		}
 		switch (gameSquare.getValue()) {
 		case BLANK_UNTOUCHED:
 			return "#";
