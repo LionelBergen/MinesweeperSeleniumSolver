@@ -2,7 +2,7 @@ package main.solver.transformers;
 
 import org.openqa.selenium.WebElement;
 
-import component.model.SquareValue;
+import component.model.gamesquare.SquareValue;
 import main.solver.component.SeleniumGameSquare;
 
 // Transforms a WebElement to a 'SeleniumGameSquare'

@@ -7,10 +7,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import component.model.GameSquare;
-import component.model.SquareValue;
+import component.model.Section;
+import component.model.gamesquare.GameSquare;
+import component.model.gamesquare.SquareValue;
 import solver.component.Rule;
-import solver.component.section.Section;
 import tests.minesweeper.data.component.SectionTestScenario;
 
 import static tests.minesweeper.data.TestDataHelper.getGameSquare;
@@ -41,7 +41,7 @@ public class SectionTestScenarios {
 		ss.add(new Section(new HashSet<>(gameSquares)));
 		expectedContents.put(ss, gameSquares);
 		
-		return new SectionTestScenario(section, expectedContents, Arrays.asList(new Rule(gameSquares, 1)));
+		return new SectionTestScenario(Arrays.asList(section), expectedContents, Arrays.asList(new Rule(gameSquares, 1)));
 	}
 	
 	private static SectionTestScenario getScenario02() {
@@ -101,7 +101,7 @@ public class SectionTestScenarios {
 		expectedContents.put(parentSet2, resultSet2);
 		expectedContents.put(parentSet3, resultSet3);
 		
-		return new SectionTestScenario(section, expectedContents, expectedResults);
+		return new SectionTestScenario(Arrays.asList(section), expectedContents, expectedResults);
 	}
 	
 	// Similar as above but with 2 flags & a 4 instead of a 3
@@ -165,7 +165,7 @@ public class SectionTestScenarios {
 		expectedContents.put(parentSet2, resultSet2);
 		expectedContents.put(parentSet3, resultSet3);
 		
-		return new SectionTestScenario(section, expectedContents, expectedResults);
+		return new SectionTestScenario(Arrays.asList(section), expectedContents, expectedResults);
 	}
 	
 	// Here: https://math.stackexchange.com/questions/3447402/minesweeper-odds-for-this-scenario-2-different-calculations
@@ -269,7 +269,7 @@ public class SectionTestScenarios {
 		expectedContents.put(parentSet6, resultSet6);
 		expectedContents.put(parentSet7, resultSet7);
 		
-		return new SectionTestScenario(section, expectedContents, expectedResults);
+		return new SectionTestScenario(Arrays.asList(section), expectedContents, expectedResults);
 	}
 	
 	private static Rule createSweeperSet(List<GameSquare> gameSquares, int expectedNumberOfMines) {

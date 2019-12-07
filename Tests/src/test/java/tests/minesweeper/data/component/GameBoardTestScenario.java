@@ -3,7 +3,7 @@ package tests.minesweeper.data.component;
 import java.util.List;
 
 import component.model.RegularGameBoard;
-import solver.component.section.Section;
+import component.model.Section;
 
 public class GameBoardTestScenario {
 	private RegularGameBoard gameBoard;

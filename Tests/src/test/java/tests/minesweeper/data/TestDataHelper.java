@@ -7,10 +7,10 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
-import component.model.GameSquare;
 import component.model.RegularGameBoard;
-import component.model.SquareValue;
-import solver.component.section.Section;
+import component.model.Section;
+import component.model.gamesquare.GameSquare;
+import component.model.gamesquare.SquareValue;
 import tests.minesweeper.data.component.GameBoardTestScenario;
 
 public class TestDataHelper {
@@ -39,8 +39,7 @@ public class TestDataHelper {
 			gameSquares.get(i).setValue(SquareValue.ONE);
 		}
 		
-		RegularGameBoard gameBoard = new RegularGameBoard();
-		gameBoard.setGameBoard(gameSquares);
+		RegularGameBoard gameBoard = new RegularGameBoard(gameSquares);
 		
 		return gameBoard;
 	}

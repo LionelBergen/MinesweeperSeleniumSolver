@@ -6,10 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import component.model.GameBoard;
-import component.model.GameSquare;
-import component.model.SquareValue;
-import solver.component.section.GenericSection;
-import solver.component.section.Section;
+import component.model.Section;
+import component.model.gamesquare.GameSquare;
+import component.model.gamesquare.SquareValue;
 
 /**
  * Utilizes {@link GameBoard} methods to get {@link Section}s which can be used in calculations
@@ -17,8 +16,8 @@ import solver.component.section.Section;
  * @author Lionel Bergen
  */
 public class BoardAnalyzer {
-	public static List<? extends GenericSection<? extends GameSquare>> breakupBoard(GameBoard<? extends GameSquare> gameBoard) {
-		final List<Section> sectionsOfInterest = new ArrayList<Section>();
+	public static List<Section> breakupBoard(GameBoard gameBoard) {
+		final List<Section> sectionsOfInterest = new ArrayList<>();
 		
 		// Get a resultset for every number
 		for (GameSquare gameSquare : gameBoard.getAllNumberedSquares()) {
@@ -33,11 +32,11 @@ public class BoardAnalyzer {
 		return new ArrayList<Section> (new HashSet<Section>(sectionsOfInterest));
 	}
 	
-	private static void addSquareToResultSet(GameBoard<? extends GameSquare> gameBoard, GameSquare gameSquare, Section resultSet) { 
+	private static void addSquareToResultSet(GameBoard gameBoard, GameSquare gameSquare, Section resultSet) { 
 		addSquareToResultSet(gameBoard, gameSquare, resultSet, false);
 	}
 	
-	private static void addSquareToResultSet(GameBoard<? extends GameSquare> gameBoard, GameSquare gameSquare, Section resultSet, boolean numberedOnly) {
+	private static void addSquareToResultSet(GameBoard gameBoard, GameSquare gameSquare, Section resultSet, boolean numberedOnly) {
 		resultSet.add(gameSquare);
 		
 		final List<? extends GameSquare> squaresToProcess = numberedOnly ? gameBoard.getSurroundingNumberedSquares(gameSquare) : gameBoard.getSurroundingSquares(gameSquare);
@@ -66,7 +65,7 @@ public class BoardAnalyzer {
 		return (int) gameSquares.stream().filter(e -> e.getValue().equals(SquareValue.BLANK_UNTOUCHED)).count();
 	}
 	
-	private static List<GameSquare> getTouchingSquaresNotInResults(GameBoard<? extends GameSquare> gameBoard, Section resultSet, GameSquare square) {
+	private static List<GameSquare> getTouchingSquaresNotInResults(GameBoard gameBoard, Section resultSet, GameSquare square) {
 		return gameBoard.getSurroundingSquares(square).stream().filter(e -> !resultSet.getGameSquares().contains(e)).collect(Collectors.toList());
 	}
 }

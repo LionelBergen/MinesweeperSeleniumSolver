@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import component.model.GameSquare;
-import solver.component.section.Section;
+import component.model.Section;
+import component.model.gamesquare.GameSquare;
 
 public class SectionAnalyzedResults {
 	private RuleSet sectionRules;

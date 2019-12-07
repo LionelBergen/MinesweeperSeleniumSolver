@@ -1,9 +1,10 @@
-package solver.component.section;
+package component.model;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import component.model.GameSquare;
+
+import component.model.gamesquare.GameSquare;
 
 public class Section extends GenericSection<GameSquare> {
 	private Set<GameSquare> gameSquares = new HashSet<GameSquare>();
@@ -30,8 +31,14 @@ public class Section extends GenericSection<GameSquare> {
 		return this.gameSquares;
 	}
 
+	/*@Override
+	public void setGameSquares(Set<GameSquare> gameSquares) {
+		this.gameSquares = gameSquares;
+	}*/
+
 	@Override
 	public void setGameSquares(Set<GameSquare> gameSquares) {
 		this.gameSquares = gameSquares;
+		
 	}
 }

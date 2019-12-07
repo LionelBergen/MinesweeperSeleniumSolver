@@ -2,8 +2,8 @@ package main.solver.component;
 
 import org.openqa.selenium.WebElement;
 
-import component.model.GameSquare;
-import component.model.SquareValue;
+import component.model.gamesquare.GameSquare;
+import component.model.gamesquare.SquareValue;
 
 /**
  * Game square, but with an additional WebElement property

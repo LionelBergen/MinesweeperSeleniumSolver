@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import solver.component.section.GenericSection;
+import component.model.GenericSection;
 
 public class SeleniumSection extends GenericSection<SeleniumGameSquare> {
 	private Set<SeleniumGameSquare> gameSquares = new HashSet<SeleniumGameSquare>();

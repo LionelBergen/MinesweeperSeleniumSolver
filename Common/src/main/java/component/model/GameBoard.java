@@ -1,7 +1,11 @@
 package component.model;
 
 import static utility.util.MathUtil.getRandomNumber;
+
 import java.util.List;
+
+import component.model.gamesquare.GameSquare;
+import component.model.gamesquare.SquareValue;
 import utility.util.GameBoardHelper;
 
 /**
@@ -9,16 +13,16 @@ import utility.util.GameBoardHelper;
  *  
  * @author Lionel Bergen
  */
-public abstract class GameBoard<T extends GameSquare> {
-	private final GameBoardHelper<T> gameBoardHelper = new GameBoardHelper<T>();
-	private List<T> gameBoard = null;
+public abstract class GameBoard {
+	private final GameBoardHelper gameBoardHelper = new GameBoardHelper();
+	private List<GameSquare> gameBoard = null;
 	
-	public void setGameBoard(List<T> gameSquares) {
-		this.gameBoard = gameSquares;
+	public List<GameSquare> getGameBoard() {
+		return this.gameBoard;
 	}
 	
-	public List<T> getGameBoard() {
-		return this.gameBoard;
+	protected void setGameBoard(List<GameSquare> gameSquares) {
+		this.gameBoard = gameSquares;
 	}
 	
 	public int getSize() {
@@ -34,12 +38,12 @@ public abstract class GameBoard<T extends GameSquare> {
 	 * 
 	 * @return A square that is surrounded by 8 blank squares
 	 */
-	public T getRandomLonelySquare() {
+	public GameSquare getRandomLonelySquare() {
 		return getAllBlankSquares().stream().filter(e -> getSurroundingBlankSquares(e).size() == 8).findFirst().orElse(null);
 	}
 
-	public T getRandomOpenElement() {
-		List<T> blankSquares = getAllBlankSquares();
+	public GameSquare getRandomOpenElement() {
+		List<GameSquare> blankSquares = getAllBlankSquares();
 		
 		return blankSquares.get(getRandomNumber(0, blankSquares.size() - 1));
 	}
@@ -49,31 +53,31 @@ public abstract class GameBoard<T extends GameSquare> {
 	 * 
 	 * @return List of blank squares on the board
 	 */
-	public List<T> getAllBlankSquares() {
+	public List<GameSquare> getAllBlankSquares() {
 		return gameBoardHelper.getAllBlankSquares(this.gameBoard);
 	}
 	
-	public List<T> getAllNumberedSquares() {
+	public List<GameSquare> getAllNumberedSquares() {
 		return gameBoardHelper.getAllNumberedSquares(this.gameBoard);
 	}
 	
-	public List<T> getAllFlaggedSquares() {
+	public List<GameSquare> getAllFlaggedSquares() {
 		return gameBoardHelper.getAllFlaggedSquares(this.gameBoard);
 	}
 	
-	public List<T> getSurroundingSquares(GameSquare square) {
+	public List<GameSquare> getSurroundingSquares(GameSquare square) {
 		return gameBoardHelper.getSurroundingSquares(this.gameBoard, square);
 	}
 	
-	public List<T> getSurroundingFlaggedSquares(GameSquare square) {
+	public List<GameSquare> getSurroundingFlaggedSquares(GameSquare square) {
 		return gameBoardHelper.getSurroundingFlaggedSquares(this.gameBoard, square);
 	}
 	
-	public List<T> getSurroundingBlankSquares(GameSquare square) {
+	public List<GameSquare> getSurroundingBlankSquares(GameSquare square) {
 		return gameBoardHelper.getSurroundingBlankSquares(this.gameBoard, square);
 	}
 	
-	public List<T> getSurroundingNumberedSquares(GameSquare square) {
+	public List<GameSquare> getSurroundingNumberedSquares(GameSquare square) {
 		return gameBoardHelper.getSurroundingNumberedSquares(this.gameBoard, square);
 	}
 }

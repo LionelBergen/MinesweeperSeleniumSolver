@@ -7,9 +7,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import component.model.GameSquare;
 import component.model.RegularGameBoard;
-import component.model.SquareValue;
+import component.model.gamesquare.GameSquare;
+import component.model.gamesquare.SquareValue;
 
 public class GameBoardTest {
 	@Test

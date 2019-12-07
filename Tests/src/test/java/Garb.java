@@ -8,12 +8,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import component.model.Section;
 import solver.board.analyzing.BoardAnalyzer;
 import solver.board.analyzing.SectionAnalyzer;
 import solver.calculation.board.MineOddsCalculator;
 import solver.component.KeyValue;
 import solver.component.Rule;
-import solver.component.section.Section;
 import tests.minesweeper.data.GameBoardTestScenarios;
 import tests.minesweeper.data.component.GameBoardTestScenario;
 import utility.util.MathUtil;
@@ -31,8 +31,7 @@ public class Garb {
 		GameBoardTestScenario test = GameBoardTestScenarios.SCENARIO_SPECIAL_03;
 		
 		List<Section> sections = (List<Section>) BoardAnalyzer.breakupBoard(test.getGameBoard());
-		
-		
+
 		Section section1 = sections.get(0);
 		Section section2 = sections.get(1);
 		Set<List<KeyValue>> resultsLeftSide = new HashSet<>();

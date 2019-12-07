@@ -6,8 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import component.model.GameSquare;
-import component.model.SquareValue;
+import component.model.gamesquare.GameSquare;
+import component.model.gamesquare.SquareValue;
 
 public class GameSquareTest {
 	@Test

@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import component.model.GameSquare;
-import component.model.SquareValue;
+import component.model.gamesquare.GameSquare;
+import component.model.gamesquare.SquareValue;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

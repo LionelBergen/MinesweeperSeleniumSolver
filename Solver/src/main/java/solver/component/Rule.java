@@ -2,7 +2,8 @@ package solver.component;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import component.model.GameSquare;
+
+import component.model.gamesquare.GameSquare;
 
 // TODO: write .contains() and equals() tests for this & Section. Not sure if we'll be keeping these classes so I didn't write tests..
 /**

@@ -1,4 +1,4 @@
-package component.model;
+package component.model.gamesquare;
 
 import java.util.Arrays;
 import java.util.List;

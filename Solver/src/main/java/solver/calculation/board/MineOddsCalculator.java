@@ -9,10 +9,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import component.model.Section;
 import solver.board.analyzing.SolutionAnalyzer;
 import solver.component.KeyValue;
 import solver.component.Rule;
-import solver.component.section.Section;
 import utility.util.MathUtil;
 
 /**

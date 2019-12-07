@@ -2,7 +2,9 @@ package component.model;
 
 import java.util.Comparator;
 
-public class GameSquare {
+import component.model.gamesquare.SquareValue;
+
+public class RegularGameSquare<T extends RegularGameSquare<T>> {
 	private SquareValue value;
 	private int x;
 	private int y;
@@ -10,15 +12,19 @@ public class GameSquare {
 	// Used for debugging / testing
 	private String name;
 	
-	public GameSquare(String name, SquareValue value, int x, int y) {
-		this.name = name;
+	public RegularGameSquare(String name, SquareValue value, int x, int y) {
 		this.value = value;
 		this.x = x;
 		this.y = y;
+		this.name = name;
 	}
-	
-	public GameSquare(SquareValue value, int x, int y) {
-		this(null, value, x, y);
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getX() {
@@ -41,17 +47,9 @@ public class GameSquare {
 		return value;
 	}
 
-	public GameSquare setValue(SquareValue value) {
+	public RegularGameSquare<T> setValue(SquareValue value) {
 		this.value = value;
 		return this;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 	
 	@Override
@@ -71,7 +69,8 @@ public class GameSquare {
 	        return false;
 	    }
 	    
-	    GameSquare otherSquare = (GameSquare) other;
+	    @SuppressWarnings("unchecked")
+	    RegularGameSquare<T> otherSquare = (RegularGameSquare<T>) other;
 	    
 	    // field comparison
 	    return otherSquare.getX() == this.getX() && this.getY() == otherSquare.getY() && this.getValue() == otherSquare.getValue();
@@ -90,7 +89,7 @@ public class GameSquare {
 	}
 
 	// TODO: write test
-	public int compareTo(GameSquare o2) {
-		return Comparator.comparingInt(GameSquare::getX).thenComparingInt(GameSquare::getY).thenComparing(GameSquare::getValue).compare(this, o2);
+	public int compareTo(RegularGameSquare<T> o2) {
+		return Comparator.comparingInt(RegularGameSquare<T>::getX).thenComparingInt(RegularGameSquare::getY).thenComparing(RegularGameSquare::getValue).compare(this, o2);
 	}
 }

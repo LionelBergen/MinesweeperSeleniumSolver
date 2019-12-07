@@ -1,8 +1,8 @@
-package solver.component.section;
+package component.model;
 
 import java.util.Set;
 
-import component.model.GameSquare;
+import component.model.gamesquare.GameSquare;
 import utility.util.Utility;
 
 /**

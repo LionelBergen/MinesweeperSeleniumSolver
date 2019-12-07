@@ -2,19 +2,19 @@ package tests.minesweeper.solver.calculation;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
-import component.model.GameSquare;
+import component.model.GenericSection;
 import component.model.RegularGameBoard;
+import component.model.Section;
+import component.model.gamesquare.GameSquare;
 import solver.board.analyzing.BoardAnalyzer;
-import solver.component.section.GenericSection;
-import solver.component.section.Section;
 import tests.minesweeper.data.TestDataHelper;
 import tests.minesweeper.data.GameBoardTestScenarios;
 import tests.minesweeper.data.component.GameBoardTestScenario;
@@ -160,7 +160,6 @@ public class BoardAnalyzerTest {
 		assertSectionListsEqual(expectedResults, actualResults);
 	}
 	
-	@Ignore
 	@Test
 	public void testBreakupBoardSpecial03() {
 		GameBoardTestScenario testScenerio = GameBoardTestScenarios.SCENARIO_SPECIAL_03;
@@ -194,7 +193,11 @@ public class BoardAnalyzerTest {
 			GameSquare squareFromList = expectedSection.getGameSquares().iterator().next();
 			
 			// get matching in actual results
-			GenericSection<? extends GameSquare> actualSection = actualResults.stream().filter(e -> e.getGameSquares().contains(squareFromList)).findAny().get();
+			GenericSection<? extends GameSquare> actualSection = actualResults.stream().filter(e -> e.getGameSquares().contains(squareFromList)).findAny().orElse(null);
+			
+			if (actualSection == null) {
+				fail("Did not find expected square: " + squareFromList);
+			}
 			
 			assertListsEqual(expectedSection.getGameSquares(), actualSection.getGameSquares());
 		}

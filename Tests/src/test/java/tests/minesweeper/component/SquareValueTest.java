@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import component.model.SquareValue;
+import component.model.gamesquare.SquareValue;
 
 public class SquareValueTest {
 	@Test

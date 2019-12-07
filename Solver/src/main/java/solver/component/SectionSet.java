@@ -2,7 +2,7 @@ package solver.component;
 
 import java.util.Set;
 
-import solver.component.section.Section;
+import component.model.Section;
 
 // TODO: make immutable
 /**
