@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import component.model.GenericSection;
 import component.model.Section;
 import component.model.gamesquare.GameSquare;
 import solver.component.SectionAnalyzedResults;
@@ -15,6 +14,7 @@ import solver.component.Rule;
 import static utility.util.GameBoardHelper.GameBoardHelper;
 
 public class SectionAnalyzer {
+	// TODO: remove this method & the class
 	public static SectionAnalyzedResults breakupSection(List<Section> sections) {
 		SectionAnalyzedResults result = null;
 		
@@ -51,15 +51,15 @@ public class SectionAnalyzer {
 		return result.getContents().values();
 	}
 	
-	public static List<Rule> breakupSectionIntoRules(GenericSection<? extends GameSquare> section) {
+	public static List<Rule> breakupSectionIntoRules(Section section) {
 		return breakupSectionIntoRules(Arrays.asList(section));
 	}
 	
-	public static List<Rule> breakupSectionIntoRules(List<? extends GenericSection<? extends GameSquare>> sections) {
+	public static List<Rule> breakupSectionIntoRules(Collection<Section> sections) {
 		List<Rule> ruleSet = new ArrayList<Rule>();
 		
-		for (GenericSection<? extends GameSquare> section : sections) {
-			Set<GameSquare> squaresInSectionList = (Set<GameSquare>) section.getGameSquares();
+		for (Section section : sections) {
+			Set<GameSquare> squaresInSectionList = section.getGameSquares();
 			
 			for (GameSquare square : squaresInSectionList) {
 				if (square.getValue().isNumbered()) {

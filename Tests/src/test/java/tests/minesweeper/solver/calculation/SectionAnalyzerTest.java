@@ -56,50 +56,59 @@ public class SectionAnalyzerTest {
 	// Tests a simple 1 block surrounded by 8 blanks
 	@Test
 	public void testScenario01() {
-		testScenario(SectionTestScenarios.SCENARIO_01);
+		testScenario(SectionTestScenarios.SCENARIO_01, false);
 	}
 	
 	// Tests a 2 touching a 3, surrounded by blanks
 	@Test
 	public void testScenario02() {
-		testScenario(SectionTestScenarios.SCENARIO_02);
+		testScenario(SectionTestScenarios.SCENARIO_02, false);
 	}
 	
 	// Tests a 2 touching a 4, surrounded by blanks & 2 flags touching the 4
 	@Test
 	public void testScenario03() {
-		testScenario(SectionTestScenarios.SCENARIO_03);
+		testScenario(SectionTestScenarios.SCENARIO_03, false);
 	}
 	
 	// https://math.stackexchange.com/questions/3447402/minesweeper-odds-for-this-scenario-2-different-calculations
 	@Test
 	public void testSpecial101() {
-		testScenario(SectionTestScenarios.SCENARIO_SPECIAL_01);
+		testScenario(SectionTestScenarios.SCENARIO_SPECIAL_01, false);
 	}
 	
-	private void testScenario(SectionTestScenario scenario) {
+	// https://math.stackexchange.com/questions/3466402/calculating-minesweeper-odds-is-this-calculation-correct
+	@Test
+	public void testSpecial102() {
+		testScenario(SectionTestScenarios.SCENARIO_SPECIAL_02, true);
+	}
+	
+	private void testScenario(SectionTestScenario scenario, boolean assertRulesOnly) {
 		// TODO: delete the 'breakupSection' method...
 		SectionAnalyzedResults actualResult = SectionAnalyzer.breakupSection(scenario.getSections());
 		List<Rule> resultRules = SectionAnalyzer.breakupSectionIntoRules(scenario.getSections());
 		
 		// assert rules found
-		assertEquals(scenario.getExpectedOrigResults().size(), resultRules.size());
 		for (Rule expected : scenario.getExpectedOrigResults()) {
 			assertTrue("Original Results did not contain expected: " + expected, resultRules.contains(expected));
+			assertEquals(expected, resultRules.get(resultRules.indexOf(expected)));
 		}
+		assertEquals(scenario.getExpectedOrigResults().size(), resultRules.size());
 		
-		for (Section section : scenario.getSections()) {
-			// assert contents
-			Collection<Section> resultContents = SectionAnalyzer.getSections(resultRules, section.getGameSquares());
-			//List<Set<Section>> actualContents = actualResult.getResultSets();
-			assertEquals(scenario.getExpectedContents().size(), resultContents.size());
-			
-			for (Entry<List<Section>, List<GameSquare>> expected : scenario.getExpectedContents().entrySet()) {
-				// List<Section> resultList = new ArrayList<Section>(resultContents);
-				//Section y = resultContents.stream().filter(e -> expected.getKey().contains(e)).findAny().get();
-				Set<GameSquare> x = actualResult.get(expected.getKey());
+		if (!assertRulesOnly) {
+			for (Section section : scenario.getSections()) {
+				// assert contents
+				Collection<Section> resultContents = SectionAnalyzer.getSections(resultRules, section.getGameSquares());
+				//List<Set<Section>> actualContents = actualResult.getResultSets();
+				assertEquals(scenario.getExpectedContents().size(), resultContents.size());
 				
-				assertTrue("Results did not contain expected value from: " + expected, x.containsAll(expected.getValue()));
+				for (Entry<List<Section>, List<GameSquare>> expected : scenario.getExpectedContents().entrySet()) {
+					// List<Section> resultList = new ArrayList<Section>(resultContents);
+					//Section y = resultContents.stream().filter(e -> expected.getKey().contains(e)).findAny().get();
+					Set<GameSquare> x = actualResult.get(expected.getKey());
+					
+					assertTrue("Results did not contain expected value from: " + expected, x.containsAll(expected.getValue()));
+				}
 			}
 		}
 	}

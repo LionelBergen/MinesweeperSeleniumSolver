@@ -2,8 +2,10 @@ package solver.component;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import component.model.gamesquare.GameSquare;
+import utility.util.Utility;
 
 // TODO: write .contains() and equals() tests for this & Section. Not sure if we'll be keeping these classes so I didn't write tests..
 /**
@@ -32,7 +34,7 @@ public class Rule {
 	
 	// TODO: remove
 	// Used for debugging
-	/*@Override
+	@Override
 	public String toString() {
 		boolean allContainName = squares.stream().filter(e -> e.getName() == null).count() == 0;
 		
@@ -41,7 +43,7 @@ public class Rule {
 		}
 		
 		return "#:" + resultsEqual + " " + Utility.sortList(squares).stream().map(Object::toString).collect(Collectors.joining(", "));
-	}*/
+	}
 	
 	@Override
 	public int hashCode() {
@@ -81,6 +83,6 @@ public class Rule {
 	    }
 	    
 	    // Don't care about order
-	    return this.squares.containsAll(otherResultSet.squares);
+	    return this.squares.containsAll(otherResultSet.squares) && this.getResultsEqual() == otherResultSet.getResultsEqual();
 	}
 }

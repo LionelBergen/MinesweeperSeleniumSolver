@@ -3,6 +3,7 @@ package main.solver;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -14,13 +15,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import component.model.GenericSection;
 import component.model.Section;
 import component.model.gamesquare.GameSquare;
 import component.model.gamesquare.SquareValue;
 import main.solver.component.SeleniumGameBoard;
 import main.solver.component.SeleniumGameSquare;
-import main.solver.component.SeleniumSection;
 import main.solver.logging.Logger;
 import solver.board.analyzing.BoardAnalyzer;
 import solver.board.analyzing.SectionAnalyzer;
@@ -62,9 +61,12 @@ public class MineSweeperSolver {
     	// The in-game timer used for highscores begins here, on first click
     	Logger.setCurrentTime();
     	
-    	// select a random square & update game board
-    	List<SeleniumGameSquare> surroundingSquaresToUpdate = selectARandomSquare(webDriver, gameBoard, startingMines);
-		surroundingSquaresToUpdate = updateAllNumberedSquares(webDriver, gameBoard, surroundingSquaresToUpdate);
+    	// select a random square & update game board (Remove duplicates)
+    	List<SeleniumGameSquare> surroundingSquaresToUpdate = new ArrayList<>(new HashSet<SeleniumGameSquare>(selectARandomSquare(webDriver, gameBoard, startingMines)));
+    	
+    	while (!surroundingSquaresToUpdate.isEmpty()) {
+    		surroundingSquaresToUpdate = new ArrayList<>(new HashSet<SeleniumGameSquare>(updateAllNumberedSquares(webDriver, gameBoard, surroundingSquaresToUpdate)));
+    	}
     	
     	while (!gameBoard.isGameWon()) {
     		// Select a best square based on probability
@@ -126,9 +128,11 @@ public class MineSweeperSolver {
 		
 		Map<Section, Double> odds = new HashMap<>();
 		
+		// Step 2:
+		List<Rule> rules = SectionAnalyzer.breakupSectionIntoRules(sections);
+		
+		// TODO:
 		for (Section section : sections) {
-			// Step 2:
-			List<Rule> rules = SectionAnalyzer.breakupSectionIntoRules(section);
 			
 			// Step 3: get subSections
 			Collection<Section> subSections = SectionAnalyzer.getSections(rules, section.getGameSquares());
@@ -308,7 +312,7 @@ public class MineSweeperSolver {
 		// Wait for the WebElement to update & retrieve the new value
     	String newClassName = waitForClassNameToChange(webDriver, gameSquare.getWebElement());
     	SquareValue newValue = SquareValue.fromValue(newClassName);
-    	
+    	Logger.logMessage("Changed square to: " + newValue + " at: " + gameSquare);
     	if (newValue == null) {
     		throw new RuntimeException("Cannot get value from class: " + newClassName);
     	}

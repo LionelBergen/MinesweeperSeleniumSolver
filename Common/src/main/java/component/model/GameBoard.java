@@ -15,18 +15,13 @@ import utility.util.GameBoardHelper;
  */
 public abstract class GameBoard {
 	private final GameBoardHelper gameBoardHelper = new GameBoardHelper();
-	private List<GameSquare> gameBoard = null;
 	
-	public List<GameSquare> getGameBoard() {
-		return this.gameBoard;
-	}
+	public abstract List<GameSquare> getGameBoard();
 	
-	protected void setGameBoard(List<GameSquare> gameSquares) {
-		this.gameBoard = gameSquares;
-	}
+	protected abstract void setGameBoard(List<GameSquare> gameSquares);
 	
 	public int getSize() {
-		return this.gameBoard.size();
+		return this.getGameBoard().size();
 	}
 	
 	public boolean isGameWon() {
@@ -54,30 +49,30 @@ public abstract class GameBoard {
 	 * @return List of blank squares on the board
 	 */
 	public List<GameSquare> getAllBlankSquares() {
-		return gameBoardHelper.getAllBlankSquares(this.gameBoard);
+		return gameBoardHelper.getAllBlankSquares(this.getGameBoard());
 	}
 	
 	public List<GameSquare> getAllNumberedSquares() {
-		return gameBoardHelper.getAllNumberedSquares(this.gameBoard);
+		return gameBoardHelper.getAllNumberedSquares(this.getGameBoard());
 	}
 	
 	public List<GameSquare> getAllFlaggedSquares() {
-		return gameBoardHelper.getAllFlaggedSquares(this.gameBoard);
+		return gameBoardHelper.getAllFlaggedSquares(this.getGameBoard());
 	}
 	
 	public List<GameSquare> getSurroundingSquares(GameSquare square) {
-		return gameBoardHelper.getSurroundingSquares(this.gameBoard, square);
+		return gameBoardHelper.getSurroundingSquares(this.getGameBoard(), square);
 	}
 	
 	public List<GameSquare> getSurroundingFlaggedSquares(GameSquare square) {
-		return gameBoardHelper.getSurroundingFlaggedSquares(this.gameBoard, square);
+		return gameBoardHelper.getSurroundingFlaggedSquares(this.getGameBoard(), square);
 	}
 	
 	public List<GameSquare> getSurroundingBlankSquares(GameSquare square) {
-		return gameBoardHelper.getSurroundingBlankSquares(this.gameBoard, square);
+		return gameBoardHelper.getSurroundingBlankSquares(this.getGameBoard(), square);
 	}
 	
 	public List<GameSquare> getSurroundingNumberedSquares(GameSquare square) {
-		return gameBoardHelper.getSurroundingNumberedSquares(this.gameBoard, square);
+		return gameBoardHelper.getSurroundingNumberedSquares(this.getGameBoard(), square);
 	}
 }

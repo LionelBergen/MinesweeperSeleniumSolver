@@ -27,6 +27,11 @@ public class SeleniumGameBoard extends GameBoard {
 	public List<GameSquare> getGameBoard() {
 		return new ArrayList<GameSquare>(this.gameBoard);
 	}
+
+	@Override
+	protected void setGameBoard(List<GameSquare> gameSquares) {
+		throw new RuntimeException("Invalid argument");
+	}
     
     private SeleniumGameSquare transformGameSquare(WebElement playableSquareElement) {
     	return WebElementSeleniumGameSquareTransformer.transform(playableSquareElement);
