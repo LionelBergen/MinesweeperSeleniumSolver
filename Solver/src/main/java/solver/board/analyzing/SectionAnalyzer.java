@@ -9,12 +9,11 @@ import java.util.Set;
 import component.model.Section;
 import component.model.gamesquare.GameSquare;
 import solver.component.SectionAnalyzedResults;
-import solver.component.SectionSet;
 import solver.component.Rule;
 import static utility.util.GameBoardHelper.GameBoardHelper;
 
 public class SectionAnalyzer {
-	// TODO: remove this method & the class
+	// TODO: remove this method & the 'SectionAnalyzedResults' class
 	public static SectionAnalyzedResults breakupSection(List<Section> sections) {
 		SectionAnalyzedResults result = null;
 		
@@ -29,16 +28,6 @@ public class SectionAnalyzer {
 		}
 		
 		return result;
-	}
-	
-	public static Set<SectionSet> getSectionSets(List<Rule> rules, Collection<GameSquare> allSquares) {
-		SectionAnalyzedResults result = new SectionAnalyzedResults(rules);
-		
-		for (GameSquare gs : allSquares) {
-			result.put(gs);
-		}
-		
-		return result.getContents().keySet();
 	}
 	
 	public static Collection<Section> getSections(List<Rule> rules, Collection<GameSquare> allSquares) {
@@ -66,7 +55,7 @@ public class SectionAnalyzer {
 					List<GameSquare> surroundingBlankSquares = GameBoardHelper.getSurroundingBlankSquares(squaresInSectionList, square);
 					int numberOfMines = GameBoardHelper.getNumberOfMinesSurroundingSquare(squaresInSectionList, square);
 					
-					ruleSet.add(new Rule(surroundingBlankSquares, numberOfMines));
+					ruleSet.add(new Rule(surroundingBlankSquares, numberOfMines, section));
 				}
 			}
 		}

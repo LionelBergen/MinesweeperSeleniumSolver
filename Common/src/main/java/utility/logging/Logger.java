@@ -1,4 +1,4 @@
-package main.solver.logging;
+package utility.logging;
 
 // Logger that doubles as a timer for timing events
 public final class Logger {

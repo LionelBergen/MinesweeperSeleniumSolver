@@ -20,11 +20,11 @@ import component.model.gamesquare.GameSquare;
 import component.model.gamesquare.SquareValue;
 import main.solver.component.SeleniumGameBoard;
 import main.solver.component.SeleniumGameSquare;
-import main.solver.logging.Logger;
 import solver.board.analyzing.BoardAnalyzer;
 import solver.board.analyzing.SectionAnalyzer;
 import solver.calculation.board.MineOddsCalculator;
 import solver.component.Rule;
+import utility.logging.Logger;
 import utility.util.MathUtil;
 
 // TODO: Create interfaces, ensure Element's are kept separate
@@ -131,7 +131,7 @@ public class MineSweeperSolver {
 		// Step 2:
 		List<Rule> rules = SectionAnalyzer.breakupSectionIntoRules(sections);
 		
-		// TODO:
+		// TODO: don't for-loop, pass the array
 		for (Section section : sections) {
 			
 			// Step 3: get subSections

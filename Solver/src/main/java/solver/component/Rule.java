@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import component.model.Section;
 import component.model.gamesquare.GameSquare;
 import utility.util.Utility;
 
@@ -14,14 +15,16 @@ import utility.util.Utility;
  * @author Lionel Bergen
  */
 public class Rule {
-	private final Collection<? extends GameSquare> squares;
+	private final Collection<GameSquare> squares;
 	private final int resultsEqual;
+	private final Section sectionThisRuleCameFrom;
 	
 	public static final int UNKNOWN_VALUE = -1;
 	
-	public Rule(Collection<GameSquare> squares, int resultsEqual) {
+	public Rule(Collection<GameSquare> squares, int resultsEqual, Section sectionThisRuleCameFrom) {
 		this.squares = squares; 
 		this.resultsEqual = resultsEqual;
+		this.sectionThisRuleCameFrom = sectionThisRuleCameFrom;
 	}
 
 	public Collection<GameSquare> getSquares() {
@@ -30,6 +33,10 @@ public class Rule {
 
 	public int getResultsEqual() {
 		return resultsEqual;
+	}
+
+	public Section getSectionThisRuleCameFrom() {
+		return sectionThisRuleCameFrom;
 	}
 	
 	// TODO: remove
@@ -83,6 +90,6 @@ public class Rule {
 	    }
 	    
 	    // Don't care about order
-	    return this.squares.containsAll(otherResultSet.squares) && this.getResultsEqual() == otherResultSet.getResultsEqual();
+	    return this.squares.containsAll(otherResultSet.squares) && this.getResultsEqual() == otherResultSet.getResultsEqual() && this.sectionThisRuleCameFrom.equals(otherResultSet.getSectionThisRuleCameFrom());
 	}
 }

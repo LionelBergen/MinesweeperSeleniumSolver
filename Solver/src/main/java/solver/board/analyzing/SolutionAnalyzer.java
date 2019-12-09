@@ -2,6 +2,7 @@ package solver.board.analyzing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,13 +20,13 @@ public final class SolutionAnalyzer {
 	 * @param objects
 	 * @return
 	 */
-	public static List<List<KeyValue>> getAllPossibilities(final int sumOfAllLists, final List<KeyValue> objects) {
+	public static List<List<KeyValue>> getAllPossibilities(final int sumOfAllLists, final Collection<KeyValue> objects) {
 		if (objects.size() <= 1) {
-			return Arrays.asList(objects);
+			return Arrays.asList(new ArrayList<KeyValue>(objects));
 		}
 		// TODO: change this comment / mapping, we no longer transform class. However creating a new KeyValue may be necessary (pointers)
 		// Each 'object's value is it's max value. Meaning the value should never be more than its max
-		List<KeyValue> x = objects.stream().map(e -> transform(e, 0)).collect(Collectors.toList());
+		//List<KeyValue> x = objects.stream().map(e -> transform(e, 0)).collect(Collectors.toList());
 		
 		Set<List<Integer>> allNumberCombinations = MathCombinationCalculator.getAllNumberCombinations(sumOfAllLists, objects.size());
 		Set<List<Integer>> allNumberCombinationsInAllOrders = new HashSet<>();
@@ -44,7 +45,8 @@ public final class SolutionAnalyzer {
 		List<List<KeyValue>> transformedResults = new ArrayList<>();
 		
 		for (List<Integer> result : allNumberCombinationsInAllOrders) {
-			List<KeyValue> transformedResult = transform(result, x);
+			// TODO: use collection instead of instantiating a new ArrayList
+			List<KeyValue> transformedResult = transform(result, new ArrayList<>(objects));
 			
 			if (transformedResult != null) {
 				transformedResults.add(transformedResult);
@@ -56,6 +58,7 @@ public final class SolutionAnalyzer {
 	
 	private static List<KeyValue> transform(List<Integer> keys, List<KeyValue> values) {
 		List<KeyValue> transformedResult = new ArrayList<>();
+		
 		for (int i=0; i<values.size(); i++) {
 			int value = keys.get(i);
 			
@@ -71,17 +74,17 @@ public final class SolutionAnalyzer {
 	}
 	
 	private static <E> List<List<E>> generatePerm(List<E> original) {
-		if (original.size() == 0) {
-    		List<List<E>> result = new ArrayList<List<E>>(); 
-    		result.add(new ArrayList<E>()); 
+		if (original.isEmpty()) {
+    		List<List<E>> result = new ArrayList<>(); 
+    		result.add(new ArrayList<>()); 
     		return result; 
     	}
 		E firstElement = original.remove(0);
-		List<List<E>> returnValue = new ArrayList<List<E>>();
+		List<List<E>> returnValue = new ArrayList<>();
 		List<List<E>> permutations = generatePerm(original);
 		for (List<E> smallerPermutated : permutations) {
 			for (int index=0; index <= smallerPermutated.size(); index++) {
-				List<E> temp = new ArrayList<E>(smallerPermutated);
+				List<E> temp = new ArrayList<>(smallerPermutated);
 				temp.add(index, firstElement);
 				returnValue.add(temp);
 			}

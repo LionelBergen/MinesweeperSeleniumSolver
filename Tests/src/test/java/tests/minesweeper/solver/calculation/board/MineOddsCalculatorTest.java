@@ -5,15 +5,20 @@ import static org.junit.Assert.assertEquals;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 
 import component.model.Section;
 import component.model.gamesquare.GameSquare;
 import component.model.gamesquare.SquareValue;
+import solver.board.analyzing.BoardAnalyzer;
 import solver.board.analyzing.SectionAnalyzer;
 import solver.calculation.board.MineOddsCalculator;
+import solver.component.KeyValue;
 import solver.component.Rule;
+import tests.minesweeper.data.GameBoardTestScenarios;
 import tests.minesweeper.data.SectionTestScenarios;
 
 public class MineOddsCalculatorTest {
@@ -42,15 +47,16 @@ public class MineOddsCalculatorTest {
 		
 		assertEquals(1, sections.size());
 	}
-	
-	
+
 	@Test
 	public void calculateOddsTest02() {
 		List<Section> sections = SectionTestScenarios.SCENARIO_SPECIAL_02.getSections();
+		List<GameSquare> allGameSquares = sections.stream().flatMap(e -> e.getGameSquares().stream()).collect(Collectors.toList());
 		
-		for (Section section : sections) {
-			List<Rule> rules = SectionAnalyzer.breakupSectionIntoRules(section);
-			Collection<Section> allSubSectionsFromRules = SectionAnalyzer.getSections(rules, section.getGameSquares());
+		//for (Section section : sections) 
+		{
+			List<Rule> rules = SectionAnalyzer.breakupSectionIntoRules(sections);
+			Collection<Section> allSubSectionsFromRules = SectionAnalyzer.getSections(rules, allGameSquares);
 			
 			Map<Section, Double> results = MineOddsCalculator.calculateOdds(rules, allSubSectionsFromRules);
 			
@@ -68,8 +74,32 @@ public class MineOddsCalculatorTest {
 		assertEquals(1, sections.size());
 	}
 	
+	@Test
+	public void testCalculateAllPossibilities01() {
+		Collection<Section> sections = BoardAnalyzer.breakupBoard(GameBoardTestScenarios.SCENARIO_SPECIAL_01.getGameBoard());
+		List<Rule> rules = SectionAnalyzer.breakupSectionIntoRules(sections);
+		sections = SectionAnalyzer.getSections(rules, sections.stream().flatMap(e -> e.getGameSquares().stream()).collect(Collectors.toList()));
+		
+		Set<List<KeyValue>> results = MineOddsCalculator.calculateAllPossibilities(rules, sections);
+		
+		assertEquals(6, results.size());
+	}
+	
+	@Test
+	public void testCalculateAllPossibilities02() {
+		Collection<Section> sections = BoardAnalyzer.breakupBoard(GameBoardTestScenarios.SCENARIO_SPECIAL_03.getGameBoard());
+		List<Rule> rules = SectionAnalyzer.breakupSectionIntoRules(sections);
+		sections = SectionAnalyzer.getSections(rules, sections.stream().flatMap(e -> e.getGameSquares().stream()).collect(Collectors.toList()));
+		
+		Set<List<KeyValue>> results = MineOddsCalculator.calculateAllPossibilities(rules, sections);
+		
+		assertEquals(12, results.size());
+	}
+	
 	private void assertGameSquareOdds(Double expectedResultUpTo4DecimalPlaces, GameSquare gameSquare, Map<Section, Double> results) {
-		assertEquals(expectedResultUpTo4DecimalPlaces, results.get(getSectionFromResults(gameSquare, results)), DELTA);
+		Section resultSection = getSectionFromResults(gameSquare, results);
+		Double result = results.get(resultSection);
+		assertEquals(expectedResultUpTo4DecimalPlaces, result, DELTA);
 	}
 	
 	private Section getSectionFromResults(GameSquare needle, Map<Section, Double> hayStack) {

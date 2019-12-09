@@ -1,6 +1,5 @@
 package solver.calculation.board;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +12,7 @@ import component.model.Section;
 import solver.board.analyzing.SolutionAnalyzer;
 import solver.component.KeyValue;
 import solver.component.Rule;
+import utility.logging.Logger;
 import utility.util.MathUtil;
 
 /**
@@ -30,25 +30,9 @@ public class MineOddsCalculator {
 	 * @return
 	 */
 	public static Map<Section, Double> calculateOdds(List<Rule> rules, Collection<Section> sections) {
-		Collection<KeyValue> keyValues = transformSectionsToKeyValues(sections);
-		
-		System.out.println();
-		
-		final int maxSum = rules.stream().mapToInt(Rule::getResultsEqual).sum();
-		final int minSum = rules.stream().mapToInt(Rule::getResultsEqual).max().getAsInt();
-		
-		System.out.println(keyValues);
-		System.out.println(maxSum);
-		System.out.println(minSum);
-		System.out.println();
-		
-		// Get all possible solutions
-		Set<List<KeyValue>> uniqueResults = new HashSet<>();
-		for (int i = minSum; i<=maxSum; i++) {
-			uniqueResults.addAll(SolutionAnalyzer.getAllPossibilities(i, new ArrayList<KeyValue>(keyValues)));
-		}
-		
+		Logger.setCurrentTime();
 		Set<List<KeyValue>> results = calculateAllPossibilities(rules, sections);
+		Logger.logTimeTook("Calculating all " + results.size() + " possiblities");
 		
 		long[] ncrs = new long[results.iterator().next().size()];
 		
@@ -92,26 +76,32 @@ public class MineOddsCalculator {
 		return returnValue;
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @param rules
+	 * @param sections
+	 * @return
+	 */
 	public static Set<List<KeyValue>> calculateAllPossibilities(List<Rule> rules, Collection<Section> sections) {
 		Collection<KeyValue> keyValues = transformSectionsToKeyValues(sections);
-		
-		System.out.println();
 		
 		final int maxSum = rules.stream().mapToInt(Rule::getResultsEqual).sum();
 		final int minSum = rules.stream().mapToInt(Rule::getResultsEqual).max().getAsInt();
 		
-		System.out.println(keyValues);
-		System.out.println(maxSum);
-		System.out.println(minSum);
-		System.out.println();
+		Logger.logMessage("Iterating from: " + minSum + " to: " + maxSum);
 		
 		// Get all possible solutions
 		Set<List<KeyValue>> uniqueResults = new HashSet<>();
 		for (int i = minSum; i<=maxSum; i++) {
-			uniqueResults.addAll(SolutionAnalyzer.getAllPossibilities(i, new ArrayList<KeyValue>(keyValues)));
+			Logger.setCurrentTime();
+			List<List<KeyValue>> results = SolutionAnalyzer.getAllPossibilities(i, keyValues);
+			uniqueResults.addAll(results);
+			Logger.logTimeTook("Getting " + results.size() + " possibilities for: " + i);
 		}
 		
 		Set<List<KeyValue>> results = new HashSet<>();
+		Logger.setCurrentTime();
 		
 		// Filter solutions that do not follow the 'Rules'. For example, if [K+NOP+J] = 1, then J and K cannot both be 1.
 		for (List<KeyValue> resul : uniqueResults) {
@@ -137,6 +127,7 @@ public class MineOddsCalculator {
 				results.add(resul);
 			}
 		}
+		Logger.logTimeTook("Filtering out " + (uniqueResults.size() - results.size()) + " results");
 		
 		return results;
 	}

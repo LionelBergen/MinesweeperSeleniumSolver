@@ -42,7 +42,7 @@ public class SectionTestScenarios {
 		ss.add(new Section(new HashSet<>(gameSquares)));
 		expectedContents.put(ss, gameSquares);
 		
-		return new SectionTestScenario(Arrays.asList(section), expectedContents, Arrays.asList(new Rule(gameSquares, 1)));
+		return new SectionTestScenario(Arrays.asList(section), expectedContents, Arrays.asList(new Rule(gameSquares, 1, section)));
 	}
 	
 	private static SectionTestScenario getScenario02() {
@@ -68,8 +68,8 @@ public class SectionTestScenarios {
 		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3));
 		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3));
 		
-		Rule touchingThe2 = createSweeperSet(gameSquareResults1, 2);
-		Rule touchingThe3 = createSweeperSet(gameSquareResults2, 3);
+		Rule touchingThe2 = createSweeperSet(gameSquareResults1, 2, section);
+		Rule touchingThe3 = createSweeperSet(gameSquareResults2, 3, section);
 		
 		List<Rule> expectedResults = Arrays.asList(
 				touchingThe2,
@@ -134,8 +134,8 @@ public class SectionTestScenarios {
 		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 2));
 		gameSquareResults2.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 3));
 		
-		Rule touchingThe2 = createSweeperSet(gameSquareResults1, 2);
-		Rule touchingThe4 = createSweeperSet(gameSquareResults2, 2);
+		Rule touchingThe2 = createSweeperSet(gameSquareResults1, 2, section);
+		Rule touchingThe4 = createSweeperSet(gameSquareResults2, 2, section);
 		
 		List<Rule> expectedResults = Arrays.asList(
 				touchingThe2,
@@ -203,9 +203,9 @@ public class SectionTestScenarios {
 		gameSquareResults3.add(new GameSquare("O", SquareValue.BLANK_UNTOUCHED, 3, 4));
 		gameSquareResults3.add(new GameSquare("P", SquareValue.BLANK_UNTOUCHED, 4, 4));
 
-		Rule touchingThe3 = createSweeperSet(gameSquareResults1, 3);
-		Rule touchingThe11 = createSweeperSet(gameSquareResults2, 1);
-		Rule touchingThe12 = createSweeperSet(gameSquareResults3, 1);
+		Rule touchingThe3 = createSweeperSet(gameSquareResults1, 3, section);
+		Rule touchingThe11 = createSweeperSet(gameSquareResults2, 1, section);
+		Rule touchingThe12 = createSweeperSet(gameSquareResults3, 1, section);
 		
 		List<Rule> expectedResults = Arrays.asList(
 				touchingThe3,
@@ -328,11 +328,11 @@ public class SectionTestScenarios {
 		gameSquareResults5.add(new GameSquare("W", SquareValue.BLANK_UNTOUCHED, 12, 4));
 		gameSquareResults5.add(new GameSquare("Q", SquareValue.BLANK_UNTOUCHED, 12, 2));
 
-		Rule rule1 = createSweeperSet(gameSquareResults1, 3);
-		Rule rule2 = createSweeperSet(gameSquareResults2, 1);
-		Rule rule3 = createSweeperSet(gameSquareResults3, 1);
-		Rule rule4 = createSweeperSet(gameSquareResults4, 2);
-		Rule rule5 = createSweeperSet(gameSquareResults5, 1);
+		Rule rule1 = createSweeperSet(gameSquareResults1, 3, section1);
+		Rule rule2 = createSweeperSet(gameSquareResults2, 1, section1);
+		Rule rule3 = createSweeperSet(gameSquareResults3, 1, section1);
+		Rule rule4 = createSweeperSet(gameSquareResults4, 2, section2);
+		Rule rule5 = createSweeperSet(gameSquareResults5, 1, section2);
 		
 		List<Rule> expectedResults = Arrays.asList(
 				rule1,
@@ -403,7 +403,7 @@ public class SectionTestScenarios {
 		return new SectionTestScenario(Arrays.asList(section1, section2), expectedContents, expectedResults);
 	}
 	
-	private static Rule createSweeperSet(List<GameSquare> gameSquares, int expectedNumberOfMines) {
-		return new Rule(gameSquares, expectedNumberOfMines);
+	private static Rule createSweeperSet(List<GameSquare> gameSquares, int expectedNumberOfMines, Section section) {
+		return new Rule(gameSquares, expectedNumberOfMines, section);
 	}
 }

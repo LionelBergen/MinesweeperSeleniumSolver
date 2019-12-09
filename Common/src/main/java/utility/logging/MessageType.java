@@ -1,4 +1,4 @@
-package main.solver.logging;
+package utility.logging;
 
 public enum MessageType {
 	GENERAL,

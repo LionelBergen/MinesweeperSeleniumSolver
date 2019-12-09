@@ -167,7 +167,7 @@ public class BoardAnalyzerTest {
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		List<Section> expectedResults = testScenerio.getExpectedSections();
 		
-		List<? extends GenericSection<? extends GameSquare>> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
+		List<Section> actualResults = BoardAnalyzer.breakupBoard(gameBoard);
 
 		assertSectionListsEqual(expectedResults, actualResults);
 	}
