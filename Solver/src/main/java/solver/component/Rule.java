@@ -19,8 +19,6 @@ public class Rule {
 	private final int resultsEqual;
 	private final Section sectionThisRuleCameFrom;
 	
-	public static final int UNKNOWN_VALUE = -1;
-	
 	public Rule(Collection<GameSquare> squares, int resultsEqual, Section sectionThisRuleCameFrom) {
 		this.squares = squares; 
 		this.resultsEqual = resultsEqual;

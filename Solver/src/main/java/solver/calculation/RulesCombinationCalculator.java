@@ -32,7 +32,7 @@ public class RulesCombinationCalculator {
 			Set<List<KeyValue>> allCombinationsOfRule = new HashSet<>();
 			
 			for (List<KeyValue> knownValues : allKnownValues) {
-				allCombinationsOfRule.addAll(foo(sections, rules, knownValues, nextRule));
+				allCombinationsOfRule.addAll(getAllCombinationsForRule(sections, rules, knownValues, nextRule));
 			}
 			allKnownValues = new ArrayList<>(allCombinationsOfRule);
 		}
@@ -43,7 +43,7 @@ public class RulesCombinationCalculator {
 		return allKnownValues;
 	}
 	
-	private static Collection<List<KeyValue>> foo(Collection<Section> allSections, Collection<Rule> allRules, Collection<KeyValue> knownValues, Rule rule) {
+	private static Collection<List<KeyValue>> getAllCombinationsForRule(Collection<Section> allSections, Collection<Rule> allRules, Collection<KeyValue> knownValues, Rule rule) {
 		List<Section> sectionRelatingToRule = getSectionsInRule(allSections, rule);
 		List<KeyValue> sectionsTransformed = transformSectionsToKeyValues(sectionRelatingToRule, UNKNOWN_VALUE);
 		populateListWithKnown(sectionsTransformed, knownValues);
