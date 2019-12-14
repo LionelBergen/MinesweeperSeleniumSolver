@@ -22,7 +22,7 @@ public class RulesCombinationCalculator {
 		
 		List<List<KeyValue>> values = getAllVariationsOfARule(sectionRelatingToRule, firstRule);
 		// filter any items that are invalid given the other rules
-		values = values.stream().filter(e -> anyValueTooHigh(rules, e)).collect(Collectors.toList());
+		values = getValuesThatDontOverflow(values, rules);
 		
 		List<List<KeyValue>> allKnownValues = new ArrayList<>();
 		allKnownValues.addAll(values);
@@ -42,14 +42,13 @@ public class RulesCombinationCalculator {
 		return allKnownValues;
 	}
 	
-	// TODO: rename
 	private static List<List<KeyValue>> foo(List<Section> allSections, List<KeyValue> knownValues, Rule rule, List<Rule> allRules, Collection<List<KeyValue>> results) {
 		List<Section> sectionRelatingToRule = getSectionsInRule(allSections, rule);
 		List<KeyValue> sectionsTransformed = transformSectionsToKeyValues(sectionRelatingToRule);
 		populateListWithKnown(sectionsTransformed, knownValues);
 		
 		List<List<KeyValue>> allValuesForRule = getAllVariationsOfARuleWithKnownValues(sectionsTransformed, rule);
-		allValuesForRule = allValuesForRule.stream().filter(e -> anyValueTooHigh(allRules, e)).collect(Collectors.toList());
+		allValuesForRule = getValuesThatDontOverflow(allValuesForRule, allRules);
 		
 		// Add all known values to the list
 		combineLists(knownValues, allValuesForRule);
@@ -57,23 +56,7 @@ public class RulesCombinationCalculator {
 		return allValuesForRule;
 	}
 	
-	// "multiply" a list.
-	private static void combineLists(List<KeyValue> list1, List<List<KeyValue>> list2) {
-		for (List<KeyValue> l2 : list2) {
-			// Add all values that don't exist
-			l2.addAll(list1.stream().filter(e -> 
-				!l2.stream().anyMatch(e2 -> e2.getKey().equals(e.getKey())))
-					
-					.collect(Collectors.toList())
-					);
-		}
-		
-		// list1.stream().map(e1 -> e1.addAll(list2));
-	}
-	
 	public static List<List<KeyValue>> getAllVariationsOfARule(List<Section> sectionsRelatingToRule, Rule rule) {
-		System.out.println("Processing: " + sectionsRelatingToRule + " = " + rule.getResultsEqual());
-		
 		List<KeyValue> sectionsTransformed = transformSectionsToKeyValues(sectionsRelatingToRule);
 		return getAllVariationsOfARuleWithKnownValues(sectionsTransformed, rule);
 	}
@@ -125,34 +108,21 @@ public class RulesCombinationCalculator {
 		return actualResult == rule.getResultsEqual();
 	}
 	
-	private static boolean anyValueTooHigh(Collection<Rule> rules, Collection<KeyValue> values) {
-		boolean allRulesAreFollowed = false;
-		
-		for (Rule rule : rules) {
-			int actualResult = 0;
-			
-			for (KeyValue value : values) {
-				Section section = (Section) value.getKey();
-				
-				if (rule.getSquares().containsAll(section.getGameSquares())) {
-					actualResult += value.getValue();
-				}
-			}
-			
-			if (actualResult > rule.getResultsEqual()) {
-				allRulesAreFollowed = true;
-				break;
-			}
-		}
-		
-		return !allRulesAreFollowed;
+	/**
+	 * "multiply" a list.
+	 */
+	private static void combineLists(List<KeyValue> valueToAddToAllLists, List<List<KeyValue>> listToModify) {
+		// Add all items to the list that are not already on the list
+		listToModify.stream().forEach(l2 -> 
+			l2.addAll(valueToAddToAllLists.stream().filter(e -> !l2.stream().anyMatch(e2 -> e2.getKey().equals(e.getKey()))).collect(Collectors.toList()))
+		);
 	}
 	
 	/**
 	 * If any key in the knownValues list matches a key in the listToPopulate, sets the value of the 'listToPopulate' to the value found 
 	 * 
 	 * @param listToPopulate List to modify
-	 * @param knownValues Gets values from here
+	 * @param knownValues Get values from here
 	 */
 	private static void populateListWithKnown(Collection<KeyValue> listToPopulate, Collection<KeyValue> knownValues) {
 		for (KeyValue value : listToPopulate) {
@@ -164,24 +134,23 @@ public class RulesCombinationCalculator {
 		}
 	}
 	
+	private static boolean anyValueTooHigh(Collection<Rule> rules, Collection<KeyValue> values) {
+		return rules.stream().anyMatch(rule -> getValueForSquaresInRule(values, rule) > rule.getResultsEqual());
+	}
+	
 	private static boolean anyRulesBroken(Collection<Rule> rules, Collection<KeyValue> values) {
-		for (Rule rule : rules) {
-			int actualResult = 0;
-			
-			for (KeyValue value : values) {
-				Section section = (Section) value.getKey();
-				
-				if (rule.getSquares().containsAll(section.getGameSquares())) {
-					actualResult += value.getValue();
-				}
-			}
-			
-			if (actualResult != rule.getResultsEqual()) {
-				return true;
-			}
-		}
-		
-		return false;
+		return rules.stream().anyMatch(rule -> getValueForSquaresInRule(values, rule) != rule.getResultsEqual());
+	}
+	
+	private static int getValueForSquaresInRule(Collection<KeyValue> values, Rule rule) {
+		// Filter the values where the rule contains all the squares, then add the value for each
+		return values.stream()
+			.filter(e -> rule.getSquares().containsAll(((Section) e.getKey()).getGameSquares()))
+			.collect(Collectors.summingInt(e -> e.getValue()));
+	}
+	
+	private static List<List<KeyValue>> getValuesThatDontOverflow(Collection<List<KeyValue>> valuesToFilter, Collection<Rule> rules) {
+		return valuesToFilter.stream().filter(e -> !anyValueTooHigh(rules, e)).collect(Collectors.toList());
 	}
 	
 	/**
