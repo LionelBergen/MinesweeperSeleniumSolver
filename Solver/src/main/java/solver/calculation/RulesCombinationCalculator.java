@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import component.model.Section;
@@ -26,38 +27,14 @@ public class RulesCombinationCalculator {
 		List<List<KeyValue>> allKnownValues = new ArrayList<>();
 		allKnownValues.addAll(values);
 		
-		List<List<KeyValue>> results = new ArrayList<>();
-		
-		Rule nextRule = otherRules.get(0);
-		for (List<KeyValue> knownValues : allKnownValues) {
-			results.addAll(foo(allSections, knownValues, nextRule, rules, results));
+		for (Rule nextRule : otherRules) {
+			Set<List<KeyValue>> results = new HashSet<>();
+			
+			for (List<KeyValue> knownValues : allKnownValues) {
+				results.addAll(foo(allSections, knownValues, nextRule, rules, results));
+			}
+			allKnownValues = new ArrayList<>(results);
 		}
-		allKnownValues = new ArrayList<>(new HashSet<>(results));
-		results = new ArrayList<>();
-		
-		nextRule = otherRules.get(1);
-		for (List<KeyValue> knownValues : allKnownValues) {
-			results.addAll(foo(allSections, knownValues, nextRule, rules, results));
-		}
-
-		allKnownValues = new ArrayList<>(new HashSet<>(results));
-		results = new ArrayList<>();
-		
-		nextRule = otherRules.get(2);
-		for (List<KeyValue> knownValues : allKnownValues) {
-			results.addAll(foo(allSections, knownValues, nextRule, rules, results));
-		}
-
-		allKnownValues = new ArrayList<>(new HashSet<>(results));
-		results = new ArrayList<>();
-		
-		nextRule = otherRules.get(3);
-		for (List<KeyValue> knownValues : allKnownValues) {
-			results.addAll(foo(allSections, knownValues, nextRule, rules, results));
-		}
-
-		allKnownValues = new ArrayList<>(new HashSet<>(results));
-		results = new ArrayList<>();
 		
 		// filter items with broken rules
 		allKnownValues = allKnownValues.stream().filter(e -> !anyRulesBroken(rules, e)).collect(Collectors.toList());
