@@ -91,7 +91,6 @@ public class RulesCombinationCalculatorTest {
 			for (KeyValue x : g) {
 				// Set all maxValues to 0 so we can assert properly (expected all contain a maxValue of 0)
 				x.setMaxValue(0);
-				// System.out.println(x.getKey().toString());
 			}
 			
 			g.sort((e1, e2) -> compare(e1, e2));
