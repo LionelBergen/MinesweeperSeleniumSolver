@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import component.model.Section;
 import solver.board.analyzing.BoardAnalyzer;
 import solver.board.analyzing.SectionAnalyzer;
-import solver.calculation.board.MineOddsCalculator;
+import solver.calculation.RulesCombinationCalculator;
 import solver.component.KeyValue;
 import solver.component.Rule;
 import tests.minesweeper.data.GameBoardTestScenarios;
@@ -19,8 +19,6 @@ import tests.minesweeper.data.component.GameBoardTestScenario;
 import utility.util.MathUtil;
 
 public class Garb {
-	
-	@SuppressWarnings("unchecked")
 	public static void main(String [] args) {
 		final Map<Integer, BigDecimal> mineToWeight = new HashMap<>();
 		mineToWeight.put(Integer.valueOf(5), BigDecimal.valueOf(0.00287497486));
@@ -34,17 +32,17 @@ public class Garb {
 
 		Section section1 = sections.get(0);
 		Section section2 = sections.get(1);
-		Set<List<KeyValue>> resultsLeftSide = new HashSet<>();
-		Set<List<KeyValue>> results2 = new HashSet<>();
+		List<List<KeyValue>> resultsLeftSide = new ArrayList<>();
+		List<List<KeyValue>> results2 = new ArrayList<>();
 		Set<List<KeyValue>> resultsComplete = new HashSet<>();
 				
 		List<Rule> rules = SectionAnalyzer.breakupSectionIntoRules(section1);
 		Collection<Section> subSections = SectionAnalyzer.getSections(rules, section1.getGameSquares());
-		resultsLeftSide = MineOddsCalculator.calculateAllPossibilities(rules, subSections);
+		resultsLeftSide = RulesCombinationCalculator.getAllVariations(subSections, rules);
 		
 		rules = SectionAnalyzer.breakupSectionIntoRules(section2);
 		subSections = SectionAnalyzer.getSections(rules, section2.getGameSquares());
-		results2 = MineOddsCalculator.calculateAllPossibilities(rules, subSections);
+		results2 = RulesCombinationCalculator.getAllVariations(subSections, rules);
 		
 		for (List<KeyValue> x : resultsLeftSide) {
 			for (List<KeyValue> y : results2) {

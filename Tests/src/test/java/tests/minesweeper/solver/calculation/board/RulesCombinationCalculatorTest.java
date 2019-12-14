@@ -23,10 +23,8 @@ import solver.component.Rule;
 import tests.minesweeper.data.SectionTestScenarios;
 
 public class RulesCombinationCalculatorTest {
-	
-	// Sort for debugging
+	// Sort used for debugging
 	private static final Map<String, Integer> sortingMap = new HashMap<>();
-	
 	static {
 		sortingMap.put("G", 999);
 		sortingMap.put("J", 998);
@@ -255,5 +253,4 @@ public class RulesCombinationCalculatorTest {
 		
 		return list;
 	}
-
 }

@@ -32,11 +32,6 @@ public class Section extends GenericSection<GameSquare> {
 		return this.gameSquares;
 	}
 
-	/*@Override
-	public void setGameSquares(Set<GameSquare> gameSquares) {
-		this.gameSquares = gameSquares;
-	}*/
-
 	@Override
 	public void setGameSquares(Set<GameSquare> gameSquares) {
 		this.gameSquares = gameSquares;
