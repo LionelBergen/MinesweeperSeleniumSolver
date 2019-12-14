@@ -1,6 +1,7 @@
 package solver.calculation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -14,37 +15,40 @@ import solver.component.Rule;
 import static solver.component.transformer.SectionTransformer.transformSectionsToKeyValues;
 
 public class RulesCombinationCalculator {
-	public static List<List<KeyValue>> getAllVariations(List<Section> allSections, List<Rule> rules) {
-		final Rule firstRule = rules.get(0);
-		List<Rule> otherRules = rules.stream().filter(e -> e != firstRule).collect(Collectors.toList());
+	private static final int UNKNOWN_VALUE = 0;
+	
+	public static List<List<KeyValue>> getAllVariations(List<Section> allSections, List<Rule> allRules) {
+		// start by getting the first Rule & sections relating to it
+		final Rule ruleToProcess = allRules.get(0);
+		List<Rule> rulesLeftToProcess = allRules.stream().filter(e -> e != ruleToProcess).collect(Collectors.toList());
+		List<Section> sectionRelatingToRule = getSectionsInRule(allSections, ruleToProcess);
 		
-		List<Section> sectionRelatingToRule = getSectionsInRule(allSections, firstRule);
-		
-		List<List<KeyValue>> values = getAllVariationsOfARule(sectionRelatingToRule, firstRule);
-		// filter any items that are invalid given the other rules
-		values = getValuesThatDontOverflow(values, rules);
+		// Get all possible combinations given the rule & sections
+		List<List<KeyValue>> results = getAllVariationsOfARule(sectionRelatingToRule, ruleToProcess);
+		// filter any items that are invalid given all rules
+		results = getValuesThatDontOverflow(results, allRules);
 		
 		List<List<KeyValue>> allKnownValues = new ArrayList<>();
-		allKnownValues.addAll(values);
+		allKnownValues.addAll(results);
 		
-		for (Rule nextRule : otherRules) {
-			Set<List<KeyValue>> results = new HashSet<>();
+		for (Rule nextRule : rulesLeftToProcess) {
+			Set<List<KeyValue>> resultz = new HashSet<>();
 			
 			for (List<KeyValue> knownValues : allKnownValues) {
-				results.addAll(foo(allSections, knownValues, nextRule, rules, results));
+				resultz.addAll(foo(allSections, knownValues, nextRule, allRules, results));
 			}
-			allKnownValues = new ArrayList<>(results);
+			allKnownValues = new ArrayList<>(resultz);
 		}
 		
 		// filter items with broken rules
-		allKnownValues = allKnownValues.stream().filter(e -> !anyRulesBroken(rules, e)).collect(Collectors.toList());
+		allKnownValues = allKnownValues.stream().filter(e -> !anyRulesBroken(allRules, e)).collect(Collectors.toList());
 		
 		return allKnownValues;
 	}
 	
 	private static List<List<KeyValue>> foo(List<Section> allSections, List<KeyValue> knownValues, Rule rule, List<Rule> allRules, Collection<List<KeyValue>> results) {
 		List<Section> sectionRelatingToRule = getSectionsInRule(allSections, rule);
-		List<KeyValue> sectionsTransformed = transformSectionsToKeyValues(sectionRelatingToRule);
+		List<KeyValue> sectionsTransformed = transformSectionsToKeyValues(sectionRelatingToRule, UNKNOWN_VALUE);
 		populateListWithKnown(sectionsTransformed, knownValues);
 		
 		List<List<KeyValue>> allValuesForRule = getAllVariationsOfARuleWithKnownValues(sectionsTransformed, rule);
@@ -56,55 +60,61 @@ public class RulesCombinationCalculator {
 		return allValuesForRule;
 	}
 	
+	/**
+	 * Given a Section and rule, return all possible combinations that do not break the rule
+	 * 
+	 * @param sectionsRelatingToRule All sections the rule relates to
+	 * @param rule Rule which cannot be broken
+	 * @return All variations of values for the arguments
+	 */
 	public static List<List<KeyValue>> getAllVariationsOfARule(List<Section> sectionsRelatingToRule, Rule rule) {
-		List<KeyValue> sectionsTransformed = transformSectionsToKeyValues(sectionsRelatingToRule);
+		List<KeyValue> sectionsTransformed = transformSectionsToKeyValues(sectionsRelatingToRule, UNKNOWN_VALUE);
 		return getAllVariationsOfARuleWithKnownValues(sectionsTransformed, rule);
 	}
 	
 	public static List<List<KeyValue>> getAllVariationsOfARuleWithKnownValues(List<KeyValue> sectionsRelatingToRule, Rule rule) {
 		List<List<KeyValue>> results = new ArrayList<>();
 		
-		List<KeyValue> valuesWithKnown = sectionsRelatingToRule.stream().filter(e -> e.getValue() > 0).collect(Collectors.toList());
+		// No need to proces values we already know the values of
+		List<KeyValue> valuesWithKnown = sectionsRelatingToRule.stream().filter(e -> e.getValue() != UNKNOWN_VALUE).collect(Collectors.toList());
 		sectionsRelatingToRule.removeAll(valuesWithKnown);
 		
+		// populate results with all variations of rule
 		getAllVariationsOfARule(sectionsRelatingToRule, rule, results, valuesWithKnown);
 		
 		return results;
 	}
 	
-	private static void getAllVariationsOfARule(List<KeyValue> sections, Rule rule, List<List<KeyValue>> results, List<KeyValue> values) {
+	private static void getAllVariationsOfARule(List<KeyValue> sections, Rule rule, List<List<KeyValue>> results, List<KeyValue> knownValues) {
 		if (sections.isEmpty()) {
-			if (isRuleFollowed(rule, values)) {
-				results.add(values);
+			if (isRuleFollowed(rule, knownValues)) {
+				results.add(knownValues);
 			}
-			return;
 		}
-		
-		KeyValue section = sections.get(0);
-		final int maxValue = Math.min(section.getMaxValue(), rule.getResultsEqual());
-		
-		for (int i=0; i<=maxValue; i++) {
-			List<KeyValue> valuesHere = new ArrayList<>();
-			valuesHere.addAll(values);
-			valuesHere.add(new KeyValue(i, section.getMaxValue(), section.getKey()));
+		else
+		{
+			// Get a section from the list
+			KeyValue section = sections.get(0);
 			
-			List<KeyValue> otherSections = sections.stream().filter(e -> e != section).collect(Collectors.toList());
+			// We know the value cannot be higher than the max for the Section or the rule
+			final int maxValue = Math.min(section.getMaxValue(), rule.getResultsEqual());
 			
-			getAllVariationsOfARule(otherSections, rule, results, valuesHere);
+			// Add a list for every value from 0-max
+			for (int i=0; i<=maxValue; i++) {
+				// instantiate a new list. Doesn't matter that the list has the same object pointers we just need a new List object.
+				List<KeyValue> newKnownValues = new ArrayList<>();
+				newKnownValues.addAll(knownValues);
+				newKnownValues.add(new KeyValue(i, section.getMaxValue(), section.getKey()));
+				// TODO: isEmpty here?
+				List<KeyValue> otherSections = sections.stream().filter(e -> e != section).collect(Collectors.toList());
+				getAllVariationsOfARule(otherSections, rule, results, newKnownValues);
+			}
 		}
 	}
 
 	private static boolean isRuleFollowed(Rule rule, Collection<KeyValue> values) {
-		int actualResult = 0;
-		
-		for (KeyValue value : values) {
-			Section section = (Section) value.getKey();
-			
-			if (rule.getSquares().containsAll(section.getGameSquares())) {
-				actualResult += value.getValue();
-			}
-		}
-		
+		int actualResult = getValueForSquaresInRule(values, rule);
+
 		return actualResult == rule.getResultsEqual();
 	}
 	

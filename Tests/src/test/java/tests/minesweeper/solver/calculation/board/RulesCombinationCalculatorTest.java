@@ -184,7 +184,7 @@ public class RulesCombinationCalculatorTest {
 		section4.setGameSquares(new HashSet<>(Arrays.asList(squareJ)));
 		
 		List<Section> allSections = Arrays.asList(section1, section2, section3, section4);
-		List<KeyValue> allSectionsWithKnown = transformSectionsToKeyValues(allSections);
+		List<KeyValue> allSectionsWithKnown = transformSectionsToKeyValues(allSections, 0);
 		
 		List<KeyValue> expectedResult1 = getExpectedResult(new int[]{1, 1, 1, 0}, allSections);
 		List<KeyValue> expectedResult2 = getExpectedResult(new int[]{1, 1, 0, 1}, allSections);
@@ -232,7 +232,7 @@ public class RulesCombinationCalculatorTest {
 		section4.setGameSquares(new HashSet<>(Arrays.asList(squareJ)));
 		
 		List<Section> allSections = Arrays.asList(section1, section2, section3, section4);
-		List<KeyValue> allSectionsWithKnown = transformSectionsToKeyValues(allSections);
+		List<KeyValue> allSectionsWithKnown = transformSectionsToKeyValues(allSections, 0);
 		// set two known values
 		allSectionsWithKnown.get(0).setValue(2);
 		allSectionsWithKnown.get(1).setValue(1);

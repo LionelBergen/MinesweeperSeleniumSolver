@@ -10,7 +10,7 @@ import solver.component.KeyValue;
 public class SectionTransformer {
 	private SectionTransformer() { }
 	
-	public static List<KeyValue> transformSectionsToKeyValues(Collection<Section> sections) {
-		return sections.stream().map(e -> new KeyValue(0, e.getGameSquares().size(), e)).collect(Collectors.toList());
+	public static List<KeyValue> transformSectionsToKeyValues(final Collection<Section> sections, final int defaultValue) {
+		return sections.stream().map(e -> new KeyValue(defaultValue, e.getGameSquares().size(), e)).collect(Collectors.toList());
 	}
 }
