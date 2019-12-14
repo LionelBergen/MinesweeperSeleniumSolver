@@ -31,6 +31,14 @@ public class KeyValue {
 		this.key = key;
 	}
 
+	public int getMaxValue() {
+		return maxValue;
+	}
+
+	public void setMaxValue(int maxValue) {
+		this.maxValue = maxValue;
+	}
+
 	@Override
 	public boolean equals(Object other) {
 	    // self check
@@ -56,13 +64,5 @@ public class KeyValue {
 	@Override
 	public String toString() {
 		return this.key + " = " + this.value;
-	}
-
-	public int getMaxValue() {
-		return maxValue;
-	}
-
-	public void setMaxValue(int maxValue) {
-		this.maxValue = maxValue;
 	}
 }

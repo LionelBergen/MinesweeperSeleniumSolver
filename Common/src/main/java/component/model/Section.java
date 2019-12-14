@@ -16,8 +16,7 @@ public class Section extends GenericSection<GameSquare> {
 	public Section(Set<GameSquare> gameSquares) {
 		this.gameSquares = gameSquares;
 	}
-	
-	// TODO: remove duplicate
+
 	public Section(Collection<GameSquare> gameSquares) {
 		this.gameSquares = new HashSet<>(gameSquares);
 	}
