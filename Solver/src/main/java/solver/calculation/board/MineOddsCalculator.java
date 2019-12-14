@@ -1,15 +1,15 @@
 package solver.calculation.board;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import component.model.Section;
-import solver.board.analyzing.SolutionAnalyzer;
 import solver.component.KeyValue;
 import solver.component.Rule;
 import utility.logging.Logger;
@@ -84,55 +84,119 @@ public class MineOddsCalculator {
 	 * @return
 	 */
 	public static Set<List<KeyValue>> calculateAllPossibilities(List<Rule> rules, Collection<Section> sections) {
-		Collection<KeyValue> keyValues = transformSectionsToKeyValues(sections);
+		final List<KeyValue> knownValues = new ArrayList<>();
 		
-		final int maxSum = rules.stream().mapToInt(Rule::getResultsEqual).sum();
-		final int minSum = rules.stream().mapToInt(Rule::getResultsEqual).max().getAsInt();
-		
-		Logger.logMessage("Iterating from: " + minSum + " to: " + maxSum);
-		
-		// Get all possible solutions
-		Set<List<KeyValue>> uniqueResults = new HashSet<>();
-		for (int i = minSum; i<=maxSum; i++) {
-			Logger.setCurrentTime();
-			List<List<KeyValue>> results = SolutionAnalyzer.getAllPossibilities(i, keyValues);
-			uniqueResults.addAll(results);
-			Logger.logTimeTook("Getting " + results.size() + " possibilities for: " + i);
-		}
-		
-		Set<List<KeyValue>> results = new HashSet<>();
-		Logger.setCurrentTime();
-		
-		// Filter solutions that do not follow the 'Rules'. For example, if [K+NOP+J] = 1, then J and K cannot both be 1.
-		for (List<KeyValue> resul : uniqueResults) {
-			boolean valid = true;
+		for (Rule rule : rules) {
+			List<Section> sectionsRelatingToRule = getSectionsInRule(sections, rule);
 			
-			for (Rule rs : rules) {
-				int actualResult = 0;
-				for (KeyValue values : resul) {
-					Section section = (Section) values.getKey();
-					
-					if (rs.getSquares().containsAll(section.getGameSquares())) {
-						actualResult += values.getValue();
-					}
-				}
-				
-				if (actualResult != rs.getResultsEqual()) {
-					valid = false;
-					break;
-				}
+			getAllVariationsOfARule(sectionsRelatingToRule, rule);
+			
+			List<KeyValue> valuesForRule = transformSectionsToKeyValues(sectionsRelatingToRule);
+			populateListWithKnown(valuesForRule, knownValues);
+			
+			if (isRuleFollowed(rule, valuesForRule)) {
+				printRuleInfo(valuesForRule, rule);
+				knownValues.addAll(valuesForRule);
+				// This rule is now solved.
+				continue;
 			}
 			
-			if (valid) {
-				results.add(resul);
+			// Get the first unknown value to modify
+			KeyValue section = getFirstValueNotFoundInList(valuesForRule, knownValues);
+			int valueToSet = Math.min(rule.getResultsEqual(), section.getMaxValue());
+			section.setValue(valueToSet);
+			while (anyValuesTooHigh(rule, valuesForRule)) {
+				valueToSet--;
+				section.setValue(valueToSet);
+			}
+			
+			if (valueToSet < 0 ) {
+				throw new RuntimeException("rules cannot be fulfulled");
+			}
+			
+			if (isRuleFollowed(rule, valuesForRule)) {
+				printRuleInfo(valuesForRule, rule);
+				knownValues.addAll(valuesForRule);
+			} else {
+				int x = 0;
 			}
 		}
-		Logger.logTimeTook("Filtering out " + (uniqueResults.size() - results.size()) + " results");
 		
-		return results;
+		return null;
 	}
 	
-	private static Collection<KeyValue> transformSectionsToKeyValues(Collection<Section> sections) {
+	private static KeyValue getFirstValueNotFoundInList(List<KeyValue> values, List<KeyValue> filterList) {
+		return values.stream().filter(e -> !filterList.contains(e)).findFirst().orElse(null);
+	}
+	
+	// for debugging only
+	private static void printRuleInfo(List<KeyValue> values, Rule rule) {
+		List<String> y = values.stream().map(e -> ((Section) e.getKey()) + "=" + e.getValue()).collect(Collectors.toList());
+		
+		System.out.println("solved: " + y + "= " + rule.getResultsEqual());
+	}
+	
+	/**
+	 * If any key in the knownValues list matches a key in the listToPopulate, sets the value of the 'listToPopulate' to the value found 
+	 * 
+	 * @param listToPopulate List to modify
+	 * @param knownValues Gets values from here
+	 */
+	private static void populateListWithKnown(Collection<KeyValue> listToPopulate, Collection<KeyValue> knownValues) {
+		for (KeyValue value : listToPopulate) {
+			for (KeyValue knownValue : knownValues) {
+				if (knownValue.getKey().equals(value.getKey())) {
+					value.setValue(knownValue.getValue());
+				}
+			}
+		}
+	}
+	
+	// Ignores rules which are broken due to being too low (E.g actual=1 rule=2).
+	private static boolean anyValuesTooHigh(Collection<Rule> rules, Collection<KeyValue> values) {
+		boolean allRulesAreFollowed = true;
+		
+		for (Rule rule : rules) {
+			int actualResult = 0;
+			
+			for (KeyValue value : values) {
+				Section section = (Section) value.getKey();
+				
+				if (rule.getSquares().containsAll(section.getGameSquares())) {
+					actualResult += value.getValue();
+				}
+			}
+			
+			if (actualResult > rule.getResultsEqual()) {
+				allRulesAreFollowed = false;
+				break;
+			}
+		}
+		
+		return !allRulesAreFollowed;
+	}
+	
+	// TODO: check if both these methods are needed
+	private static boolean anyValuesTooHigh(Rule rules, Collection<KeyValue> values) {
+		return anyValuesTooHigh(Arrays.asList(rules), values);
+	}
+	
+	/**
+	 * Get all sections relating to a rule. For example if the Rule is {A, BC + D} = 3, we will get A, BC and D.
+	 * 
+	 * @param sections our HayStack. Find Sections here
+	 * @param rule our Needle. Contains sections to be found
+	 * @return Sections in the rule
+	 */
+	private static List<Section> getSectionsInRule(Collection<Section> sections, Rule rule) {
+		return sections.stream().filter(e -> rule.getSquares().containsAll(e.getGameSquares())).collect(Collectors.toList());
+	}
+	
+	private static List<Rule> getRulesFilteredBySection(Collection<Rule> rules, Section section) {
+		return rules.stream().filter(e -> e.getSectionThisRuleCameFrom().equals(section)).collect(Collectors.toList());
+	}
+	
+	private static List<KeyValue> transformSectionsToKeyValues(Collection<Section> sections) {
 		return sections.stream().map(e -> new KeyValue(0, e.getGameSquares().size(), e)).collect(Collectors.toList());
 	}
 }

@@ -1,7 +1,6 @@
 package tests.minesweeper.solver.calculation.board;
 
 import static org.junit.Assert.assertEquals;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;

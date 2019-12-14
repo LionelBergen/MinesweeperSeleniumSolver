@@ -279,54 +279,100 @@ public class SectionTestScenarios {
 		Section section1 = GameBoardTestScenarios.SCENARIO_SPECIAL_03.getExpectedSections().get(0);
 		Section section2 = GameBoardTestScenarios.SCENARIO_SPECIAL_03.getExpectedSections().get(1);
 		
+		// Green
+		final GameSquare A = new GameSquare("A", SquareValue.BLANK_UNTOUCHED, 4, 3);
+		final GameSquare B = new GameSquare("B", SquareValue.BLANK_UNTOUCHED, 5, 3);
+		final GameSquare F = new GameSquare("F", SquareValue.BLANK_UNTOUCHED, 4, 4);
+		final GameSquare I = new GameSquare("I", SquareValue.BLANK_UNTOUCHED, 4, 5);
+		
+		// Pink
+		final GameSquare C = new GameSquare("C", SquareValue.BLANK_UNTOUCHED, 6, 3);
+		
+		// Yellow
+		final GameSquare J = new GameSquare("J", SquareValue.BLANK_UNTOUCHED, 5, 5);
+		
+		// Brown
+		final GameSquare G = new GameSquare("G", SquareValue.BLANK_UNTOUCHED, 6, 4);
+		
+		// Orange
+		final GameSquare D = new GameSquare("D", SquareValue.BLANK_UNTOUCHED, 7, 3);
+		final GameSquare E = new GameSquare("E", SquareValue.BLANK_UNTOUCHED, 8, 3);
+		final GameSquare H = new GameSquare("H", SquareValue.BLANK_UNTOUCHED, 8, 4);
+		final GameSquare L = new GameSquare("L", SquareValue.BLANK_UNTOUCHED, 8, 5);
+		
+		// Purple
+		final GameSquare K = new GameSquare("K", SquareValue.BLANK_UNTOUCHED, 7, 5);
+		
+		// Light blue
+		final GameSquare M = new GameSquare("M", SquareValue.BLANK_UNTOUCHED, 5, 6);
+		final GameSquare N = new GameSquare("N", SquareValue.BLANK_UNTOUCHED, 6, 6);
+		final GameSquare O = new GameSquare("O", SquareValue.BLANK_UNTOUCHED, 7, 6);
+		
+		
+		// Dark blue
+		final GameSquare P = new GameSquare("P", SquareValue.BLANK_UNTOUCHED, 11, 2);
+		final GameSquare T = new GameSquare("T", SquareValue.BLANK_UNTOUCHED, 11, 3);
+		final GameSquare V = new GameSquare("V", SquareValue.BLANK_UNTOUCHED, 11, 4);
+		
+		// Beige
+		final GameSquare R = new GameSquare("R", SquareValue.BLANK_UNTOUCHED, 13, 2);
+		final GameSquare X = new GameSquare("X", SquareValue.BLANK_UNTOUCHED, 13, 4);
+		final GameSquare W = new GameSquare("W", SquareValue.BLANK_UNTOUCHED, 12, 4);
+		final GameSquare Q = new GameSquare("Q", SquareValue.BLANK_UNTOUCHED, 12, 2);
+		
+		// Red
+		final GameSquare S = new GameSquare("S", SquareValue.BLANK_UNTOUCHED, 14, 2);
+		final GameSquare U = new GameSquare("U", SquareValue.BLANK_UNTOUCHED, 14, 3);
+		final GameSquare Y = new GameSquare("Y", SquareValue.BLANK_UNTOUCHED, 14, 4);
+		
 		// (A+B+F+I) + (C) + (G) + (J) = 3
 		List<GameSquare> gameSquareResults1 = new ArrayList<GameSquare>();
-		gameSquareResults1.add(new GameSquare("A", SquareValue.BLANK_UNTOUCHED, 4, 3));
-		gameSquareResults1.add(new GameSquare("B", SquareValue.BLANK_UNTOUCHED, 5, 3));
-		gameSquareResults1.add(new GameSquare("F", SquareValue.BLANK_UNTOUCHED, 4, 4));
-		gameSquareResults1.add(new GameSquare("I", SquareValue.BLANK_UNTOUCHED, 4, 5));
-		gameSquareResults1.add(new GameSquare("C", SquareValue.BLANK_UNTOUCHED, 6, 3));
-		gameSquareResults1.add(new GameSquare("J", SquareValue.BLANK_UNTOUCHED, 5, 5));
-		gameSquareResults1.add(new GameSquare("G", SquareValue.BLANK_UNTOUCHED, 6, 4));
+		gameSquareResults1.add(A);
+		gameSquareResults1.add(B);
+		gameSquareResults1.add(F);
+		gameSquareResults1.add(I);
+		gameSquareResults1.add(C);
+		gameSquareResults1.add(J);
+		gameSquareResults1.add(G);
 		
 		// (D+E+H+L) (C) + (G) + (K) = 1
 		List<GameSquare> gameSquareResults2 = new ArrayList<GameSquare>();
-		gameSquareResults2.add(new GameSquare("D", SquareValue.BLANK_UNTOUCHED, 7, 3));
-		gameSquareResults2.add(new GameSquare("E", SquareValue.BLANK_UNTOUCHED, 8, 3));
-		gameSquareResults2.add(new GameSquare("H", SquareValue.BLANK_UNTOUCHED, 8, 4));
-		gameSquareResults2.add(new GameSquare("L", SquareValue.BLANK_UNTOUCHED, 8, 5));
-		gameSquareResults2.add(new GameSquare("C", SquareValue.BLANK_UNTOUCHED, 6, 3));
-		gameSquareResults2.add(new GameSquare("G", SquareValue.BLANK_UNTOUCHED, 6, 4));
-		gameSquareResults2.add(new GameSquare("K", SquareValue.BLANK_UNTOUCHED, 7, 5));
+		gameSquareResults2.add(D);
+		gameSquareResults2.add(E);
+		gameSquareResults2.add(H);
+		gameSquareResults2.add(L);
+		gameSquareResults2.add(C);
+		gameSquareResults2.add(G);
+		gameSquareResults2.add(K);
 		
 		// (M+N+O) + (J) + (K) + (G)         =        1
 		List<GameSquare> gameSquareResults3 = new ArrayList<GameSquare>();
-		gameSquareResults3.add(new GameSquare("M", SquareValue.BLANK_UNTOUCHED, 5, 6));
-		gameSquareResults3.add(new GameSquare("N", SquareValue.BLANK_UNTOUCHED, 6, 6));
-		gameSquareResults3.add(new GameSquare("O", SquareValue.BLANK_UNTOUCHED, 7, 6));
-		gameSquareResults3.add(new GameSquare("J", SquareValue.BLANK_UNTOUCHED, 5, 5));
-		gameSquareResults3.add(new GameSquare("K", SquareValue.BLANK_UNTOUCHED, 7, 5));
-		gameSquareResults3.add(new GameSquare("G", SquareValue.BLANK_UNTOUCHED, 6, 4));
+		gameSquareResults3.add(M);
+		gameSquareResults3.add(N);
+		gameSquareResults3.add(O);
+		gameSquareResults3.add(J);
+		gameSquareResults3.add(K);
+		gameSquareResults3.add(G);
 		
 		// (P+T+V) + (RXWQ)                  =        2
 		List<GameSquare> gameSquareResults4 = new ArrayList<GameSquare>();
-		gameSquareResults4.add(new GameSquare("P", SquareValue.BLANK_UNTOUCHED, 11, 2));
-		gameSquareResults4.add(new GameSquare("T", SquareValue.BLANK_UNTOUCHED, 11, 3));
-		gameSquareResults4.add(new GameSquare("V", SquareValue.BLANK_UNTOUCHED, 11, 4));
-		gameSquareResults4.add(new GameSquare("R", SquareValue.BLANK_UNTOUCHED, 13, 2));
-		gameSquareResults4.add(new GameSquare("X", SquareValue.BLANK_UNTOUCHED, 13, 4));
-		gameSquareResults4.add(new GameSquare("W", SquareValue.BLANK_UNTOUCHED, 12, 4));
-		gameSquareResults4.add(new GameSquare("Q", SquareValue.BLANK_UNTOUCHED, 12, 2));
+		gameSquareResults4.add(P);
+		gameSquareResults4.add(T);
+		gameSquareResults4.add(V);
+		gameSquareResults4.add(R);
+		gameSquareResults4.add(X);
+		gameSquareResults4.add(W);
+		gameSquareResults4.add(Q);
 		
 		// (S+U+Y) + (RXWQ)                  =        1
 		List<GameSquare> gameSquareResults5 = new ArrayList<GameSquare>();
-		gameSquareResults5.add(new GameSquare("S", SquareValue.BLANK_UNTOUCHED, 14, 2));
-		gameSquareResults5.add(new GameSquare("U", SquareValue.BLANK_UNTOUCHED, 14, 3));
-		gameSquareResults5.add(new GameSquare("Y", SquareValue.BLANK_UNTOUCHED, 14, 4));
-		gameSquareResults5.add(new GameSquare("R", SquareValue.BLANK_UNTOUCHED, 13, 2));
-		gameSquareResults5.add(new GameSquare("X", SquareValue.BLANK_UNTOUCHED, 13, 4));
-		gameSquareResults5.add(new GameSquare("W", SquareValue.BLANK_UNTOUCHED, 12, 4));
-		gameSquareResults5.add(new GameSquare("Q", SquareValue.BLANK_UNTOUCHED, 12, 2));
+		gameSquareResults5.add(S);
+		gameSquareResults5.add(U);
+		gameSquareResults5.add(Y);
+		gameSquareResults5.add(R);
+		gameSquareResults5.add(X);
+		gameSquareResults5.add(W);
+		gameSquareResults5.add(Q);
 
 		Rule rule1 = createSweeperSet(gameSquareResults1, 3, section1);
 		Rule rule2 = createSweeperSet(gameSquareResults2, 1, section1);
@@ -343,52 +389,49 @@ public class SectionTestScenarios {
 				);
 		
 		// Green
-		List<GameSquare> resultSet1 = Arrays.asList(
-			new GameSquare("A", SquareValue.BLANK_UNTOUCHED, 4, 3),
-			new GameSquare("B", SquareValue.BLANK_UNTOUCHED, 5, 3),
-			new GameSquare("F", SquareValue.BLANK_UNTOUCHED, 4, 4),
-			new GameSquare("I", SquareValue.BLANK_UNTOUCHED, 4, 5));
+		List<GameSquare> resultSet1 = Arrays.asList(A,B,F,I);
 		List<Section> parentSet1 = Arrays.asList(new Section(rule1.getSquares()));
 		
 		// Yellow
-		List<GameSquare> resultSet2 = Arrays.asList(
-				new GameSquare("J", SquareValue.BLANK_UNTOUCHED, 5, 5));
+		List<GameSquare> resultSet2 = Arrays.asList(J);
 		List<Section> parentSet2 = Arrays.asList(new Section(rule1.getSquares()),
 				new Section(rule3.getSquares()));
 		
 		// Light-blue
-		List<GameSquare> resultSet3 = Arrays.asList(
-				new GameSquare("M", SquareValue.BLANK_UNTOUCHED, 5, 6),
-				new GameSquare("N", SquareValue.BLANK_UNTOUCHED, 6, 6),
-				new GameSquare("O", SquareValue.BLANK_UNTOUCHED, 7, 6));
+		List<GameSquare> resultSet3 = Arrays.asList(M,N,O);
 		List<Section> parentSet3 = Arrays.asList(new Section(rule3.getSquares()));
 		
 		// Pink
-		List<GameSquare> resultSet4 = Arrays.asList(
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 1));
+		List<GameSquare> resultSet4 = Arrays.asList(C);
 		List<Section> parentSet4 = Arrays.asList(new Section(rule2.getSquares()),
 				new Section(rule1.getSquares()));
 		
 		// Brown
-		List<GameSquare> resultSet5 = Arrays.asList(
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 2));
+		List<GameSquare> resultSet5 = Arrays.asList(G);
 		List<Section> parentSet5 = Arrays.asList(new Section(rule2.getSquares()),
 				new Section(rule1.getSquares()),
 				new Section(rule3.getSquares()));
 		
 		// Purple
-		List<GameSquare> resultSet6 = Arrays.asList(
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 3));
+		List<GameSquare> resultSet6 = Arrays.asList(K);
 		List<Section> parentSet6 = Arrays.asList(new Section(rule2.getSquares()),
 				new Section(rule3.getSquares()));
 		
 		// Orange
-		List<GameSquare> resultSet7 = Arrays.asList(
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 1),
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 1),
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 2),
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 3));
+		List<GameSquare> resultSet7 = Arrays.asList(D,E,H,L);
 		List<Section> parentSet7 = Arrays.asList(new Section(rule2.getSquares()));
+		
+		// Dark-blue
+		List<GameSquare> resultSet8 = Arrays.asList(P,T,V);
+		List<Section> parentSet8 = Arrays.asList(new Section(rule4.getSquares()));
+		
+		// Beige
+		List<GameSquare> resultSet9 = Arrays.asList(Q, R, W, X);
+		List<Section> parentSet9 = Arrays.asList(new Section(rule4.getSquares()), new Section(rule5.getSquares()));
+		
+		// Red
+		List<GameSquare> resultSet10 = Arrays.asList(S,U,Y);
+		List<Section> parentSet10 = Arrays.asList(new Section(rule5.getSquares()));
 		
 		Map<List<Section>, List<GameSquare>> expectedContents = new HashMap<>();
 		
@@ -399,6 +442,9 @@ public class SectionTestScenarios {
 		expectedContents.put(parentSet5, resultSet5);
 		expectedContents.put(parentSet6, resultSet6);
 		expectedContents.put(parentSet7, resultSet7);
+		expectedContents.put(parentSet8, resultSet8);
+		expectedContents.put(parentSet9, resultSet9);
+		expectedContents.put(parentSet10, resultSet10);
 		
 		return new SectionTestScenario(Arrays.asList(section1, section2), expectedContents, expectedResults);
 	}
