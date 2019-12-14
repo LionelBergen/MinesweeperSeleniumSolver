@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import component.model.Section;
@@ -16,6 +17,7 @@ import solver.calculation.board.MineOddsCalculator;
 import solver.component.Rule;
 import tests.minesweeper.data.SectionTestScenarios;
 
+@Ignore
 public class MineOddsCalculatorTest {
 	private static final double DELTA = 1e-4;
 	
