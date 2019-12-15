@@ -3,24 +3,28 @@ package main.solver;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import component.model.Section;
 import component.model.gamesquare.GameSquare;
 import component.model.gamesquare.SquareValue;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import main.solver.component.SeleniumGameBoard;
 import main.solver.component.SeleniumGameSquare;
+import main.solver.web.MinesweeperWebsite;
 import solver.board.analyzing.BoardAnalyzer;
 import solver.board.analyzing.SectionAnalyzer;
 import solver.calculation.OddsCalculator;
@@ -30,35 +34,39 @@ import solver.component.Rule;
 import utility.logging.Logger;
 import utility.util.MathUtil;
 
-// TODO: Create interfaces, ensure Element's are kept separate
 // class for auto-completing http://minesweeperonline.com/.
 public class MineSweeperSolver {
-	private static final String MINESWEEPER_ONLINE_URL = "http://minesweeperonline.com/";
+	private static final Random RANDOM = new Random();
+	private final MinesweeperWebsite websiteHelper;
 	
-	// Minimum odds for an early exit
-	private static final float MIN_ODDS = 0.125f;
+    public static void main(String[] args) {
+    	WebDriver webDriver = getWebDriver();
+    	
+    	new MineSweeperSolver(webDriver);
+    }
+    
+    private static WebDriver getWebDriver() {
+    	WebDriverManager.chromedriver().setup();
+    	
+    	return new ChromeDriver();
+    }
 	
 	public MineSweeperSolver(WebDriver webDriver) {
 		// get URL for the website and log the time it takes
-		getMinesweeperURL(webDriver);
-	
-		webDriver.findElement(By.id("face")).click();
+		this.websiteHelper = new MinesweeperWebsite(webDriver);
 		startGame(webDriver);
 	}
 	
 	private void startGame(WebDriver webDriver) {
-		Logger.setCurrentTime();
-		
 		// setup references to the game elements
-		final WebElement gameElement = webDriver.findElement(By.id("game"));
-		List<WebElement> allPlayableSquares = getAllPlayableSquares(gameElement);
-		
+		Logger.setCurrentTime();
+		List<WebElement> allPlayableSquares = websiteHelper.getAllPlayableSquares();
     	SeleniumGameBoard gameBoard = new SeleniumGameBoard(allPlayableSquares);
     	Logger.logTimeTook("Setting up references to elements");
 		
     	// More setup/logging
     	int totalBlankSquares = gameBoard.getSize();
-    	final int startingMines = getCurrentMinesFromGame(gameElement);
+    	final int startingMines = websiteHelper.getCurrentMinesFromGame();
     	Logger.logMessage("Total mines: " + startingMines + " total playable squares: " + totalBlankSquares);
     	
     	// The in-game timer used for highscores begins here, on first click
@@ -123,7 +131,6 @@ public class MineSweeperSolver {
 	 * Does simple calculations, does not go into anything complicated such as calculating odds of each surrounding square around 2+ touching numbers
 	 */
 	private List<SeleniumGameSquare> getRandomSquareWithBestProbability(WebDriver webDriver, SeleniumGameBoard gameBoard, int startingMines) {
-		final int totalBlankSquares = gameBoard.getSize();
 		final int unFoundMines = startingMines - gameBoard.getAllFlaggedSquares().size();
 		final int totalUnidentifiedSquares = gameBoard.getAllBlankSquares().size();
 
@@ -146,13 +153,25 @@ public class MineSweeperSolver {
 		final List<List<KeyValue>> allVariations = RulesCombinationCalculator.getAllVariations(allSubSections, rules);
 		Logger.logTimeTook("Caluclated: " + allVariations.size() + " possible outcomes");
 		
-		// Step 4: combute probabilities
+		// Step 4: compute probabilities
 		Logger.setCurrentTime();
 		Logger.logMessage("Caluclating probabilities");
 		final Map<Object, BigDecimal> probabilities = OddsCalculator.calculateOdds(allVariations, unFoundMines, totalUnidentifiedSquares);
 		Logger.logTimeTook("Caluclated: " + allVariations.size() + " possible outcomes");
+
+		// Get the item with the best probability
+		Entry<Object, BigDecimal> lowestValue = probabilities.entrySet().stream().sorted(Map.Entry.comparingByValue()).findFirst().get();
+		Section result = (Section) lowestValue.getKey();
+		Set<GameSquare> squaresWithBestProbability = result.getGameSquares();
+		SeleniumGameSquare squareToSelect = getRandomSquareFromSet(squaresWithBestProbability);
     	
-		throw new RuntimeException("TODO");
+		Logger.logMessage("Found random square. Odds of hitting a mine: " + lowestValue.getValue() + "%");
+    	
+    	SquareValue newValue = selectSquareWithWait(webDriver, squareToSelect);
+    	
+    	// handle the new value change
+    	return updateSquare(webDriver, gameBoard, squareToSelect, newValue);
+    	
     	//SquareValue newValue = selectSquareWithWait(webDriver, randomSquare);
     	
     	// handle the new value change
@@ -194,6 +213,11 @@ public class MineSweeperSolver {
     	Logger.logMessage("Found random square. Odds of hitting a mine: " + entryWithBestOdds.getKey() + "%");
     	
 		return entryWithBestOdds.getValue();*/
+	}
+	
+	private SeleniumGameSquare getRandomSquareFromSet(Set<GameSquare> squares) {
+		int random = RANDOM.nextInt(squares.size());
+		return (SeleniumGameSquare) new ArrayList<>(squares).get(random);
 	}
 	
 	/**
@@ -332,30 +356,6 @@ public class MineSweeperSolver {
     	
     	return element.getAttribute("className");
 	}
-	
-	private void getMinesweeperURL(WebDriver webDriver) {
-		Logger.setCurrentTime();
-    	webDriver.get(MINESWEEPER_ONLINE_URL);
-    	Logger.logTimeTook("Opening a webdriver");
-	}
-    
-    private int getCurrentMinesFromGame(WebElement gameElement) {
-    	String minesValue = gameElement.findElement(By.id("mines_hundreds")).getAttribute("class")
-    			+ gameElement.findElement(By.id("mines_tens")).getAttribute("class")
-    			+ gameElement.findElement(By.id("mines_ones")).getAttribute("class");
-
-    	return Integer.parseInt(minesValue.replace("time", ""));
-    }
-    
-    private List<WebElement> getAllPlayableSquares(WebElement gameElement) {
-    	// get all squares
-    	List<WebElement> allPlayableSquares = gameElement.findElements(By.xpath("//div[@class='square blank']"));
-    	
-    	// Filter invisible squares. Not sure why the game has extra invisible squares
-    	allPlayableSquares = allPlayableSquares.stream().filter(e -> e.isDisplayed()).collect(Collectors.toList());
-    	
-    	return allPlayableSquares;
-    }
 	
 	private SquareValue selectSquareWithWait(WebDriver webDriver, SeleniumGameSquare gameSquare) {
 		gameSquare.getWebElement().click();
