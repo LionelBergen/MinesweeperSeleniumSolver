@@ -43,20 +43,6 @@ public class RulesCombinationCalculator {
 		return allKnownValues;
 	}
 	
-	private static Collection<List<KeyValue>> getAllCombinationsForRule(Collection<Section> allSections, Collection<Rule> allRules, Collection<KeyValue> knownValues, Rule rule) {
-		List<Section> sectionRelatingToRule = getSectionsInRule(allSections, rule);
-		List<KeyValue> sectionsTransformed = transformSectionsToKeyValues(sectionRelatingToRule, UNKNOWN_VALUE);
-		populateListWithKnown(sectionsTransformed, knownValues);
-		
-		List<List<KeyValue>> allValuesForRule = getAllVariationsOfARuleWithKnownValues(sectionsTransformed, rule);
-		allValuesForRule = getValuesThatDontOverflow(allValuesForRule, allRules);
-		
-		// Add all known values to the list
-		combineLists(knownValues, allValuesForRule);
-		
-		return allValuesForRule;
-	}
-	
 	/**
 	 * Given a Section and rule, return all possible combinations that do not break the rule
 	 * 
@@ -80,6 +66,20 @@ public class RulesCombinationCalculator {
 		getAllVariationsOfARule(sectionsRelatingToRule, rule, results, valuesWithKnown);
 		
 		return results;
+	}
+	
+	private static Collection<List<KeyValue>> getAllCombinationsForRule(Collection<Section> allSections, Collection<Rule> allRules, Collection<KeyValue> knownValues, Rule rule) {
+		List<Section> sectionRelatingToRule = getSectionsInRule(allSections, rule);
+		List<KeyValue> sectionsTransformed = transformSectionsToKeyValues(sectionRelatingToRule, UNKNOWN_VALUE);
+		populateListWithKnown(sectionsTransformed, knownValues);
+		
+		List<List<KeyValue>> allValuesForRule = getAllVariationsOfARuleWithKnownValues(sectionsTransformed, rule);
+		allValuesForRule = getValuesThatDontOverflow(allValuesForRule, allRules);
+		
+		// Add all known values to the list
+		combineLists(knownValues, allValuesForRule);
+		
+		return allValuesForRule;
 	}
 	
 	private static void getAllVariationsOfARule(Collection<KeyValue> sections, Rule rule, Collection<List<KeyValue>> results, List<KeyValue> knownValues) {
