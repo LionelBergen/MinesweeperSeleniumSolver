@@ -30,4 +30,7 @@ dependencies {
     compile project(':Main')
     compile project(':Solver')
     compile project(':Common')
+    
+    // https://mvnrepository.com/artifact/org.easymock/easymock
+	testCompile group: 'org.easymock', name: 'easymock', version: '4.1'
 }
