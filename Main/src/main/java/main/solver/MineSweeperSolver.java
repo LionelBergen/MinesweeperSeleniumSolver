@@ -1,5 +1,6 @@
 package main.solver;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -22,7 +23,9 @@ import main.solver.component.SeleniumGameBoard;
 import main.solver.component.SeleniumGameSquare;
 import solver.board.analyzing.BoardAnalyzer;
 import solver.board.analyzing.SectionAnalyzer;
-import solver.calculation.board.MineOddsCalculator;
+import solver.calculation.OddsCalculator;
+import solver.calculation.RulesCombinationCalculator;
+import solver.component.KeyValue;
 import solver.component.Rule;
 import utility.logging.Logger;
 import utility.util.MathUtil;
@@ -115,47 +118,45 @@ public class MineSweeperSolver {
 		return (SeleniumGameSquare) gameBoard.getRandomLonelySquare();
 	}
 	
-	// TODO: Do the complicated calculations. Get every (unique) blank square surrounding known area and calculate the odds. 
 	/**
 	 * Selects a random square, given the best odds. 
 	 * Does simple calculations, does not go into anything complicated such as calculating odds of each surrounding square around 2+ touching numbers
 	 */
 	private List<SeleniumGameSquare> getRandomSquareWithBestProbability(WebDriver webDriver, SeleniumGameBoard gameBoard, int startingMines) {
-		// TODO: This isn't working. Perhaps it's counting cleared squares?
-		// TODO: cannot use <? extends GmaeSquare> for everything.
-		// Step 1: Get Sections from Board
-		Collection<Section> sections = BoardAnalyzer.breakupBoard(gameBoard);
-		
-		Map<Section, Double> odds = new HashMap<>();
-		
-		// Step 2:
-		List<Rule> rules = SectionAnalyzer.breakupSectionIntoRules(sections);
-		
-		// TODO: don't for-loop, pass the array
-		for (Section section : sections) {
-			
-			// Step 3: get subSections
-			Collection<Section> subSections = SectionAnalyzer.getSections(rules, section.getGameSquares());
-			
-			odds.putAll(MineOddsCalculator.calculateOdds(rules, subSections));
-			
-			for (Entry<Section, Double> entry : odds.entrySet()) {
-				System.out.println(entry.getKey() + " " + entry.getValue());
-			}
-		}
-		
-		int totalBlankSquares = gameBoard.getSize();
-		int unFoundMines = startingMines - gameBoard.getAllFlaggedSquares().size();
-		
-		float oddsOfRandomSquare = MathUtil.asFloat(unFoundMines, totalBlankSquares);
-		SeleniumGameSquare randomSquare = getARandomSquare(gameBoard);
+		final int totalBlankSquares = gameBoard.getSize();
+		final int unFoundMines = startingMines - gameBoard.getAllFlaggedSquares().size();
+		final int totalUnidentifiedSquares = gameBoard.getAllBlankSquares().size();
 
-    	Logger.logMessage("Found random square. Odds of hitting a mine: " + oddsOfRandomSquare + "%");
+		// Step 1: Get Sections from Board
+		Logger.setCurrentTime();
+		Logger.logMessage("Breaking up board.....");
+		Collection<Section> sections = BoardAnalyzer.breakupBoard(gameBoard);
+		Logger.logTimeTook("Breaking up board");
+
+		// Step 2: get Rules & SubSections
+		Logger.setCurrentTime();
+		Logger.logMessage("Breaking up board into rules & sections");
+		final List<Rule> rules = SectionAnalyzer.breakupSectionIntoRules(sections);
+		final List<Section> allSubSections = new ArrayList<>(SectionAnalyzer.getSections(rules, gameBoard.getGameBoard()));
+		Logger.logTimeTook("Breaking up board into rules & sections");
+		
+		// Step 3: get all possibilities
+		Logger.setCurrentTime();
+		Logger.logMessage("Caluclating all possible combinations");
+		final List<List<KeyValue>> allVariations = RulesCombinationCalculator.getAllVariations(allSubSections, rules);
+		Logger.logTimeTook("Caluclated: " + allVariations.size() + " possible outcomes");
+		
+		// Step 4: combute probabilities
+		Logger.setCurrentTime();
+		Logger.logMessage("Caluclating probabilities");
+		final Map<Object, BigDecimal> probabilities = OddsCalculator.calculateOdds(allVariations, unFoundMines, totalUnidentifiedSquares);
+		Logger.logTimeTook("Caluclated: " + allVariations.size() + " possible outcomes");
     	
-    	SquareValue newValue = selectSquareWithWait(webDriver, randomSquare);
+		throw new RuntimeException("TODO");
+    	//SquareValue newValue = selectSquareWithWait(webDriver, randomSquare);
     	
     	// handle the new value change
-    	return updateSquare(webDriver, gameBoard, randomSquare, newValue);
+    	//return updateSquare(webDriver, gameBoard, randomSquare, newValue);
     	
 		/*int totalBlankSquares = gameBoard.getSize();
 		int unFoundMines = startingMines - gameBoard.getallFlaggedSquares().size();
