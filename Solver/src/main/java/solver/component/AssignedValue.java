@@ -1,11 +1,13 @@
 package solver.component;
 
+import component.model.Section;
+
 public class AssignedValue {
 	private int value;
 	private int maxValue;
-	private Object key;
+	private Section key;
 	
-	public AssignedValue(int value, int maxValue, Object key) {
+	public AssignedValue(int value, int maxValue, Section key) {
 		this.value = value;
 		this.maxValue = maxValue;
 		this.key = key;
@@ -19,11 +21,11 @@ public class AssignedValue {
 		this.value = value;
 	}
 	
-	public Object getKey() {
+	public Section getKey() {
 		return key;
 	}
 	
-	public void setKey(Object key) {
+	public void setKey(Section key) {
 		this.key = key;
 	}
 
