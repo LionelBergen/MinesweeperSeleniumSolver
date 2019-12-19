@@ -2,6 +2,11 @@ package solver.component;
 
 import component.model.Section;
 
+/**
+ * Simply a section with a value & maxValue
+ * 
+ * @author Lionel Bergen
+ */
 public class AssignedValue {
 	private int value;
 	private int maxValue;
