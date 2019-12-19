@@ -1,11 +1,11 @@
 package solver.component;
 
-public class KeyValue {
+public class AssignedValue {
 	private int value;
 	private int maxValue;
 	private Object key;
 	
-	public KeyValue(int value, int maxValue, Object key) {
+	public AssignedValue(int value, int maxValue, Object key) {
 		this.value = value;
 		this.maxValue = maxValue;
 		this.key = key;
@@ -52,7 +52,7 @@ public class KeyValue {
 	        return false;
 	    }
 	    
-	    KeyValue otherKeyValue = (KeyValue) other;
+	    AssignedValue otherKeyValue = (AssignedValue) other;
 
 	    return this.value == otherKeyValue.getValue() && this.key == otherKeyValue.getKey();
 	}

@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import component.model.Section;
-import solver.component.KeyValue;
+import solver.component.AssignedValue;
 import solver.component.Rule;
 
 import static solver.component.transformer.SectionTransformer.transformSectionsToKeyValues;
@@ -16,22 +16,22 @@ import static solver.component.transformer.SectionTransformer.transformSectionsT
 public class RulesCombinationCalculator {
 	private static final int UNKNOWN_VALUE = 0;
 	
-	public static List<List<KeyValue>> getAllVariations(Collection<Section> sections, Collection<Rule> rules) {
+	public static List<List<AssignedValue>> getAllVariations(Collection<Section> sections, Collection<Rule> rules) {
 		// start by getting the first Rule & sections relating to it
 		final Rule ruleToProcess = rules.iterator().next();
 		List<Rule> rulesLeftToProcess = rules.stream().filter(e -> e != ruleToProcess).collect(Collectors.toList());
 		List<Section> sectionRelatingToRule = getSectionsInRule(sections, ruleToProcess);
 		
 		// Get all possible combinations given the rule & sections
-		List<List<KeyValue>> allKnownValues = getAllVariationsOfARule(sectionRelatingToRule, ruleToProcess);
+		List<List<AssignedValue>> allKnownValues = getAllVariationsOfARule(sectionRelatingToRule, ruleToProcess);
 		
 		// filter any items that are invalid given all rules
 		allKnownValues = getValuesThatDontOverflow(allKnownValues, rules);
 		
 		for (Rule nextRule : rulesLeftToProcess) {
-			Set<List<KeyValue>> allCombinationsOfRule = new HashSet<>();
+			Set<List<AssignedValue>> allCombinationsOfRule = new HashSet<>();
 			
-			for (List<KeyValue> knownValues : allKnownValues) {
+			for (List<AssignedValue> knownValues : allKnownValues) {
 				allCombinationsOfRule.addAll(getAllCombinationsForRule(sections, rules, knownValues, nextRule));
 			}
 			allKnownValues = new ArrayList<>(allCombinationsOfRule);
@@ -50,16 +50,16 @@ public class RulesCombinationCalculator {
 	 * @param rule Rule which cannot be broken
 	 * @return All variations of values for the arguments
 	 */
-	public static List<List<KeyValue>> getAllVariationsOfARule(Collection<Section> sectionsRelatingToRule, Rule rule) {
-		List<KeyValue> sectionsTransformed = transformSectionsToKeyValues(sectionsRelatingToRule, UNKNOWN_VALUE);
+	public static List<List<AssignedValue>> getAllVariationsOfARule(Collection<Section> sectionsRelatingToRule, Rule rule) {
+		List<AssignedValue> sectionsTransformed = transformSectionsToKeyValues(sectionsRelatingToRule, UNKNOWN_VALUE);
 		return getAllVariationsOfARuleWithKnownValues(sectionsTransformed, rule);
 	}
 	
-	public static List<List<KeyValue>> getAllVariationsOfARuleWithKnownValues(Collection<KeyValue> sectionsRelatingToRule, Rule rule) {
-		List<List<KeyValue>> results = new ArrayList<>();
+	public static List<List<AssignedValue>> getAllVariationsOfARuleWithKnownValues(Collection<AssignedValue> sectionsRelatingToRule, Rule rule) {
+		List<List<AssignedValue>> results = new ArrayList<>();
 		
 		// No need to proces values we already know the values of
-		List<KeyValue> valuesWithKnown = sectionsRelatingToRule.stream().filter(e -> e.getValue() != UNKNOWN_VALUE).collect(Collectors.toList());
+		List<AssignedValue> valuesWithKnown = sectionsRelatingToRule.stream().filter(e -> e.getValue() != UNKNOWN_VALUE).collect(Collectors.toList());
 		sectionsRelatingToRule.removeAll(valuesWithKnown);
 		
 		// populate results with all variations of rule
@@ -68,12 +68,12 @@ public class RulesCombinationCalculator {
 		return results;
 	}
 	
-	private static Collection<List<KeyValue>> getAllCombinationsForRule(Collection<Section> allSections, Collection<Rule> allRules, Collection<KeyValue> knownValues, Rule rule) {
+	private static Collection<List<AssignedValue>> getAllCombinationsForRule(Collection<Section> allSections, Collection<Rule> allRules, Collection<AssignedValue> knownValues, Rule rule) {
 		List<Section> sectionRelatingToRule = getSectionsInRule(allSections, rule);
-		List<KeyValue> sectionsTransformed = transformSectionsToKeyValues(sectionRelatingToRule, UNKNOWN_VALUE);
+		List<AssignedValue> sectionsTransformed = transformSectionsToKeyValues(sectionRelatingToRule, UNKNOWN_VALUE);
 		populateListWithKnown(sectionsTransformed, knownValues);
 		
-		List<List<KeyValue>> allValuesForRule = getAllVariationsOfARuleWithKnownValues(sectionsTransformed, rule);
+		List<List<AssignedValue>> allValuesForRule = getAllVariationsOfARuleWithKnownValues(sectionsTransformed, rule);
 		allValuesForRule = getValuesThatDontOverflow(allValuesForRule, allRules);
 		
 		// Add all known values to the list
@@ -82,7 +82,7 @@ public class RulesCombinationCalculator {
 		return allValuesForRule;
 	}
 	
-	private static void getAllVariationsOfARule(Collection<KeyValue> sections, Rule rule, Collection<List<KeyValue>> results, List<KeyValue> knownValues) {
+	private static void getAllVariationsOfARule(Collection<AssignedValue> sections, Rule rule, Collection<List<AssignedValue>> results, List<AssignedValue> knownValues) {
 		if (sections.isEmpty()) {
 			if (isRuleFollowed(rule, knownValues)) {
 				results.add(knownValues);
@@ -91,7 +91,7 @@ public class RulesCombinationCalculator {
 		else
 		{
 			// Get a section from the list
-			KeyValue section = sections.iterator().next();
+			AssignedValue section = sections.iterator().next();
 			
 			// We know the value cannot be higher than the max for the Section or the rule
 			final int maxValue = Math.min(section.getMaxValue(), rule.getResultsEqual());
@@ -99,18 +99,18 @@ public class RulesCombinationCalculator {
 			// Add a list for every value from 0-max
 			for (int i=0; i<=maxValue; i++) {
 				// instantiate a new list. Doesn't matter that the list has the same object pointers we just need a new List object.
-				List<KeyValue> newKnownValues = new ArrayList<>(knownValues);
+				List<AssignedValue> newKnownValues = new ArrayList<>(knownValues);
 				
-				newKnownValues.add(new KeyValue(i, section.getMaxValue(), section.getKey()));
+				newKnownValues.add(new AssignedValue(i, section.getMaxValue(), section.getKey()));
 
 				// process other sections
-				List<KeyValue> otherSections = sections.stream().filter(e -> e != section).collect(Collectors.toList());
+				List<AssignedValue> otherSections = sections.stream().filter(e -> e != section).collect(Collectors.toList());
 				getAllVariationsOfARule(otherSections, rule, results, newKnownValues);
 			}
 		}
 	}
 
-	private static boolean isRuleFollowed(Rule rule, Collection<KeyValue> values) {
+	private static boolean isRuleFollowed(Rule rule, Collection<AssignedValue> values) {
 		int actualResult = getValueForSquaresInRule(values, rule);
 
 		return actualResult == rule.getResultsEqual();
@@ -119,7 +119,7 @@ public class RulesCombinationCalculator {
 	/**
 	 * "multiply" a list.
 	 */
-	private static void combineLists(Collection<KeyValue> valueToAddToAllLists, Collection<List<KeyValue>> listToModify) {
+	private static void combineLists(Collection<AssignedValue> valueToAddToAllLists, Collection<List<AssignedValue>> listToModify) {
 		// Add all items to the list that are not already on the list
 		listToModify.stream().forEach(l2 -> 
 			l2.addAll(valueToAddToAllLists.stream().filter(e -> !l2.stream().anyMatch(e2 -> e2.getKey().equals(e.getKey()))).collect(Collectors.toList()))
@@ -132,9 +132,9 @@ public class RulesCombinationCalculator {
 	 * @param listToPopulate List to modify
 	 * @param knownValues Get values from here
 	 */
-	private static void populateListWithKnown(Collection<KeyValue> listToPopulate, Collection<KeyValue> knownValues) {
-		for (KeyValue value : listToPopulate) {
-			for (KeyValue knownValue : knownValues) {
+	private static void populateListWithKnown(Collection<AssignedValue> listToPopulate, Collection<AssignedValue> knownValues) {
+		for (AssignedValue value : listToPopulate) {
+			for (AssignedValue knownValue : knownValues) {
 				if (knownValue.getKey().equals(value.getKey())) {
 					value.setValue(knownValue.getValue());
 				}
@@ -142,22 +142,22 @@ public class RulesCombinationCalculator {
 		}
 	}
 	
-	private static boolean anyValueTooHigh(Collection<Rule> rules, Collection<KeyValue> values) {
+	private static boolean anyValueTooHigh(Collection<Rule> rules, Collection<AssignedValue> values) {
 		return rules.stream().anyMatch(rule -> getValueForSquaresInRule(values, rule) > rule.getResultsEqual());
 	}
 	
-	private static boolean anyRulesBroken(Collection<Rule> rules, Collection<KeyValue> values) {
+	private static boolean anyRulesBroken(Collection<Rule> rules, Collection<AssignedValue> values) {
 		return rules.stream().anyMatch(rule -> getValueForSquaresInRule(values, rule) != rule.getResultsEqual());
 	}
 	
-	private static int getValueForSquaresInRule(Collection<KeyValue> values, Rule rule) {
+	private static int getValueForSquaresInRule(Collection<AssignedValue> values, Rule rule) {
 		// Filter the values where the rule contains all the squares, then add the value for each
 		return values.stream()
 			.filter(e -> rule.getSquares().containsAll(((Section) e.getKey()).getGameSquares()))
 			.collect(Collectors.summingInt(e -> e.getValue()));
 	}
 	
-	private static List<List<KeyValue>> getValuesThatDontOverflow(Collection<List<KeyValue>> valuesToFilter, Collection<Rule> rules) {
+	private static List<List<AssignedValue>> getValuesThatDontOverflow(Collection<List<AssignedValue>> valuesToFilter, Collection<Rule> rules) {
 		return valuesToFilter.stream().filter(e -> !anyValueTooHigh(rules, e)).collect(Collectors.toList());
 	}
 	

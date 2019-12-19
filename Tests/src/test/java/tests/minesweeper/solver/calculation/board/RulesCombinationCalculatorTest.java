@@ -18,7 +18,7 @@ import component.model.Section;
 import component.model.gamesquare.GameSquare;
 import component.model.gamesquare.SquareValue;
 import solver.calculation.RulesCombinationCalculator;
-import solver.component.KeyValue;
+import solver.component.AssignedValue;
 import solver.component.Rule;
 import tests.minesweeper.data.SectionTestScenarios;
 
@@ -67,28 +67,28 @@ public class RulesCombinationCalculatorTest {
 		
 		// Note: Order matters, see SectionTestScenarios.SCENARIO_SPECIAL_02
 		// G, J, ONM, VTP, IBFA, K, YUS, LHED, C, XWRQ
-		List<KeyValue> excpectedResultA11B11 = getExpectedResult(new int[]{0, 1, 0, 1, 1, 0, 0, 0, 1, 1}, testSections);
-		List<KeyValue> excpectedResultA11B21 = getExpectedResult(new int[]{0, 1, 0, 2, 1, 0, 1, 0, 1, 0}, testSections);
+		List<AssignedValue> excpectedResultA11B11 = getExpectedResult(new int[]{0, 1, 0, 1, 1, 0, 0, 0, 1, 1}, testSections);
+		List<AssignedValue> excpectedResultA11B21 = getExpectedResult(new int[]{0, 1, 0, 2, 1, 0, 1, 0, 1, 0}, testSections);
 		
-		List<KeyValue> excpectedResultA12B11 = getExpectedResult(new int[]{0, 0, 1, 1, 2, 0, 0, 0, 1, 1}, testSections);
-		List<KeyValue> excpectedResultA12B21 = getExpectedResult(new int[]{0, 0, 1, 2, 2, 0, 1, 0, 1, 0}, testSections);
+		List<AssignedValue> excpectedResultA12B11 = getExpectedResult(new int[]{0, 0, 1, 1, 2, 0, 0, 0, 1, 1}, testSections);
+		List<AssignedValue> excpectedResultA12B21 = getExpectedResult(new int[]{0, 0, 1, 2, 2, 0, 1, 0, 1, 0}, testSections);
 		
-		List<KeyValue> excpectedResultA21B11 = getExpectedResult(new int[]{1, 0, 0, 1, 2, 0, 0, 0, 0, 1}, testSections);
-		List<KeyValue> excpectedResultA21B21 = getExpectedResult(new int[]{1, 0, 0, 2, 2, 0, 1, 0, 0, 0}, testSections);
+		List<AssignedValue> excpectedResultA21B11 = getExpectedResult(new int[]{1, 0, 0, 1, 2, 0, 0, 0, 0, 1}, testSections);
+		List<AssignedValue> excpectedResultA21B21 = getExpectedResult(new int[]{1, 0, 0, 2, 2, 0, 1, 0, 0, 0}, testSections);
 		
-		List<KeyValue> excpectedResultA22B11 = getExpectedResult(new int[]{0, 1, 0, 1, 2, 0, 0, 1, 0, 1}, testSections);
-		List<KeyValue> excpectedResultA22B21 = getExpectedResult(new int[]{0, 1, 0, 2, 2, 0, 1, 1, 0, 0}, testSections);
+		List<AssignedValue> excpectedResultA22B11 = getExpectedResult(new int[]{0, 1, 0, 1, 2, 0, 0, 1, 0, 1}, testSections);
+		List<AssignedValue> excpectedResultA22B21 = getExpectedResult(new int[]{0, 1, 0, 2, 2, 0, 1, 1, 0, 0}, testSections);
 		
-		List<KeyValue> excpectedResultA23B11 = getExpectedResult(new int[]{0, 0, 0, 1, 3, 1, 0, 0, 0, 1}, testSections);
-		List<KeyValue> excpectedResultA23B21 = getExpectedResult(new int[]{0, 0, 0, 2, 3, 1, 1, 0, 0, 0}, testSections);
+		List<AssignedValue> excpectedResultA23B11 = getExpectedResult(new int[]{0, 0, 0, 1, 3, 1, 0, 0, 0, 1}, testSections);
+		List<AssignedValue> excpectedResultA23B21 = getExpectedResult(new int[]{0, 0, 0, 2, 3, 1, 1, 0, 0, 0}, testSections);
 		
-		List<KeyValue> excpectedResultA24B11 = getExpectedResult(new int[]{0, 0, 1, 1, 3, 0, 0, 1, 0, 1}, testSections);
-		List<KeyValue> excpectedResultA24B21 = getExpectedResult(new int[]{0, 0, 1, 2, 3, 0, 1, 1, 0, 0}, testSections);
+		List<AssignedValue> excpectedResultA24B11 = getExpectedResult(new int[]{0, 0, 1, 1, 3, 0, 0, 1, 0, 1}, testSections);
+		List<AssignedValue> excpectedResultA24B21 = getExpectedResult(new int[]{0, 0, 1, 2, 3, 0, 1, 1, 0, 0}, testSections);
 		
-		List<List<KeyValue>> results = RulesCombinationCalculator.getAllVariations(testSections, testRules);
+		List<List<AssignedValue>> results = RulesCombinationCalculator.getAllVariations(testSections, testRules);
 		
-		for (List<KeyValue> g : results) {
-			for (KeyValue x : g) {
+		for (List<AssignedValue> g : results) {
+			for (AssignedValue x : g) {
 				// Set all maxValues to 0 so we can assert properly (expected all contain a maxValue of 0)
 				x.setMaxValue(0);
 			}
@@ -135,17 +135,17 @@ public class RulesCombinationCalculatorTest {
 		
 		List<Section> allSections = Arrays.asList(section1, section2, section3, section4);
 		
-		List<KeyValue> expectedResult1 = getExpectedResult(new int[]{1, 1, 1, 0}, allSections);
-		List<KeyValue> expectedResult2 = getExpectedResult(new int[]{1, 1, 0, 1}, allSections);
-		List<KeyValue> expectedResult3 = getExpectedResult(new int[]{1, 0, 1, 1}, allSections);
-		List<KeyValue> expectedResult4 = getExpectedResult(new int[]{0, 1, 1, 1}, allSections);
-		List<KeyValue> expectedResult5 = getExpectedResult(new int[]{2, 1, 0, 0}, allSections);
-		List<KeyValue> expectedResult6 = getExpectedResult(new int[]{2, 0, 1, 0}, allSections);
-		List<KeyValue> expectedResult7 = getExpectedResult(new int[]{2, 0, 0, 1}, allSections);
-		List<KeyValue> expectedResult8 = getExpectedResult(new int[]{3, 0, 0, 0}, allSections);
+		List<AssignedValue> expectedResult1 = getExpectedResult(new int[]{1, 1, 1, 0}, allSections);
+		List<AssignedValue> expectedResult2 = getExpectedResult(new int[]{1, 1, 0, 1}, allSections);
+		List<AssignedValue> expectedResult3 = getExpectedResult(new int[]{1, 0, 1, 1}, allSections);
+		List<AssignedValue> expectedResult4 = getExpectedResult(new int[]{0, 1, 1, 1}, allSections);
+		List<AssignedValue> expectedResult5 = getExpectedResult(new int[]{2, 1, 0, 0}, allSections);
+		List<AssignedValue> expectedResult6 = getExpectedResult(new int[]{2, 0, 1, 0}, allSections);
+		List<AssignedValue> expectedResult7 = getExpectedResult(new int[]{2, 0, 0, 1}, allSections);
+		List<AssignedValue> expectedResult8 = getExpectedResult(new int[]{3, 0, 0, 0}, allSections);
 				
 		Rule rule = new Rule(allSquares, 3, section3);
-		List<List<KeyValue>> results = RulesCombinationCalculator.getAllVariationsOfARule(allSections,  rule);
+		List<List<AssignedValue>> results = RulesCombinationCalculator.getAllVariationsOfARule(allSections,  rule);
 		
 		assertTrue(results.contains(expectedResult1));
 		assertTrue(results.contains(expectedResult2));
@@ -181,19 +181,19 @@ public class RulesCombinationCalculatorTest {
 		section4.setGameSquares(new HashSet<>(Arrays.asList(squareJ)));
 		
 		List<Section> allSections = Arrays.asList(section1, section2, section3, section4);
-		List<KeyValue> allSectionsWithKnown = transformSectionsToKeyValues(allSections, 0);
+		List<AssignedValue> allSectionsWithKnown = transformSectionsToKeyValues(allSections, 0);
 		
-		List<KeyValue> expectedResult1 = getExpectedResult(new int[]{1, 1, 1, 0}, allSections);
-		List<KeyValue> expectedResult2 = getExpectedResult(new int[]{1, 1, 0, 1}, allSections);
-		List<KeyValue> expectedResult3 = getExpectedResult(new int[]{1, 0, 1, 1}, allSections);
-		List<KeyValue> expectedResult4 = getExpectedResult(new int[]{0, 1, 1, 1}, allSections);
-		List<KeyValue> expectedResult5 = getExpectedResult(new int[]{2, 1, 0, 0}, allSections);
-		List<KeyValue> expectedResult6 = getExpectedResult(new int[]{2, 0, 1, 0}, allSections);
-		List<KeyValue> expectedResult7 = getExpectedResult(new int[]{2, 0, 0, 1}, allSections);
-		List<KeyValue> expectedResult8 = getExpectedResult(new int[]{3, 0, 0, 0}, allSections);
+		List<AssignedValue> expectedResult1 = getExpectedResult(new int[]{1, 1, 1, 0}, allSections);
+		List<AssignedValue> expectedResult2 = getExpectedResult(new int[]{1, 1, 0, 1}, allSections);
+		List<AssignedValue> expectedResult3 = getExpectedResult(new int[]{1, 0, 1, 1}, allSections);
+		List<AssignedValue> expectedResult4 = getExpectedResult(new int[]{0, 1, 1, 1}, allSections);
+		List<AssignedValue> expectedResult5 = getExpectedResult(new int[]{2, 1, 0, 0}, allSections);
+		List<AssignedValue> expectedResult6 = getExpectedResult(new int[]{2, 0, 1, 0}, allSections);
+		List<AssignedValue> expectedResult7 = getExpectedResult(new int[]{2, 0, 0, 1}, allSections);
+		List<AssignedValue> expectedResult8 = getExpectedResult(new int[]{3, 0, 0, 0}, allSections);
 				
 		Rule rule = new Rule(allSquares, 3, section3);
-		List<List<KeyValue>> results = RulesCombinationCalculator.getAllVariationsOfARuleWithKnownValues(allSectionsWithKnown, rule);
+		List<List<AssignedValue>> results = RulesCombinationCalculator.getAllVariationsOfARuleWithKnownValues(allSectionsWithKnown, rule);
 		
 		assertTrue(results.contains(expectedResult1));
 		assertTrue(results.contains(expectedResult2));
@@ -229,25 +229,25 @@ public class RulesCombinationCalculatorTest {
 		section4.setGameSquares(new HashSet<>(Arrays.asList(squareJ)));
 		
 		List<Section> allSections = Arrays.asList(section1, section2, section3, section4);
-		List<KeyValue> allSectionsWithKnown = transformSectionsToKeyValues(allSections, 0);
+		List<AssignedValue> allSectionsWithKnown = transformSectionsToKeyValues(allSections, 0);
 		// set two known values
 		allSectionsWithKnown.get(0).setValue(2);
 		allSectionsWithKnown.get(1).setValue(1);
 		
-		List<KeyValue> expectedResult1 = getExpectedResult(new int[]{2, 1, 0, 0}, allSections);
+		List<AssignedValue> expectedResult1 = getExpectedResult(new int[]{2, 1, 0, 0}, allSections);
 				
 		Rule rule = new Rule(allSquares, 3, section3);
-		List<List<KeyValue>> results = RulesCombinationCalculator.getAllVariationsOfARuleWithKnownValues(allSectionsWithKnown, rule);
+		List<List<AssignedValue>> results = RulesCombinationCalculator.getAllVariationsOfARuleWithKnownValues(allSectionsWithKnown, rule);
 		
 		assertTrue(results.contains(expectedResult1));
 		assertEquals(1, results.size());
 	}
 	
-	private List<KeyValue> getExpectedResult(int[] values, List<Section> sections) {
-		List<KeyValue> list = new ArrayList<>();
+	private List<AssignedValue> getExpectedResult(int[] values, List<Section> sections) {
+		List<AssignedValue> list = new ArrayList<>();
 		
 		for (int i=0; i<values.length; i++) {
-			list.add(new KeyValue(values[i], 0, sections.get(i)));
+			list.add(new AssignedValue(values[i], 0, sections.get(i)));
 		}
 		
 		return list;

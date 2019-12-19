@@ -29,7 +29,7 @@ import solver.board.analyzing.BoardAnalyzer;
 import solver.board.analyzing.SectionAnalyzer;
 import solver.calculation.OddsCalculator;
 import solver.calculation.RulesCombinationCalculator;
-import solver.component.KeyValue;
+import solver.component.AssignedValue;
 import solver.component.Rule;
 import utility.logging.Logger;
 import utility.util.MathUtil;
@@ -150,7 +150,7 @@ public class MineSweeperSolver {
 		// Step 3: get all possibilities
 		Logger.setCurrentTime();
 		Logger.logMessage("Caluclating all possible combinations");
-		final List<List<KeyValue>> allVariations = RulesCombinationCalculator.getAllVariations(allSubSections, rules);
+		final List<List<AssignedValue>> allVariations = RulesCombinationCalculator.getAllVariations(allSubSections, rules);
 		Logger.logTimeTook("Caluclated: " + allVariations.size() + " possible outcomes");
 		
 		// Step 4: compute probabilities

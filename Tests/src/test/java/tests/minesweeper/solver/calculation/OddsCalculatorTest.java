@@ -18,7 +18,7 @@ import solver.board.analyzing.BoardAnalyzer;
 import solver.board.analyzing.SectionAnalyzer;
 import solver.calculation.OddsCalculator;
 import solver.calculation.RulesCombinationCalculator;
-import solver.component.KeyValue;
+import solver.component.AssignedValue;
 import solver.component.Rule;
 import tests.minesweeper.data.GameBoardTestScenarios;
 import tests.minesweeper.data.component.GameBoardTestScenario;
@@ -27,7 +27,7 @@ public class OddsCalculatorTest {
 	@Test
 	public void testCalculateOdds() {
 		GameBoardTestScenario test = GameBoardTestScenarios.SCENARIO_SPECIAL_03;
-		List<List<KeyValue>> resultsComplete = getResultsComplete(test);
+		List<List<AssignedValue>> resultsComplete = getResultsComplete(test);
 
 		Map<Object, BigDecimal> results = OddsCalculator.calculateOdds(resultsComplete, 25, 123);
 		Map<String, BigDecimal> expectedResults = new HashMap<>();
@@ -68,12 +68,12 @@ public class OddsCalculatorTest {
 		return null;
 	}
 	
-	private static List<List<KeyValue>> getResultsComplete(GameBoardTestScenario test) {
+	private static List<List<AssignedValue>> getResultsComplete(GameBoardTestScenario test) {
 		List<GameSquare> allGameSquares = test.getGameBoard().getGameBoard();
 		List<Section> sections = (List<Section>) BoardAnalyzer.breakupBoard(test.getGameBoard());
 		List<Rule> allRules = SectionAnalyzer.breakupSectionIntoRules(sections);
 		Collection<Section> allSections = SectionAnalyzer.getSections(allRules, allGameSquares);
-		List<List<KeyValue>> resultsComplete = RulesCombinationCalculator.getAllVariations(allSections, allRules);
+		List<List<AssignedValue>> resultsComplete = RulesCombinationCalculator.getAllVariations(allSections, allRules);
 		
 		return resultsComplete;
 	}

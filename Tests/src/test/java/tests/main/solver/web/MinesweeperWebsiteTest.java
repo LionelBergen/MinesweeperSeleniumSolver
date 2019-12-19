@@ -11,6 +11,7 @@ import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.anyString;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -34,6 +35,7 @@ public class MinesweeperWebsiteTest {
 		assertNotNull(testObject);
 	}
 	
+	@Ignore
 	@Test
 	public void testSelectARandomSquare() {
 		MinesweeperWebsite testObject = createTestSubject();

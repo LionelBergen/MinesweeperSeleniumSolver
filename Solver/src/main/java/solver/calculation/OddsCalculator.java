@@ -7,16 +7,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import solver.component.KeyValue;
+import solver.component.AssignedValue;
 import utility.util.MathUtil;
 
 public class OddsCalculator {
 	private static class WeightWithCases {
 		BigDecimal weight;
 		long numberOfCases;
-		List<KeyValue> cases;
+		List<AssignedValue> cases;
 		
-		public WeightWithCases(BigDecimal weight, long numberOfCases, List<KeyValue> cases) {
+		public WeightWithCases(BigDecimal weight, long numberOfCases, List<AssignedValue> cases) {
 			this.weight = weight;
 			this.numberOfCases = numberOfCases;
 			this.cases = cases;
@@ -35,7 +35,7 @@ public class OddsCalculator {
 			this.numberOfSquaresBeingIdentified = numberOfSquaresBeingIdentified;
 		}
 
-		public void add(Integer numberOfMines, Long numberOfCases, List<KeyValue> recordsForCase) {
+		public void add(Integer numberOfMines, Long numberOfCases, List<AssignedValue> recordsForCase) {
 			if (weightCalculations.get(numberOfMines) == null) {
 				BigDecimal a = BigDecimal.valueOf(totalMines - numberOfMines);
 				BigDecimal weight = calculateWeight(a, numberOfSquaresBeingIdentified);
@@ -66,11 +66,11 @@ public class OddsCalculator {
 		}
 	}
 	
-	public static Map<Object, BigDecimal> calculateOdds(final List<List<KeyValue>> records, final int totalMines, final int totalUnidentifiedSquares) {
+	public static Map<Object, BigDecimal> calculateOdds(final List<List<AssignedValue>> records, final int totalMines, final int totalUnidentifiedSquares) {
 		final Map<Object, BigDecimal> results = new HashMap<>();
 		
 		// All records are of the same length & contain the exact same squares
-		for (KeyValue section : records.get(0)) {
+		for (AssignedValue section : records.get(0)) {
 			// strip the value, maxvalue so we can reference it using any
 			results.put(section.getKey(), BigDecimal.ZERO);
 		}
@@ -79,7 +79,7 @@ public class OddsCalculator {
 		
 		final WeightHandler weightHandler = new WeightHandler(totalMines, numberOfSquaresBeingIdentified);
 		
-		for (List<KeyValue> record : records) {
+		for (List<AssignedValue> record : records) {
 			final Integer numberOfMines = record.stream().map(e -> e.getValue()).collect(Collectors.summingInt(Integer::intValue));
 			final Long numberOfCases = calculateNumberOfCases(record);
 			
@@ -91,7 +91,7 @@ public class OddsCalculator {
 		for (WeightWithCases y : weightHandler.keys()) {
 			BigDecimal weightForCase = MathUtil.multiply(y.weight, BigDecimal.valueOf(y.numberOfCases));
 			System.out.println("weight: " + weightForCase + " # of cases: " + y.numberOfCases);
-			for (KeyValue section : y.cases) {
+			for (AssignedValue section : y.cases) {
 				if (section.getValue() > 0) {
 					BigDecimal weightPerSquare = BigDecimal.valueOf((double) section.getValue() / section.getMaxValue());
 					BigDecimal weightCalculation = MathUtil.multiply(weightPerSquare, weightForCase);
@@ -110,7 +110,7 @@ public class OddsCalculator {
 		return MathUtil.binomial(b, a);
 	}
 	
-	private static Long calculateNumberOfCases(List<KeyValue> values) {
+	private static Long calculateNumberOfCases(List<AssignedValue> values) {
 		return values.stream().map(e -> MathUtil.nCr(e.getMaxValue(), e.getValue()))
 				.reduce(1L, (a, b) -> a * b);
 	}
