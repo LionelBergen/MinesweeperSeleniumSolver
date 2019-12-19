@@ -27,11 +27,6 @@ public class SeleniumSection extends GenericSection<SeleniumGameSquare> {
 	}
 
 	@Override
-	public void setGameSquares(Set<SeleniumGameSquare> gameSquares) {
-		this.gameSquares = gameSquares;
-	}
-
-	@Override
 	public Set<SeleniumGameSquare> getGameSquares() {
 		return this.gameSquares;
 	}

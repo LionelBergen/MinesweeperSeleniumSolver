@@ -7,9 +7,10 @@ import java.util.stream.Collectors;
 import component.model.gamesquare.GameSquare;
 
 public class Section extends GenericSection<GameSquare> {
-	private Set<GameSquare> gameSquares = new HashSet<GameSquare>();
+	private final Set<GameSquare> gameSquares;
 	
 	public Section() {
+		this(new HashSet<GameSquare>());
 	}
 	
 	public Section(Set<GameSquare> gameSquares) {
@@ -24,12 +25,6 @@ public class Section extends GenericSection<GameSquare> {
 	@Override
 	public Set<GameSquare> getGameSquares() {
 		return this.gameSquares;
-	}
-
-	@Override
-	public void setGameSquares(Set<GameSquare> gameSquares) {
-		this.gameSquares = gameSquares;
-		
 	}
 	
 	@Override

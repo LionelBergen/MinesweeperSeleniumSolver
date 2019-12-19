@@ -15,8 +15,6 @@ public abstract class GenericSection<T extends GameSquare> {
 	
 	public abstract Set<T> getGameSquares();
 	
-	public abstract void setGameSquares(Set<T> gameSquares);
-	
 	@Override
 	public int hashCode() {
 		final int prime = 92821;

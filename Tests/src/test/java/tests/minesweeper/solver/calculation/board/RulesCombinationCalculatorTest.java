@@ -124,14 +124,10 @@ public class RulesCombinationCalculatorTest {
 		
 		List<GameSquare> allSquares = Arrays.asList(squareA, squareB, squareC, squareF, squareI, squareG, squareJ);
 		
-		Section section1 = new Section();
-		Section section2 = new Section();
-		Section section3 = new Section();
-		Section section4 = new Section();
-		section1.setGameSquares(new HashSet<>(Arrays.asList(squareA, squareB, squareF, squareI)));
-		section2.setGameSquares(new HashSet<>(Arrays.asList(squareC)));
-		section3.setGameSquares(new HashSet<>(Arrays.asList(squareG)));
-		section4.setGameSquares(new HashSet<>(Arrays.asList(squareJ)));
+		Section section1 = new Section(new HashSet<>(Arrays.asList(squareA, squareB, squareF, squareI)));
+		Section section2 = new Section(new HashSet<>(Arrays.asList(squareC)));
+		Section section3 = new Section(new HashSet<>(Arrays.asList(squareG)));
+		Section section4 = new Section(new HashSet<>(Arrays.asList(squareJ)));
 		
 		List<Section> allSections = Arrays.asList(section1, section2, section3, section4);
 		
@@ -171,14 +167,10 @@ public class RulesCombinationCalculatorTest {
 		
 		List<GameSquare> allSquares = Arrays.asList(squareA, squareB, squareC, squareF, squareI, squareG, squareJ);
 		
-		Section section1 = new Section();
-		Section section2 = new Section();
-		Section section3 = new Section();
-		Section section4 = new Section();
-		section1.setGameSquares(new HashSet<>(Arrays.asList(squareA, squareB, squareF, squareI)));
-		section2.setGameSquares(new HashSet<>(Arrays.asList(squareC)));
-		section3.setGameSquares(new HashSet<>(Arrays.asList(squareG)));
-		section4.setGameSquares(new HashSet<>(Arrays.asList(squareJ)));
+		Section section1 = new Section(new HashSet<>(Arrays.asList(squareA, squareB, squareF, squareI)));
+		Section section2 = new Section(new HashSet<>(Arrays.asList(squareC)));
+		Section section3 = new Section(new HashSet<>(Arrays.asList(squareG)));
+		Section section4 = new Section(new HashSet<>(Arrays.asList(squareJ)));
 		
 		List<Section> allSections = Arrays.asList(section1, section2, section3, section4);
 		List<AssignedValue> allSectionsWithKnown = transformSectionsToKeyValues(allSections, 0);
@@ -219,14 +211,10 @@ public class RulesCombinationCalculatorTest {
 		
 		List<GameSquare> allSquares = Arrays.asList(squareA, squareB, squareC, squareF, squareI, squareG, squareJ);
 		
-		Section section1 = new Section();
-		Section section2 = new Section();
-		Section section3 = new Section();
-		Section section4 = new Section();
-		section1.setGameSquares(new HashSet<>(Arrays.asList(squareA, squareB, squareF, squareI)));
-		section2.setGameSquares(new HashSet<>(Arrays.asList(squareC)));
-		section3.setGameSquares(new HashSet<>(Arrays.asList(squareG)));
-		section4.setGameSquares(new HashSet<>(Arrays.asList(squareJ)));
+		Section section1 = new Section(new HashSet<>(Arrays.asList(squareA, squareB, squareF, squareI)));
+		Section section2 = new Section(new HashSet<>(Arrays.asList(squareC)));
+		Section section3 = new Section(new HashSet<>(Arrays.asList(squareG)));
+		Section section4 = new Section(new HashSet<>(Arrays.asList(squareJ)));
 		
 		List<Section> allSections = Arrays.asList(section1, section2, section3, section4);
 		List<AssignedValue> allSectionsWithKnown = transformSectionsToKeyValues(allSections, 0);
