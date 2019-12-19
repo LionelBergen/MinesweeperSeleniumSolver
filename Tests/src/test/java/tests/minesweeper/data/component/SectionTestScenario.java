@@ -2,6 +2,7 @@ package tests.minesweeper.data.component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import component.model.Section;
 import component.model.gamesquare.GameSquare;
@@ -10,9 +11,9 @@ import solver.component.Rule;
 public class SectionTestScenario {
 	private List<Section> sections;
 	private List<Rule> expectedOrigResults;
-	private Map<List<Section>, List<GameSquare>> expectedContents;
+	private Map<List<Section>, Set<GameSquare>> expectedContents;
 	
-	public SectionTestScenario(List<Section> sections, Map<List<Section>, List<GameSquare>> expectedContents, List<Rule> expectedOrigResults) {
+	public SectionTestScenario(List<Section> sections, Map<List<Section>, Set<GameSquare>> expectedContents, List<Rule> expectedOrigResults) {
 		this.sections = sections;
 		this.expectedOrigResults = expectedOrigResults;
 		this.expectedContents = expectedContents;
@@ -34,11 +35,11 @@ public class SectionTestScenario {
 		this.expectedOrigResults = expectedOrigResults;
 	}
 
-	public Map<List<Section>, List<GameSquare>> getExpectedContents() {
+	public Map<List<Section>, Set<GameSquare>> getExpectedContents() {
 		return expectedContents;
 	}
 
-	public void setExpectedContents(Map<List<Section>, List<GameSquare>> expectedContents) {
+	public void setExpectedContents(Map<List<Section>, Set<GameSquare>> expectedContents) {
 		this.expectedContents = expectedContents;
 	}
 }

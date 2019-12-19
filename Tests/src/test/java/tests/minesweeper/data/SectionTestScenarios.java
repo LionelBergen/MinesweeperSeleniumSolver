@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import component.model.Section;
 import component.model.gamesquare.GameSquare;
@@ -27,7 +28,7 @@ public class SectionTestScenarios {
 	private static SectionTestScenario getScenario01() {
 		Section section = GameBoardTestScenarios.SCENARIO_01.getExpectedSections().iterator().next();
 		
-		List<GameSquare> gameSquares = new ArrayList<GameSquare>();
+		Set<GameSquare> gameSquares = new HashSet<GameSquare>();
 		gameSquares.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 1));
 		gameSquares.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1));
 		gameSquares.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 1));
@@ -37,7 +38,7 @@ public class SectionTestScenarios {
 		gameSquares.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3));
 		gameSquares.add(new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 3));
 		
-		Map<List<Section>, List<GameSquare>> expectedContents = new HashMap<>();
+		Map<List<Section>, Set<GameSquare>> expectedContents = new HashMap<>();
 		List<Section> ss = new ArrayList<>();
 		ss.add(new Section(new HashSet<>(gameSquares)));
 		expectedContents.put(ss, gameSquares);
@@ -76,27 +77,27 @@ public class SectionTestScenarios {
 				touchingThe3
 				);
 		
-		List<GameSquare> resultSet1 = Arrays.asList(
+		Set<GameSquare> resultSet1 = new HashSet<>(Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 0),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 0),
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 0));
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 0)));
 		List<Section> parentSet1 = Arrays.asList(new Section(new HashSet<>(touchingThe2.getSquares())));
 		
-		List<GameSquare> resultSet2 = Arrays.asList(
+		Set<GameSquare> resultSet2 = new HashSet<>(Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 1),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 2),
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 2));
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 2)));
 		List<Section> parentSet2 = Arrays.asList(new Section(new HashSet<>(touchingThe2.getSquares())),
 				new Section(new HashSet<>(touchingThe3.getSquares())));
 		
-		List<GameSquare> resultSet3 = Arrays.asList(
+		Set<GameSquare> resultSet3 = new HashSet<>(Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 3),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3),
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3));
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3)));
 		List<Section> parentSet3 = Arrays.asList(new Section(new HashSet<>(touchingThe3.getSquares())));
 		
-		Map<List<Section>, List<GameSquare>> expectedContents = new HashMap<>();
+		Map<List<Section>, Set<GameSquare>> expectedContents = new HashMap<>();
 		
 		expectedContents.put(parentSet1, resultSet1);
 		expectedContents.put(parentSet2, resultSet2);
@@ -142,25 +143,25 @@ public class SectionTestScenarios {
 				touchingThe4
 				);
 		
-		List<GameSquare> resultSet1 = Arrays.asList(
+		Set<GameSquare> resultSet1 = new HashSet<>(Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 0),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 0),
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 0));
-		List<Section> parentSet1 = Arrays.asList(new Section(touchingThe2.getSquares()));
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 0)));
+		List<Section> parentSet1 = Arrays.asList(new Section(new HashSet<>(touchingThe2.getSquares())));
 		
-		List<GameSquare> resultSet2 = Arrays.asList(
+		Set<GameSquare> resultSet2 = new HashSet<>(Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 1),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 2),
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 2));
-		List<Section> parentSet2 = Arrays.asList(new Section(touchingThe2.getSquares()),
-				new Section(touchingThe4.getSquares()));
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 2)));
+		List<Section> parentSet2 = Arrays.asList(new Section(new HashSet<>(touchingThe2.getSquares())),
+				new Section(new HashSet<>(touchingThe4.getSquares())));
 		
-		List<GameSquare> resultSet3 = Arrays.asList(
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 3));
-		List<Section> parentSet3 = Arrays.asList(new Section(touchingThe4.getSquares()));
+		Set<GameSquare> resultSet3 = new HashSet<>(Arrays.asList(
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 0, 3)));
+		List<Section> parentSet3 = Arrays.asList(new Section(new HashSet<>(touchingThe4.getSquares())));
 		
-		Map<List<Section>, List<GameSquare>> expectedContents = new HashMap<>();
+		Map<List<Section>, Set<GameSquare>> expectedContents = new HashMap<>();
 		
 		expectedContents.put(parentSet1, resultSet1);
 		expectedContents.put(parentSet2, resultSet2);
@@ -214,54 +215,54 @@ public class SectionTestScenarios {
 				);
 		
 		// Green
-		List<GameSquare> resultSet1 = Arrays.asList(
+		Set<GameSquare> resultSet1 = new HashSet<>(Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 1),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 2),
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3));
-		List<Section> parentSet1 = Arrays.asList(new Section(touchingThe3.getSquares()));
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3)));
+		List<Section> parentSet1 = Arrays.asList(new Section(new HashSet<>(touchingThe3.getSquares())));
 		
 		// Yellow
-		List<GameSquare> resultSet2 = Arrays.asList(
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3));
-		List<Section> parentSet2 = Arrays.asList(new Section(touchingThe3.getSquares()),
-				new Section(touchingThe12.getSquares()));
+		Set<GameSquare> resultSet2 = new HashSet<>(Arrays.asList(
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 3)));
+		List<Section> parentSet2 = Arrays.asList(new Section(new HashSet<>(touchingThe3.getSquares())),
+				new Section(new HashSet<>(touchingThe12.getSquares())));
 		
 		// Light-blue
-		List<GameSquare> resultSet3 = Arrays.asList(
+		Set<GameSquare> resultSet3 = new HashSet<>(Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 4),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 4),
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 4));
-		List<Section> parentSet3 = Arrays.asList(new Section(touchingThe12.getSquares()));
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 4)));
+		List<Section> parentSet3 = Arrays.asList(new Section(new HashSet<>(touchingThe12.getSquares())));
 		
 		// Pink
-		List<GameSquare> resultSet4 = Arrays.asList(
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 1));
-		List<Section> parentSet4 = Arrays.asList(new Section(touchingThe11.getSquares()),
-				new Section(touchingThe3.getSquares()));
+		Set<GameSquare> resultSet4 = new HashSet<>(Arrays.asList(
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 1)));
+		List<Section> parentSet4 = Arrays.asList(new Section(new HashSet<>(touchingThe11.getSquares())),
+				new Section(new HashSet<>(touchingThe3.getSquares())));
 		
 		// Brown
-		List<GameSquare> resultSet5 = Arrays.asList(
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 2));
-		List<Section> parentSet5 = Arrays.asList(new Section(touchingThe11.getSquares()),
-				new Section(touchingThe3.getSquares()),
-				new Section(touchingThe12.getSquares()));
+		Set<GameSquare> resultSet5 = new HashSet<>(Arrays.asList(
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 2)));
+		List<Section> parentSet5 = Arrays.asList(new Section(new HashSet<>(touchingThe11.getSquares())),
+				new Section(new HashSet<>(touchingThe3.getSquares())),
+				new Section(new HashSet<>(touchingThe12.getSquares())));
 		
 		// Purple
-		List<GameSquare> resultSet6 = Arrays.asList(
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 3));
-		List<Section> parentSet6 = Arrays.asList(new Section(touchingThe11.getSquares()),
-				new Section(touchingThe12.getSquares()));
+		Set<GameSquare> resultSet6 = new HashSet<>(Arrays.asList(
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 3)));
+		List<Section> parentSet6 = Arrays.asList(new Section(new HashSet<>(touchingThe11.getSquares())),
+				new Section(new HashSet<>(touchingThe12.getSquares())));
 		
 		// Orange
-		List<GameSquare> resultSet7 = Arrays.asList(
+		Set<GameSquare> resultSet7 = new HashSet<>(Arrays.asList(
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 1),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 1),
 				new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 2),
-				new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 3));
-		List<Section> parentSet7 = Arrays.asList(new Section(touchingThe11.getSquares()));
+				new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 3)));
+		List<Section> parentSet7 = Arrays.asList(new Section(new HashSet<>(touchingThe11.getSquares())));
 		
-		Map<List<Section>, List<GameSquare>> expectedContents = new HashMap<>();
+		Map<List<Section>, Set<GameSquare>> expectedContents = new HashMap<>();
 		
 		expectedContents.put(parentSet1, resultSet1);
 		expectedContents.put(parentSet2, resultSet2);
@@ -389,51 +390,51 @@ public class SectionTestScenarios {
 				);
 		
 		// Green
-		List<GameSquare> resultSet1 = Arrays.asList(A,B,F,I);
-		List<Section> parentSet1 = Arrays.asList(new Section(rule1.getSquares()));
+		Set<GameSquare> resultSet1 = new HashSet<>(Arrays.asList(A,B,F,I));
+		List<Section> parentSet1 = Arrays.asList(new Section(new HashSet<>(rule1.getSquares())));
 		
 		// Yellow
-		List<GameSquare> resultSet2 = Arrays.asList(J);
-		List<Section> parentSet2 = Arrays.asList(new Section(rule1.getSquares()),
-				new Section(rule3.getSquares()));
+		Set<GameSquare> resultSet2 = new HashSet<>(Arrays.asList(J));
+		List<Section> parentSet2 = Arrays.asList(new Section(new HashSet<>(rule1.getSquares())),
+				new Section(new HashSet<>(rule3.getSquares())));
 		
 		// Light-blue
-		List<GameSquare> resultSet3 = Arrays.asList(M,N,O);
-		List<Section> parentSet3 = Arrays.asList(new Section(rule3.getSquares()));
+		Set<GameSquare> resultSet3 = new HashSet<>(Arrays.asList(M,N,O));
+		List<Section> parentSet3 = Arrays.asList(new Section(new HashSet<>(rule3.getSquares())));
 		
 		// Pink
-		List<GameSquare> resultSet4 = Arrays.asList(C);
-		List<Section> parentSet4 = Arrays.asList(new Section(rule2.getSquares()),
-				new Section(rule1.getSquares()));
+		Set<GameSquare> resultSet4 = new HashSet<>(Arrays.asList(C));
+		List<Section> parentSet4 = Arrays.asList(new Section(new HashSet<>(rule2.getSquares())),
+				new Section(new HashSet<>(rule1.getSquares())));
 		
 		// Brown
-		List<GameSquare> resultSet5 = Arrays.asList(G);
-		List<Section> parentSet5 = Arrays.asList(new Section(rule2.getSquares()),
-				new Section(rule1.getSquares()),
-				new Section(rule3.getSquares()));
+		Set<GameSquare> resultSet5 = new HashSet<>(Arrays.asList(G));
+		List<Section> parentSet5 = Arrays.asList(new Section(new HashSet<>(rule2.getSquares())),
+				new Section(new HashSet<>(rule1.getSquares())),
+				new Section(new HashSet<>(rule3.getSquares())));
 		
 		// Purple
-		List<GameSquare> resultSet6 = Arrays.asList(K);
-		List<Section> parentSet6 = Arrays.asList(new Section(rule2.getSquares()),
-				new Section(rule3.getSquares()));
+		Set<GameSquare> resultSet6 = new HashSet<>(Arrays.asList(K));
+		List<Section> parentSet6 = Arrays.asList(new Section(new HashSet<>(rule2.getSquares())),
+				new Section(new HashSet<>(rule3.getSquares())));
 		
 		// Orange
-		List<GameSquare> resultSet7 = Arrays.asList(D,E,H,L);
-		List<Section> parentSet7 = Arrays.asList(new Section(rule2.getSquares()));
+		Set<GameSquare> resultSet7 = new HashSet<>(Arrays.asList(D,E,H,L));
+		List<Section> parentSet7 = Arrays.asList(new Section(new HashSet<>(rule2.getSquares())));
 		
 		// Dark-blue
-		List<GameSquare> resultSet8 = Arrays.asList(P,T,V);
-		List<Section> parentSet8 = Arrays.asList(new Section(rule4.getSquares()));
+		Set<GameSquare> resultSet8 = new HashSet<>(Arrays.asList(P,T,V));
+		List<Section> parentSet8 = Arrays.asList(new Section(new HashSet<>(rule4.getSquares())));
 		
 		// Beige
-		List<GameSquare> resultSet9 = Arrays.asList(Q, R, W, X);
-		List<Section> parentSet9 = Arrays.asList(new Section(rule4.getSquares()), new Section(rule5.getSquares()));
+		Set<GameSquare> resultSet9 = new HashSet<>(Arrays.asList(Q, R, W, X));
+		List<Section> parentSet9 = Arrays.asList(new Section(new HashSet<>(rule4.getSquares())), new Section(new HashSet<>(rule5.getSquares())));
 		
 		// Red
-		List<GameSquare> resultSet10 = Arrays.asList(S,U,Y);
-		List<Section> parentSet10 = Arrays.asList(new Section(rule5.getSquares()));
+		Set<GameSquare> resultSet10 = new HashSet<>(Arrays.asList(S,U,Y));
+		List<Section> parentSet10 = Arrays.asList(new Section(new HashSet<>(rule5.getSquares())));
 		
-		Map<List<Section>, List<GameSquare>> expectedContents = new HashMap<>();
+		Map<List<Section>, Set<GameSquare>> expectedContents = new HashMap<>();
 		
 		expectedContents.put(parentSet1, resultSet1);
 		expectedContents.put(parentSet2, resultSet2);

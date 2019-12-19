@@ -102,7 +102,7 @@ public class SectionAnalyzerTest {
 				//List<Set<Section>> actualContents = actualResult.getResultSets();
 				assertEquals(scenario.getExpectedContents().size(), resultContents.size());
 				
-				for (Entry<List<Section>, List<GameSquare>> expected : scenario.getExpectedContents().entrySet()) {
+				for (Entry<List<Section>, Set<GameSquare>> expected : scenario.getExpectedContents().entrySet()) {
 					// List<Section> resultList = new ArrayList<Section>(resultContents);
 					//Section y = resultContents.stream().filter(e -> expected.getKey().contains(e)).findAny().get();
 					Set<GameSquare> x = actualResult.get(expected.getKey());

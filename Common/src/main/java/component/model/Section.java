@@ -1,6 +1,5 @@
 package component.model;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,10 +14,6 @@ public class Section extends GenericSection<GameSquare> {
 	
 	public Section(Set<GameSquare> gameSquares) {
 		this.gameSquares = gameSquares;
-	}
-
-	public Section(Collection<GameSquare> gameSquares) {
-		this.gameSquares = new HashSet<>(gameSquares);
 	}
 
 	@Override
