@@ -5,10 +5,6 @@ public class KeyValue {
 	private int maxValue;
 	private Object key;
 	
-	public KeyValue(int maxValue, Object key) {
-		this(0, maxValue, key);
-	}
-	
 	public KeyValue(int value, int maxValue, Object key) {
 		this.value = value;
 		this.maxValue = maxValue;
