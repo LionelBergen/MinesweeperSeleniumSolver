@@ -29,7 +29,7 @@ public class GameBoardAnalyzer {
 	Map<Section, BigDecimal> results;
 
 	// TODO: totalMines, totalUnidentifiedSquares should be on GameBaord
-	public static Map<Section, BigDecimal> getOddsForEverySquare(GameBoard gameBoard, int totalMines, int totalUnidentifiedSquares) {
+	public static Map<Section, BigDecimal> calculateOddsForEverySection(GameBoard gameBoard, int totalMines, int totalUnidentifiedSquares) {
 		GameBoardAnalyzer gameBoardAnalyzer = new GameBoardAnalyzer();
 		gameBoardAnalyzer.gameBoard = gameBoard;
 		gameBoardAnalyzer.totalMines = totalMines;
