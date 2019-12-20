@@ -29,7 +29,7 @@ public class OddsCalculatorTest {
 		GameBoardTestScenario test = GameBoardTestScenarios.SCENARIO_SPECIAL_03;
 		List<List<AssignedValue>> resultsComplete = getResultsComplete(test);
 
-		Map<Object, BigDecimal> results = OddsCalculator.calculateOdds(resultsComplete, 25, 123);
+		Map<Section, BigDecimal> results = OddsCalculator.calculateOdds(resultsComplete, 25, 123);
 		Map<String, BigDecimal> expectedResults = new HashMap<>();
 		
 		expectedResults.put("C", BigDecimal.valueOf(0.34941864));
@@ -43,7 +43,7 @@ public class OddsCalculatorTest {
 		expectedResults.put("VTP", BigDecimal.valueOf(0.38455520));
 		expectedResults.put("LEHD", BigDecimal.valueOf(0.09078006));
 		
-		for (Entry<Object, BigDecimal> x : results.entrySet()) {
+		for (Entry<Section, BigDecimal> x : results.entrySet()) {
 			BigDecimal expectedResult = getExpectedResult(x.getKey(), expectedResults);
 			BigDecimal actualResult = x.getValue();
 			assertNotNull("Unexpected entry: " + x.getKey().toString(), expectedResult);

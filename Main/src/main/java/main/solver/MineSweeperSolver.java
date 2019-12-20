@@ -156,12 +156,12 @@ public class MineSweeperSolver {
 		// Step 4: compute probabilities
 		Logger.setCurrentTime();
 		Logger.logMessage("Caluclating probabilities");
-		final Map<Object, BigDecimal> probabilities = OddsCalculator.calculateOdds(allVariations, unFoundMines, totalUnidentifiedSquares);
+		final Map<Section, BigDecimal> probabilities = OddsCalculator.calculateOdds(allVariations, unFoundMines, totalUnidentifiedSquares);
 		Logger.logTimeTook("Caluclated: " + allVariations.size() + " possible outcomes");
 
 		// Get the item with the best probability
-		Entry<Object, BigDecimal> lowestValue = probabilities.entrySet().stream().sorted(Map.Entry.comparingByValue()).findFirst().get();
-		Section result = (Section) lowestValue.getKey();
+		Entry<Section, BigDecimal> lowestValue = probabilities.entrySet().stream().sorted(Map.Entry.comparingByValue()).findFirst().get();
+		Section result = lowestValue.getKey();
 		Set<GameSquare> squaresWithBestProbability = result.getGameSquares();
 		SeleniumGameSquare squareToSelect = getRandomSquareFromSet(squaresWithBestProbability);
     	

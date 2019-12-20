@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import component.model.Section;
 import solver.component.AssignedValue;
 import utility.util.MathUtil;
 
@@ -66,8 +67,8 @@ public class OddsCalculator {
 		}
 	}
 	
-	public static Map<Object, BigDecimal> calculateOdds(final List<List<AssignedValue>> records, final int totalMines, final int totalUnidentifiedSquares) {
-		final Map<Object, BigDecimal> results = new HashMap<>();
+	public static Map<Section, BigDecimal> calculateOdds(final List<List<AssignedValue>> records, final int totalMines, final int totalUnidentifiedSquares) {
+		final Map<Section, BigDecimal> results = new HashMap<>();
 		
 		// All records are of the same length & contain the exact same squares
 		for (AssignedValue section : records.get(0)) {
