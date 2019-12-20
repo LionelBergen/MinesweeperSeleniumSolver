@@ -5,22 +5,13 @@ import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.junit.Test;
 
 import component.model.Section;
-import component.model.gamesquare.GameSquare;
-import solver.board.analyzing.BoardAnalyzer;
 import solver.board.analyzing.GameBoardAnalyzer;
-import solver.board.analyzing.SectionAnalyzer;
-import solver.calculation.OddsCalculator;
-import solver.calculation.RulesCombinationCalculator;
-import solver.component.AssignedValue;
-import solver.component.Rule;
 import tests.minesweeper.data.GameBoardTestScenarios;
 import tests.minesweeper.data.component.GameBoardTestScenario;
 
@@ -66,15 +57,5 @@ public class GameBoardAnalyzerTest {
 		}
 		
 		return null;
-	}
-	
-	private static List<List<AssignedValue>> getResultsComplete(GameBoardTestScenario test) {
-		List<GameSquare> allGameSquares = test.getGameBoard().getGameBoard();
-		List<Section> sections = (List<Section>) BoardAnalyzer.breakupBoard(test.getGameBoard());
-		List<Rule> allRules = SectionAnalyzer.breakupSectionIntoRules(sections);
-		Collection<Section> allSections = SectionAnalyzer.getSections(allRules, allGameSquares);
-		List<List<AssignedValue>> resultsComplete = RulesCombinationCalculator.getAllVariations(allSections, allRules);
-		
-		return resultsComplete;
 	}
 }
