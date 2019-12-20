@@ -20,7 +20,7 @@ public class GameBoardAnalyzerTest {
 	public void testCalculateOdds() {
 		GameBoardTestScenario test = GameBoardTestScenarios.SCENARIO_SPECIAL_03;
 
-		Map<Section, BigDecimal> results = GameBoardAnalyzer.calculateOddsForEverySection(test.getGameBoard(), 25, 123);
+		Map<Section, BigDecimal> results = GameBoardAnalyzer.calculateOddsForEverySection(test.getGameBoard());
 		Map<String, BigDecimal> expectedResults = new HashMap<>();
 		
 		expectedResults.put("C", BigDecimal.valueOf(0.34941864));

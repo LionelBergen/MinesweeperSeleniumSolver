@@ -14,14 +14,14 @@ import component.model.gamesquare.SquareValue;
 public class GameBoardTest {
 	@Test
 	public void testGetSize() {
-		RegularGameBoard testGameBoard = getValidGameBoard(21);
+		RegularGameBoard testGameBoard = getValidGameBoard(21, 5);
 		
 		assertEquals(100, testGameBoard.getSize());
 	}
 	
 	@Test
 	public void testGetAllBlankSquares() {
-		RegularGameBoard testGameBoard = getValidGameBoard(13);
+		RegularGameBoard testGameBoard = getValidGameBoard(13, 5);
 		
 		List<GameSquare> results = testGameBoard.getAllBlankSquares();
 		assertEquals(87, results.size());

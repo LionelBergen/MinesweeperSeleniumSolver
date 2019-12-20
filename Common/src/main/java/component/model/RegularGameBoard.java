@@ -11,8 +11,9 @@ import component.model.gamesquare.GameSquare;
 public class RegularGameBoard extends GameBoard {
 	List<GameSquare> gameBoard;
 	
-	public RegularGameBoard(List<GameSquare> playableSquares) {
+	public RegularGameBoard(List<GameSquare> playableSquares, int numberOfMines) {
 		setGameBoard(playableSquares);
+		this.setTotalUnidentifiedMines(numberOfMines);
 	}
 
 	@Override

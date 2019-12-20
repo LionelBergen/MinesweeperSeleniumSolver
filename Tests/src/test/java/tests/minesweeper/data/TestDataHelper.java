@@ -14,15 +14,15 @@ import component.model.gamesquare.SquareValue;
 import tests.minesweeper.data.component.GameBoardTestScenario;
 
 public class TestDataHelper {
-	public static RegularGameBoard getValidGameBoard(int numberOfNumberedSquares) {
-		return getValidGameBoard(numberOfNumberedSquares, 10, 10);
+	public static RegularGameBoard getValidGameBoard(int numberOfNumberedSquares, int numberOfMines) {
+		return getValidGameBoard(numberOfNumberedSquares, 10, 10, numberOfMines);
 	}
 	
-	public static RegularGameBoard getValidGameBoard(int width, int height) {
-		return getValidGameBoard(0, width, height);
+	public static RegularGameBoard getValidGameBoard(int width, int height, int numberOfMines) {
+		return getValidGameBoard(0, width, height, numberOfMines);
 	}
 	
-	public static RegularGameBoard getValidGameBoard(int numberOfNumberedSquares, int width, int height) {
+	public static RegularGameBoard getValidGameBoard(int numberOfNumberedSquares, int width, int height, int numberOfMines) {
 		List<GameSquare> gameSquares = new ArrayList<GameSquare>();
 		
 		// Get a 10x10 game board fille with blank
@@ -39,7 +39,7 @@ public class TestDataHelper {
 			gameSquares.get(i).setValue(SquareValue.ONE);
 		}
 		
-		RegularGameBoard gameBoard = new RegularGameBoard(gameSquares);
+		RegularGameBoard gameBoard = new RegularGameBoard(gameSquares, numberOfMines);
 		
 		return gameBoard;
 	}

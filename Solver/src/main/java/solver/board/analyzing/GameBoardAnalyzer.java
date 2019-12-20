@@ -24,16 +24,11 @@ public class GameBoardAnalyzer {
 	private Collection<Section> sections;
 	private GameBoard gameBoard;
 	private List<List<AssignedValue>> allPossibleCombinations;
-	private int totalMines;
-	private int totalUnidentifiedSquares;
 	Map<Section, BigDecimal> results;
 
-	// TODO: totalMines, totalUnidentifiedSquares should be on GameBaord
-	public static Map<Section, BigDecimal> calculateOddsForEverySection(GameBoard gameBoard, int totalMines, int totalUnidentifiedSquares) {
+	public static Map<Section, BigDecimal> calculateOddsForEverySection(GameBoard gameBoard) {
 		GameBoardAnalyzer gameBoardAnalyzer = new GameBoardAnalyzer();
 		gameBoardAnalyzer.gameBoard = gameBoard;
-		gameBoardAnalyzer.totalMines = totalMines;
-		gameBoardAnalyzer.totalUnidentifiedSquares = totalUnidentifiedSquares;
 		
 		gameBoardAnalyzer.breakupBoard(gameBoard)
 			.createRules()
@@ -48,7 +43,7 @@ public class GameBoardAnalyzer {
 	
 	private GameBoardAnalyzer calculateOdds() {
 		// TODO: totalMines, totalUnidentifiedSquares should be on GameBaord
-		this.results = OddsCalculator.calculateOdds(this.allPossibleCombinations, this.totalMines, this.totalUnidentifiedSquares);
+		this.results = OddsCalculator.calculateOdds(this.allPossibleCombinations, this.gameBoard.getTotalUnidentifiedMines(), this.gameBoard.getNumberOfUnidentifiedSquares());
 		
 		return this;
 	}

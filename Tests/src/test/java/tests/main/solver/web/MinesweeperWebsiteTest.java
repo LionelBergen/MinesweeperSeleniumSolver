@@ -43,7 +43,7 @@ public class MinesweeperWebsiteTest {
 		List<WebElement> mockWebElements = new ArrayList<>();
 		mockWebElements.add(new MockWebElement());
 		
-		SeleniumGameBoard gameBoard = new SeleniumGameBoard(mockWebElements);
+		SeleniumGameBoard gameBoard = new SeleniumGameBoard(mockWebElements, -1);
 		
 		testObject.selectARandomSquare(mockWebDriver, gameBoard, 50);
 	}

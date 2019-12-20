@@ -15,6 +15,7 @@ import utility.util.GameBoardHelper;
  */
 public abstract class GameBoard {
 	private final GameBoardHelper gameBoardHelper = new GameBoardHelper();
+	private int totalUnidentifiedMines = 0;
 	
 	public abstract List<GameSquare> getGameBoard();
 	
@@ -74,5 +75,17 @@ public abstract class GameBoard {
 	
 	public List<GameSquare> getSurroundingNumberedSquares(GameSquare square) {
 		return gameBoardHelper.getSurroundingNumberedSquares(this.getGameBoard(), square);
+	}
+	
+	public int getNumberOfUnidentifiedSquares() {
+		return this.getAllBlankSquares().size();
+	}
+
+	public int getTotalUnidentifiedMines() {
+		return totalUnidentifiedMines;
+	}
+
+	public void setTotalUnidentifiedMines(int totalUnidentifiedMines) {
+		this.totalUnidentifiedMines = totalUnidentifiedMines;
 	}
 }

@@ -18,9 +18,10 @@ import main.solver.transformers.WebElementSeleniumGameSquareTransformer;
 public class SeleniumGameBoard extends GameBoard {
 	private final List<SeleniumGameSquare> gameBoard;
 	
-	public SeleniumGameBoard(List<WebElement> playableSquares) {
+	public SeleniumGameBoard(List<WebElement> playableSquares, int numberOfMines) {
 		// Transform, getting the X and Y of each
 		this.gameBoard = playableSquares.stream().map(e -> transformGameSquare(e)).collect(Collectors.toList());
+		this.setTotalUnidentifiedMines(numberOfMines);
 	}
 	
 	@Override

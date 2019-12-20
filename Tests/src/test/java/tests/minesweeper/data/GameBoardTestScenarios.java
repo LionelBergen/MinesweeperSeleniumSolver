@@ -35,7 +35,7 @@ public class GameBoardTestScenarios {
 	 */
 	private static GameBoardTestScenario getGameBoardScenario1() {
 		// setup a game board
-		RegularGameBoard gameBoard = getValidGameBoard(5, 5);
+		RegularGameBoard gameBoard = getValidGameBoard(5, 5, 1);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 2, 2).setValue(SquareValue.ONE);
 		
@@ -56,7 +56,7 @@ public class GameBoardTestScenarios {
 	 */
 	private static GameBoardTestScenario getGameBoardScenario2() {
 		// setup the game board
-		RegularGameBoard gameBoard = getValidGameBoard(7, 7);
+		RegularGameBoard gameBoard = getValidGameBoard(7, 7, 2);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 1, 1).setValue(SquareValue.ONE);
 		getGameSquare(squares, 5, 2).setValue(SquareValue.ONE);
@@ -87,7 +87,7 @@ public class GameBoardTestScenarios {
 	 */
 	private static GameBoardTestScenario getGameBoardScenario3() {
 		// create game board
-		RegularGameBoard gameBoard = getValidGameBoard(7, 7);
+		RegularGameBoard gameBoard = getValidGameBoard(7, 7, 2);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 1, 1).setValue(SquareValue.TWO);
 		getGameSquare(squares, 1, 2).setValue(SquareValue.THREE);
@@ -118,7 +118,7 @@ public class GameBoardTestScenarios {
 	 * @return A Game board containing 2 1's, which are seperate and touching a wall or corner
 	 */
 	private static GameBoardTestScenario getGameBoardScenario4() {
-		RegularGameBoard gameBoard = getValidGameBoard(5, 5);
+		RegularGameBoard gameBoard = getValidGameBoard(5, 5, 2);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 0, 0).setValue(SquareValue.ONE);
 		getGameSquare(squares, 3, 4).setValue(SquareValue.ONE);
@@ -142,7 +142,7 @@ public class GameBoardTestScenarios {
 	 * @return A Game board containing 2 numbers separated by a single blank
 	 */
 	private static GameBoardTestScenario getGameBoardScenario5() {
-		RegularGameBoard gameBoard = getValidGameBoard(4, 4);
+		RegularGameBoard gameBoard = getValidGameBoard(4, 4, 2);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 0, 0).setValue(SquareValue.ONE);
 		getGameSquare(squares, 0, 2).setValue(SquareValue.ONE);
@@ -161,7 +161,7 @@ public class GameBoardTestScenarios {
 	 * @return A Game board containing 2 numbers separated by a single blank - diagonally this time
 	 */
 	private static GameBoardTestScenario getGameBoardScenario6() {
-		RegularGameBoard gameBoard = getValidGameBoard(4, 4);
+		RegularGameBoard gameBoard = getValidGameBoard(4, 4, 2);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 0, 0).setValue(SquareValue.ONE);
 		getGameSquare(squares, 2, 2).setValue(SquareValue.ONE);
@@ -182,7 +182,7 @@ public class GameBoardTestScenarios {
 	 * @return A Game board containing 2 numbers separated by two spaces
 	 */
 	private static GameBoardTestScenario getGameBoardScenario7() {
-		RegularGameBoard gameBoard = getValidGameBoard(4, 4);
+		RegularGameBoard gameBoard = getValidGameBoard(4, 4, 2);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 0, 0).setValue(SquareValue.ONE);
 		getGameSquare(squares, 0, 3).setValue(SquareValue.ONE);
@@ -204,7 +204,7 @@ public class GameBoardTestScenarios {
 	 * @return A Game board containing 2 numbers separated by two flags
 	 */
 	private static GameBoardTestScenario getGameBoardScenario8() {
-		RegularGameBoard gameBoard = getValidGameBoard(4, 4);
+		RegularGameBoard gameBoard = getValidGameBoard(4, 4, 2);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 0, 0).setValue(SquareValue.ONE);
 		getGameSquare(squares, 0, 1).setValue(SquareValue.FLAGGED);
@@ -228,7 +228,7 @@ public class GameBoardTestScenarios {
 	 * @return A Game board containing 2 numbers separated by a single flag
 	 */
 	private static GameBoardTestScenario getGameBoardScenario9() {
-		RegularGameBoard gameBoard = getValidGameBoard(4, 4);
+		RegularGameBoard gameBoard = getValidGameBoard(4, 4, 2);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 0, 0).setValue(SquareValue.ONE);
 		getGameSquare(squares, 0, 1).setValue(SquareValue.FLAGGED);
@@ -249,7 +249,7 @@ public class GameBoardTestScenarios {
 	 * We've manually calculated the odds and such
 	 */
 	private static GameBoardTestScenario getGameBoardScenarioSpecial01() {
-		RegularGameBoard gameBoard = getValidGameBoard(7, 6);
+		RegularGameBoard gameBoard = getValidGameBoard(7, 6, 5);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 2, 2).setValue(SquareValue.THREE).setName("3");
 		getGameSquare(squares, 4, 2).setValue(SquareValue.ONE).setName("1");
@@ -276,7 +276,7 @@ public class GameBoardTestScenarios {
 	 * Described here: https://math.stackexchange.com/questions/3466402/calculating-minesweeper-odds-is-this-calculation-correct
 	 */
 	private static GameBoardTestScenario getGameBoardScenarioSpecial03() {
-		RegularGameBoard gameBoard = getValidGameBoard(16, 8);
+		RegularGameBoard gameBoard = getValidGameBoard(16, 8, 25);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 4, 3).setValue(SquareValue.BLANK_UNTOUCHED).setName("A");
 		getGameSquare(squares, 5, 3).setValue(SquareValue.BLANK_UNTOUCHED).setName("B");
@@ -343,7 +343,7 @@ public class GameBoardTestScenarios {
 	 * @return A Game board containing a flag, and a full square of numbers
 	 */
 	private static GameBoardTestScenario getGameBoardScenarioSpecial02() {
-		RegularGameBoard gameBoard = getValidGameBoard(9, 9);
+		RegularGameBoard gameBoard = getValidGameBoard(9, 9, 4);
 		List<GameSquare> squares = gameBoard.getGameBoard();
 		getGameSquare(squares, 2, 2).setValue(SquareValue.TWO);
 		getGameSquare(squares, 3, 2).setValue(SquareValue.TWO);

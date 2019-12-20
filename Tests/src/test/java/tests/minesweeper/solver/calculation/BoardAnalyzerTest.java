@@ -23,7 +23,7 @@ public class BoardAnalyzerTest {
 	// A board with no squares
 	@Test
 	public void testBreakupBoardEmpty() {
-		RegularGameBoard emptyGameBoard = TestDataHelper.getValidGameBoard(0, 0, 0);
+		RegularGameBoard emptyGameBoard = TestDataHelper.getValidGameBoard(0, 0, 0, 0);
 		
 		List<? extends GenericSection<? extends GameSquare>> results = BoardAnalyzer.breakupBoard(emptyGameBoard);
 
@@ -33,7 +33,7 @@ public class BoardAnalyzerTest {
 	// A board with all empty squares
 	@Test
 	public void testBreakupBoardNoResults() {
-		RegularGameBoard emptyGameBoard = TestDataHelper.getValidGameBoard(0, 10, 10);
+		RegularGameBoard emptyGameBoard = TestDataHelper.getValidGameBoard(0, 10, 10, 0);
 		
 		List<? extends GenericSection<? extends GameSquare>> results = BoardAnalyzer.breakupBoard(emptyGameBoard);
 

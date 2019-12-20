@@ -58,16 +58,15 @@ public class MineSweeperSolver {
 	}
 	
 	private void startGame(WebDriver webDriver) {
-		// setup references to the game elements
 		Logger.setCurrentTime();
-		List<WebElement> allPlayableSquares = websiteHelper.getAllPlayableSquares();
-    	SeleniumGameBoard gameBoard = new SeleniumGameBoard(allPlayableSquares);
-    	Logger.logTimeTook("Setting up references to elements");
 		
-    	// More setup/logging
-    	int totalBlankSquares = gameBoard.getSize();
+		// setup references to the game elements
     	final int startingMines = websiteHelper.getCurrentMinesFromGame();
-    	Logger.logMessage("Total mines: " + startingMines + " total playable squares: " + totalBlankSquares);
+		List<WebElement> allPlayableSquares = websiteHelper.getAllPlayableSquares();
+    	SeleniumGameBoard gameBoard = new SeleniumGameBoard(allPlayableSquares, startingMines);
+    	
+    	Logger.logTimeTook("Setting up references to elements");
+    	Logger.logMessage("Total mines: " + startingMines + " total playable squares: " + gameBoard.getSize());
     	
     	// The in-game timer used for highscores begins here, on first click
     	Logger.setCurrentTime();
