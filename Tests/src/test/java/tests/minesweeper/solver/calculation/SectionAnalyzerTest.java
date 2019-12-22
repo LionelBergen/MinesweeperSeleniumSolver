@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import java.util.Set;
 
 import org.junit.Test;
@@ -86,7 +87,10 @@ public class SectionAnalyzerTest {
 	private void testScenario(SectionTestScenario scenario, boolean assertRulesOnly) {
 		// TODO: delete the 'breakupSection' method...
 		SectionAnalyzedResults actualResult = SectionAnalyzer.breakupSection(scenario.getSections());
+		List<GameSquare> allSquares = scenario.getSections().stream().map(e -> e.getGameSquares().stream().collect(Collectors.toList())).flatMap(List::stream).collect(Collectors.toList());
+		
 		List<Rule> resultRules = SectionAnalyzer.breakupSectionIntoRules(scenario.getSections());
+		Collection<Section> resultSections = SectionAnalyzer.getSections(resultRules, allSquares);
 		
 		// assert rules found
 		for (Rule expected : scenario.getExpectedOrigResults()) {
@@ -105,7 +109,7 @@ public class SectionAnalyzerTest {
 				for (Entry<List<Section>, Set<GameSquare>> expected : scenario.getExpectedContents().entrySet()) {
 					// List<Section> resultList = new ArrayList<Section>(resultContents);
 					//Section y = resultContents.stream().filter(e -> expected.getKey().contains(e)).findAny().get();
-					Set<GameSquare> x = actualResult.get(expected.getKey());
+					Set<GameSquare> x = resultSections.get(expected.getKey());
 					
 					assertTrue("Results did not contain expected value from: " + expected, x.containsAll(expected.getValue()));
 				}
