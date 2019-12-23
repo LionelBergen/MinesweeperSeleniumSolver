@@ -6,8 +6,11 @@ const SQUARE_CLASS = "square";
 
 // used for labeling different sections of the board
 const UNCOLOURED_COLOUR = '#bcc0c4';
-const COLOURS = [ UNCOLOURED_COLOUR, '#1260de', '#e06767', '#734e4e', '#825d35', '#35cc58', '#7350de', '#eb26d0', '#e31010'];
-const NUM_COLUMNS_COLOURS = 5;
+const NUMBERED_COLOUR = '#a8abad';
+const COLOURS = [ UNCOLOURED_COLOUR, NUMBERED_COLOUR, '#1260de', '#e06767', '#734e4e', '#825d35', '#35cc58', '#7350de', 
+                  '#eb26d0', '#e31010', '#ed8c42', '#f7d7be', '#83b5d6', '#f5930a', '#8f0414',
+                  '#f2eb24'];
+const NUM_COLUMNS_COLOURS = 6;
 
 const DEFAULT_NUM_ROWS = 5;
 const DEFAULT_NUM_COLUMNS = 5;
@@ -15,6 +18,7 @@ const DEFAULT_NUM_MINES = 3;
 
 let numberOfRows = DEFAULT_NUM_ROWS;
 let numberOfColumns = DEFAULT_NUM_COLUMNS;
+let numberOfMines = DEFAULT_NUM_MINES;
 let colourSelected;
 let lastSelectedElement;
 
@@ -28,9 +32,7 @@ window.onload = function() {
   document.getElementById('subtractWidth').addEventListener('click', function(){addWidth(-1)});
   document.getElementById('subtractHeight').addEventListener('click', function(){addHeight(-1)});
   
-  // Create default board
-  createBoardToUI(numberOfColumns, numberOfRows);
-  document.getElementById('minesInput').value = DEFAULT_NUM_MINES;
+  initializeBoard();
   
   // create pallete of colours
   createControls();
@@ -39,21 +41,66 @@ window.onload = function() {
   createKeyEventListener();
   
   document.getElementById('saveBoard').addEventListener('click', saveBoard);
+  document.getElementById('loadBoard').addEventListener('click', loadBoard);
+}
+
+function initializeBoard(itemsToKeep) {
+  // Create default board
+  createBoardToUI(numberOfColumns, numberOfRows, itemsToKeep);
+  document.getElementById('minesInput').value = numberOfMines;
 }
 
 function saveBoard() {
-  let jsonData = {
-    mines:  document.getElementById('minesInput').value,
-    width: numberOfRows,
-    height: numberOfColumns
-  };
-  
-  for (let x=0; x<numberOfRows; x++) {
-    for (let y=0; y<numberOfColumns; y++) {
-      //console.log(document.getElementById(x + "_" + y));
+  let squares = [];
+  for (let x=0; x<numberOfColumns; x++) {
+    for (let y=0; y<numberOfRows; y++) {
+      let currentElement = document.getElementById(y + "_" + x);
+      let elementColour = currentElement.style.backgroundColor;
+      if (elementColour) { 
+        elementColour = rgb2hex(currentElement.style.backgroundColor);
+        
+        if (elementColour == UNCOLOURED_COLOUR) {
+          elementColour = "";
+        }
+      } else {
+        elementColour = "";
+      }
+      //console.log(d);
+      squares.push({x: x, y: y, name: currentElement.innerHTML, colour: elementColour });
     }
   }
-  console.log(jsonData);
+  
+  let jsonData = {
+    mines:  document.getElementById('minesInput').value,
+    width: numberOfColumns,
+    height: numberOfRows,
+    squares: squares
+  };
+  console.log(JSON.stringify(jsonData));
+}
+
+function loadBoard() {
+  let result = prompt('enter the JSON for the board');
+  result = JSON.parse(result);
+  
+  if (result) {
+    console.log(result);
+    
+    numberOfRows = result.height;
+    numberOfColumns = result.width;
+    numberOfMines = result.mines;
+    
+    let existingItems = [];
+    
+    // itemId, colour, innerHTML
+    for (let i=0; i<result.squares.length; i++) {
+      let square = result.squares[i];
+      
+      existingItems.push({itemId: square.y + "_" + square.x, innerHTML: square.name, colour: square.colour});
+    }
+    
+    initializeBoard(existingItems);
+  }
 }
 
 function createKeyEventListener() {
@@ -63,6 +110,12 @@ function createKeyEventListener() {
         lastSelectedElement.innerHTML = "|";
       } else if (e.key.length == 1) {
         lastSelectedElement.innerHTML = String(e.key).toUpperCase();
+        
+        // if it's a number
+        if (!isNaN(e.key)) {
+          lastSelectedElement.style.backgroundColor = NUMBERED_COLOUR;
+        }
+        
         lastSelectedElement = null;
       }
     }
@@ -92,9 +145,7 @@ function setColour(colour) {
   colourSelected = colour;
 }
 
-function createBoardToUI(numberOfColumns, numberOfRows) {
-  let existingItems = getIdsWithChanges();
-  
+function createBoardToUI(numberOfColumns, numberOfRows, existingItems) {
   document.getElementById(GAMEBOARD_ID).innerHTML = "";
   for (let i=0; i<numberOfRows; i++) {
     document.getElementById(GAMEBOARD_ID).innerHTML += createRow(i, numberOfColumns);
@@ -103,14 +154,15 @@ function createBoardToUI(numberOfColumns, numberOfRows) {
   document.getElementById('widthInput').value = numberOfColumns;
   document.getElementById('heightInput').value = numberOfRows;
   
-  // re-create old items
-  for (let i=0; i<existingItems.length; i++) {
-    let elementToModify = document.getElementById(existingItems[i].itemId);
-    
-    if (elementToModify) {
-      console.log(existingItems[i]);
-      elementToModify.style.backgroundColor = existingItems[i].colour;
-      elementToModify.innerHTML = existingItems[i].innerHTML;
+  if (existingItems) {
+    // re-create old items
+    for (let i=0; i<existingItems.length; i++) {
+      let elementToModify = document.getElementById(existingItems[i].itemId);
+      
+      if (elementToModify) {
+        elementToModify.style.backgroundColor = existingItems[i].colour;
+        elementToModify.innerHTML = existingItems[i].innerHTML;
+      }
     }
   }
 }
@@ -145,12 +197,12 @@ function rgb2hex(rgb) {
 
 function addWidth(amount) {
   numberOfColumns += amount;
-  createBoardToUI(numberOfColumns, numberOfRows);
+  createBoardToUI(numberOfColumns, numberOfRows, getIdsWithChanges());
 }
 
 function addHeight(amount) {
   numberOfRows += amount;
-  createBoardToUI(numberOfColumns, numberOfRows);
+  createBoardToUI(numberOfColumns, numberOfRows, getIdsWithChanges());
 }
 
 function addColour(elementClicked) {
