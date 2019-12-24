@@ -12,13 +12,13 @@ import org.junit.Test;
 
 import component.model.Section;
 import solver.board.analyzing.GameBoardAnalyzer;
-import tests.minesweeper.data.GameBoardTestScenarios;
 import tests.minesweeper.data.component.GameBoardTestScenario;
+import tests.minesweeper.solver.data.GameBoardTestData;
 
 public class GameBoardAnalyzerTest {
 	@Test
 	public void testCalculateOdds() {
-		GameBoardTestScenario test = GameBoardTestScenarios.SCENARIO_SPECIAL_03;
+		GameBoardTestScenario test = GameBoardTestData.SPECIAL_SCENARIO_03;
 
 		Map<Section, BigDecimal> results = GameBoardAnalyzer.calculateOddsForEverySection(test.getGameBoard());
 		Map<String, BigDecimal> expectedResults = new HashMap<>();

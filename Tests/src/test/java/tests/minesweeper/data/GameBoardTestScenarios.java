@@ -2,8 +2,6 @@ package tests.minesweeper.data;
 
 import static tests.minesweeper.data.TestDataHelper.getValidGameBoard;
 import static tests.minesweeper.data.TestDataHelper.getGameSquare;
-import static tests.minesweeper.data.TestDataHelper.visualizeGameBoard;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -28,7 +26,10 @@ public class GameBoardTestScenarios {
 	
 	public static final GameBoardTestScenario SCENARIO_SPECIAL_01 = getGameBoardScenarioSpecial01();
 	public static final GameBoardTestScenario SCENARIO_SPECIAL_02 = getGameBoardScenarioSpecial02();
-	public static final GameBoardTestScenario SCENARIO_SPECIAL_03 = getGameBoardScenarioSpecial03();
+	
+	public static void main(String[] args) {
+		TestDataHelper.visualizeGameBoard(SCENARIO_SPECIAL_02);
+	}
 	
 	/**
 	 * @return A Game board containing a 1 in the center
@@ -273,73 +274,6 @@ public class GameBoardTestScenarios {
 	}
 	
 	/**
-	 * Described here: https://math.stackexchange.com/questions/3466402/calculating-minesweeper-odds-is-this-calculation-correct
-	 */
-	private static GameBoardTestScenario getGameBoardScenarioSpecial03() {
-		RegularGameBoard gameBoard = getValidGameBoard(16, 8, 25);
-		List<GameSquare> squares = gameBoard.getGameBoard();
-		getGameSquare(squares, 4, 3).setValue(SquareValue.BLANK_UNTOUCHED).setName("A");
-		getGameSquare(squares, 5, 3).setValue(SquareValue.BLANK_UNTOUCHED).setName("B");
-		getGameSquare(squares, 6, 3).setValue(SquareValue.BLANK_UNTOUCHED).setName("C");
-		getGameSquare(squares, 7, 3).setValue(SquareValue.BLANK_UNTOUCHED).setName("D");
-		getGameSquare(squares, 8, 3).setValue(SquareValue.BLANK_UNTOUCHED).setName("E");
-		getGameSquare(squares, 4, 4).setValue(SquareValue.BLANK_UNTOUCHED).setName("F");
-		getGameSquare(squares, 6, 4).setValue(SquareValue.BLANK_UNTOUCHED).setName("G");
-		getGameSquare(squares, 8, 4).setValue(SquareValue.BLANK_UNTOUCHED).setName("H");
-		getGameSquare(squares, 4, 5).setValue(SquareValue.BLANK_UNTOUCHED).setName("I");
-		getGameSquare(squares, 5, 5).setValue(SquareValue.BLANK_UNTOUCHED).setName("J");
-		getGameSquare(squares, 7, 5).setValue(SquareValue.BLANK_UNTOUCHED).setName("K");
-		getGameSquare(squares, 8, 5).setValue(SquareValue.BLANK_UNTOUCHED).setName("L");
-		getGameSquare(squares, 5, 6).setValue(SquareValue.BLANK_UNTOUCHED).setName("M");
-		getGameSquare(squares, 6, 6).setValue(SquareValue.BLANK_UNTOUCHED).setName("N");
-		getGameSquare(squares, 7, 6).setValue(SquareValue.BLANK_UNTOUCHED).setName("O");
-		
-		getGameSquare(squares, 11, 2).setValue(SquareValue.BLANK_UNTOUCHED).setName("P");
-		getGameSquare(squares, 12, 2).setValue(SquareValue.BLANK_UNTOUCHED).setName("Q");
-		getGameSquare(squares, 13, 2).setValue(SquareValue.BLANK_UNTOUCHED).setName("R");
-		getGameSquare(squares, 14, 2).setValue(SquareValue.BLANK_UNTOUCHED).setName("S");
-		getGameSquare(squares, 11, 3).setValue(SquareValue.BLANK_UNTOUCHED).setName("T");
-		getGameSquare(squares, 14, 3).setValue(SquareValue.BLANK_UNTOUCHED).setName("U");
-		getGameSquare(squares, 11, 4).setValue(SquareValue.BLANK_UNTOUCHED).setName("V");
-		getGameSquare(squares, 12, 4).setValue(SquareValue.BLANK_UNTOUCHED).setName("W");
-		getGameSquare(squares, 13, 4).setValue(SquareValue.BLANK_UNTOUCHED).setName("X");
-		getGameSquare(squares, 14, 4).setValue(SquareValue.BLANK_UNTOUCHED).setName("Y");
-		
-		getGameSquare(squares, 5, 4).setValue(SquareValue.THREE).setName("3");
-		getGameSquare(squares, 7, 4).setValue(SquareValue.ONE).setName("1");
-		getGameSquare(squares, 6, 5).setValue(SquareValue.ONE).setName("1");
-		
-		getGameSquare(squares, 12, 3).setValue(SquareValue.TWO).setName("2");
-		getGameSquare(squares, 13, 3).setValue(SquareValue.ONE).setName("1");
-		
-		final List<GameSquare> expectedResults1 = 
-				Arrays.asList(new GameSquare("A", SquareValue.BLANK_UNTOUCHED, 4, 3), new GameSquare("B", SquareValue.BLANK_UNTOUCHED, 5, 3),
-						new GameSquare("C", SquareValue.BLANK_UNTOUCHED, 6, 3), new GameSquare("D", SquareValue.BLANK_UNTOUCHED, 7, 3),
-						new GameSquare("E", SquareValue.BLANK_UNTOUCHED, 8, 3),
-						new GameSquare("F", SquareValue.BLANK_UNTOUCHED, 4, 4), new GameSquare("3", SquareValue.THREE, 5, 4),
-						new GameSquare("G", SquareValue.BLANK_UNTOUCHED, 6, 4), new GameSquare("1", SquareValue.ONE, 7, 4),
-						new GameSquare("H", SquareValue.BLANK_UNTOUCHED, 8, 4), 
-						new GameSquare("I", SquareValue.BLANK_UNTOUCHED, 4, 5), new GameSquare("J", SquareValue.BLANK_UNTOUCHED, 5, 5), 
-						new GameSquare("1", SquareValue.ONE, 6, 5), new GameSquare("K", SquareValue.BLANK_UNTOUCHED, 7, 5), 
-						new GameSquare("L", SquareValue.BLANK_UNTOUCHED, 8, 5),
-						new GameSquare("M", SquareValue.BLANK_UNTOUCHED, 5, 6),
-						new GameSquare("N", SquareValue.BLANK_UNTOUCHED, 6, 6), new GameSquare("O", SquareValue.BLANK_UNTOUCHED, 7, 6)
-						);
-		
-		final List<GameSquare> expectedResults2 = 
-				Arrays.asList(new GameSquare("P", SquareValue.BLANK_UNTOUCHED, 11, 2), new GameSquare("Q", SquareValue.BLANK_UNTOUCHED, 12, 2),
-						new GameSquare("R", SquareValue.BLANK_UNTOUCHED, 13, 2), new GameSquare("S", SquareValue.BLANK_UNTOUCHED, 14, 2),
-						new GameSquare("T", SquareValue.BLANK_UNTOUCHED, 11, 3),
-						new GameSquare("U", SquareValue.BLANK_UNTOUCHED, 14, 3), new GameSquare("V", SquareValue.BLANK_UNTOUCHED, 11, 4),
-						new GameSquare("W", SquareValue.BLANK_UNTOUCHED, 12, 4), new GameSquare("X", SquareValue.BLANK_UNTOUCHED, 13, 4),
-						new GameSquare("Y", SquareValue.BLANK_UNTOUCHED, 14, 4), 
-						new GameSquare("2", SquareValue.TWO, 12, 3), new GameSquare("1", SquareValue.ONE, 13, 3)
-						);
-
-		return createTestScenario(gameBoard, Arrays.asList(expectedResults1, expectedResults2));
-	}
-	
-	/**
 	 * @return A Game board containing a flag, and a full square of numbers
 	 */
 	private static GameBoardTestScenario getGameBoardScenarioSpecial02() {
@@ -399,10 +333,6 @@ public class GameBoardTestScenarios {
 						);
 
 		return createTestScenario(gameBoard, Arrays.asList(expectedResults1));
-	}
-	
-	public static void main(String[] args) {
-		visualizeGameBoard(SCENARIO_SPECIAL_03);
 	}
 	
 	private static GameBoardTestScenario createTestScenario(RegularGameBoard gameBoard, List<List<GameSquare>> gameSquaresList) {

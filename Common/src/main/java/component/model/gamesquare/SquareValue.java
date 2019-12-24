@@ -50,4 +50,14 @@ public enum SquareValue {
 		
 		return null;
 	}
+	
+	public static SquareValue fromNumber(String fromValue) {
+		for (SquareValue s : values()) {
+			if (String.valueOf(s.numberOfSurroundingMines).equals(fromValue)) {
+				return s;
+			}
+		}
+		
+		return null;
+	}
 }

@@ -20,13 +20,13 @@ import solver.calculation.OddsCalculator;
 import solver.calculation.RulesCombinationCalculator;
 import solver.component.AssignedValue;
 import solver.component.Rule;
-import tests.minesweeper.data.GameBoardTestScenarios;
 import tests.minesweeper.data.component.GameBoardTestScenario;
+import tests.minesweeper.solver.data.GameBoardTestData;
 
 public class OddsCalculatorTest {
 	@Test
 	public void testCalculateOdds() {
-		GameBoardTestScenario test = GameBoardTestScenarios.SCENARIO_SPECIAL_03;
+		GameBoardTestScenario test = GameBoardTestData.SPECIAL_SCENARIO_03;
 		List<List<AssignedValue>> resultsComplete = getResultsComplete(test);
 
 		Map<Section, BigDecimal> results = OddsCalculator.calculateOdds(resultsComplete, 25, 123);

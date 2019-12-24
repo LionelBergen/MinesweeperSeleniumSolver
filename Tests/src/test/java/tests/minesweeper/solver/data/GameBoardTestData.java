@@ -28,6 +28,9 @@ public class GameBoardTestData {
 	
 	private static final String SPECIAL_SENARIO_03_FILE_NAME = "SpecialScenario03.json";
 	
+	/**
+	 * Described here: https://math.stackexchange.com/questions/3466402/calculating-minesweeper-odds-is-this-calculation-correct
+	 */
 	public static final GameBoardTestScenario SPECIAL_SCENARIO_03 = getTestScenario(SPECIAL_SENARIO_03_FILE_NAME);
 	
 	private static GameBoardTestScenario getTestScenario(String fileName) {
@@ -48,8 +51,8 @@ public class GameBoardTestData {
 				JSONObject gameSquare = (JSONObject) iter.next();
 				
 				String name = gameSquare.get("name").toString();
-				SquareValue squareValue = isSingleDigitNumber(name) ? SquareValue.fromValue(name) : SquareValue.BLANK_UNTOUCHED;
-				
+				SquareValue squareValue = isSingleDigitNumber(name) ? SquareValue.fromNumber(name) : SquareValue.BLANK_UNTOUCHED;
+				System.out.println(squareValue);
 				int x = Integer.parseInt(gameSquare.get("x").toString());
 				int y = Integer.parseInt(gameSquare.get("y").toString());
 				

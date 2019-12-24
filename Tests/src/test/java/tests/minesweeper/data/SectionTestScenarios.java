@@ -13,6 +13,7 @@ import component.model.gamesquare.GameSquare;
 import component.model.gamesquare.SquareValue;
 import solver.component.Rule;
 import tests.minesweeper.data.component.SectionTestScenario;
+import tests.minesweeper.solver.data.GameBoardTestData;
 
 import static tests.minesweeper.data.TestDataHelper.getGameSquare;
 import static tests.minesweeper.data.TestDataHelper.makeCopy;
@@ -275,10 +276,11 @@ public class SectionTestScenarios {
 		return new SectionTestScenario(Arrays.asList(section), expectedContents, expectedResults);
 	}
 	
+	// TODO:
 	// Here: https://math.stackexchange.com/questions/3466402/calculating-minesweeper-odds-is-this-calculation-correct
 	private static SectionTestScenario getScenarioSpecial02() {
-		Section section1 = GameBoardTestScenarios.SCENARIO_SPECIAL_03.getExpectedSections().get(0);
-		Section section2 = GameBoardTestScenarios.SCENARIO_SPECIAL_03.getExpectedSections().get(1);
+		Section section1 = GameBoardTestData.SPECIAL_SCENARIO_03.getExpectedSections().get(0);
+		Section section2 = GameBoardTestData.SPECIAL_SCENARIO_03.getExpectedSections().get(1);
 		
 		// Green
 		final GameSquare A = new GameSquare("A", SquareValue.BLANK_UNTOUCHED, 4, 3);
