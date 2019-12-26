@@ -1,6 +1,7 @@
 package tests.minesweeper.solver.data;
 
 import java.io.File;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -110,6 +111,12 @@ public class GameBoardTestData {
 	}
 	
 	private static File getFile(String fileName) {
-		return new File(CLASS_LOADER.getResource(DATA_DIRECTORY + fileName).getFile());
+		URL resource = CLASS_LOADER.getResource(fileName);
+		
+		if (resource != null) {
+			return new File(resource.getFile());
+		} else {
+			return new File(CLASS_LOADER.getResource(DATA_DIRECTORY + fileName).getFile());
+		}
 	}
 }

@@ -31,3 +31,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
 	compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 }
+
+task copyTestResources(type: Copy) {
+    from "${projectDir}/src/test/java/tests/minesweeper/solver/data"
+    into "${buildDir}/classes/test"
+}
