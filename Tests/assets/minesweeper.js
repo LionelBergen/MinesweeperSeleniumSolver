@@ -12,6 +12,10 @@ const COLOURS = [ UNCOLOURED_COLOUR, NUMBERED_COLOUR, '#1260de', '#e06767', '#73
                   '#f2eb24'];
 const NUM_COLUMNS_COLOURS = 6;
 
+const CONTROL_BUTTONS = [ 
+  {name: "flag", src: "flag.jpg"} 
+];
+
 const DEFAULT_NUM_ROWS = 5;
 const DEFAULT_NUM_COLUMNS = 5;
 const DEFAULT_NUM_MINES = 3;
@@ -19,7 +23,7 @@ const DEFAULT_NUM_MINES = 3;
 let numberOfRows = DEFAULT_NUM_ROWS;
 let numberOfColumns = DEFAULT_NUM_COLUMNS;
 let numberOfMines = DEFAULT_NUM_MINES;
-let colourSelected;
+let fillSelected;
 let lastSelectedElement;
 
 window.onload = function() {
@@ -34,7 +38,7 @@ window.onload = function() {
   
   initializeBoard();
   
-  // create pallete of colours
+  // create pallete of colours, mines flags etc
   createControls();
   
   //
@@ -50,23 +54,36 @@ function initializeBoard(itemsToKeep) {
   document.getElementById('minesInput').value = numberOfMines;
 }
 
+function getElementByYX(y, x) {
+  return document.getElementById(y + "_" + x);
+}
+
+function getElementFill(elementWithFill) {
+  let backgroundColour = elementWithFill.style.backgroundColor;
+  
+  if (backgroundColour) {
+    return rgb2hex(backgroundColour);
+  }
+  else {
+    return elementWithFill.style.backgroundImage;
+  }
+}
+
 function saveBoard() {
   let squares = [];
   for (let x=0; x<numberOfColumns; x++) {
     for (let y=0; y<numberOfRows; y++) {
-      let currentElement = document.getElementById(y + "_" + x);
-      let elementColour = currentElement.style.backgroundColor;
-      if (elementColour) { 
-        elementColour = rgb2hex(currentElement.style.backgroundColor);
-        
-        if (elementColour == UNCOLOURED_COLOUR) {
-          elementColour = "";
+      let currentElement = getElementByYX(y, x);
+      let elementFill = getElementFill(currentElement);
+
+      if (elementFill) {
+        if (elementFill == UNCOLOURED_COLOUR) {
+          elementFill = "";
         }
       } else {
-        elementColour = "";
+        elementFill = "";
       }
-      //console.log(d);
-      squares.push({x: x, y: y, name: currentElement.innerHTML, colour: elementColour });
+      squares.push({x: x, y: y, name: currentElement.innerHTML, colour: elementFill });
     }
   }
   
@@ -124,6 +141,11 @@ function createKeyEventListener() {
 
 function createControls() {
   let htmlString = "<table id='colours'><thead></thead><tbody><tr>";
+  
+  for (let i=0; i<CONTROL_BUTTONS.length; i++) {
+    htmlString += createTDImage(CONTROL_BUTTONS[i].src);
+  }
+  htmlString += "</tr><tr>";
 
   for (let i=0; i<COLOURS.length; i++) {
     htmlString += createTD(COLOURS[i]);
@@ -137,12 +159,16 @@ function createControls() {
   document.getElementById(CONTROLS_ID).innerHTML = htmlString;
 }
 
-function createTD(colour) {
-  return "<td style='background-color: " + colour + "' onclick='setColour(\"" + colour + "\")'></td>";
+function createTDImage(imageSrc) {
+  return "<td style='background-image: url(\"" + imageSrc + "\")' onclick='setFill(\"" + imageSrc + "\")'></td>";
 }
 
-function setColour(colour) {
-  colourSelected = colour;
+function createTD(colour) {
+  return "<td style='background-color: " + colour + "' onclick='setFill(\"" + colour + "\")'></td>";
+}
+
+function setFill(colour) {
+  fillSelected = colour;
 }
 
 function createBoardToUI(numberOfColumns, numberOfRows, existingItems) {
@@ -206,12 +232,17 @@ function addHeight(amount) {
 }
 
 function addColour(elementClicked) {
-  if (colourSelected) {
-    elementClicked.style.backgroundColor = colourSelected;
+  if (fillSelected) {
+    if (fillSelected.startsWith("#")) {
+      elementClicked.style.backgroundImage = "";
+      elementClicked.style.backgroundColor = fillSelected;
+    } else {
+      elementClicked.style.backgroundImage = "url( " + fillSelected + ")";
+      elementClicked.style.backgroundColor = "";
+    }
   }
 }
 
-// + " ";
 function createColumn(rowNumber, columnNumber) {
   return "<div class='" + BLANK_SQUARE_CLASS + "' id='" + (rowNumber + "_" + columnNumber) + "' onclick='addColour(this)' "
   + "oncontextmenu='typeIntoElement(this)'"
