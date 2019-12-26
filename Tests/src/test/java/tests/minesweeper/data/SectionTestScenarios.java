@@ -279,8 +279,8 @@ public class SectionTestScenarios {
 	// TODO:
 	// Here: https://math.stackexchange.com/questions/3466402/calculating-minesweeper-odds-is-this-calculation-correct
 	private static SectionTestScenario getScenarioSpecial02() {
-		Section section1 = GameBoardTestData.SPECIAL_SCENARIO_03.getExpectedSections().get(0);
-		Section section2 = GameBoardTestData.SPECIAL_SCENARIO_03.getExpectedSections().get(1);
+		Section section1 = new Section();
+		Section section2 = new Section();
 		
 		// Green
 		final GameSquare A = new GameSquare("A", SquareValue.BLANK_UNTOUCHED, 4, 3);

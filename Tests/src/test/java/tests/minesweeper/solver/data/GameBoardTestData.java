@@ -73,18 +73,19 @@ public class GameBoardTestData {
 				
 				int x = Integer.parseInt(gameSquare.get("x").toString());
 				int y = Integer.parseInt(gameSquare.get("y").toString());
+				String sectionGroupBy = (String) gameSquare.get("colour");
 				
 				GameSquare gameSquareResult = new GameSquare(name, squareValue, x, y);
 				gameSquaresFromResults.add(gameSquareResult);
 				
-				if (!name.isEmpty() && !isSingleDigitNumber(name)) {
-					List<GameSquare> squaresInSection = sections.get(name);
+				if (!name.isEmpty() && !isSingleDigitNumber(name) && sectionGroupBy != null) {
+					List<GameSquare> squaresInSection = sections.get(sectionGroupBy);
 					if (squaresInSection == null) {
 						squaresInSection = new ArrayList<GameSquare>();
 					}
 					
 					squaresInSection.add(gameSquareResult);
-					sections.put(name, squaresInSection);
+					sections.put(sectionGroupBy, squaresInSection);
 				}
 			}
 			
