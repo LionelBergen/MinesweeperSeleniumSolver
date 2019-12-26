@@ -12,9 +12,7 @@ const COLOURS = [ UNCOLOURED_COLOUR, NUMBERED_COLOUR, '#1260de', '#e06767', '#73
                   '#f2eb24'];
 const NUM_COLUMNS_COLOURS = 6;
 
-const CONTROL_BUTTONS = [ 
-  {name: "flag", src: "flag.jpg"} 
-];
+const FLAG_IMG_SRC = "flag.jpg";
 
 const DEFAULT_NUM_ROWS = 5;
 const DEFAULT_NUM_COLUMNS = 5;
@@ -69,6 +67,21 @@ function getElementFill(elementWithFill) {
   }
 }
 
+function getType(elementFill) {
+  let type = "";
+  
+  if (elementFill) {
+    if (String(elementFill).includes("flag")) {
+      type = "flag";
+    }
+    else if (String(elementFill).includes("mine")) {
+      type = "mine";
+    }
+  }
+
+  return type;
+}
+
 function saveBoard() {
   let squares = [];
   for (let x=0; x<numberOfColumns; x++) {
@@ -83,7 +96,11 @@ function saveBoard() {
       } else {
         elementFill = "";
       }
-      squares.push({x: x, y: y, name: currentElement.innerHTML, colour: elementFill });
+      
+      let type = getType(elementFill);
+      let colour = type == "" ? elementFill : "";
+      
+      squares.push({x: x, y: y, name: currentElement.innerHTML, colour: colour, type: type});
     }
   }
   
@@ -109,11 +126,11 @@ function loadBoard() {
     
     let existingItems = [];
     
-    // itemId, colour, innerHTML
+    // itemId, colour, type, innerHTML
     for (let i=0; i<result.squares.length; i++) {
       let square = result.squares[i];
       
-      existingItems.push({itemId: square.y + "_" + square.x, innerHTML: square.name, colour: square.colour});
+      existingItems.push({itemId: square.y + "_" + square.x, type: square.type, innerHTML: square.name, colour: square.colour});
     }
     
     initializeBoard(existingItems);
@@ -142,9 +159,9 @@ function createKeyEventListener() {
 function createControls() {
   let htmlString = "<table id='colours'><thead></thead><tbody><tr>";
   
-  for (let i=0; i<CONTROL_BUTTONS.length; i++) {
-    htmlString += createTDImage(CONTROL_BUTTONS[i].src);
-  }
+  // create buttons
+  htmlString += createTDImage(FLAG_IMG_SRC);
+  
   htmlString += "</tr><tr>";
 
   for (let i=0; i<COLOURS.length; i++) {
@@ -188,9 +205,18 @@ function createBoardToUI(numberOfColumns, numberOfRows, existingItems) {
       if (elementToModify) {
         elementToModify.style.backgroundColor = existingItems[i].colour;
         elementToModify.innerHTML = existingItems[i].innerHTML;
+        elementToModify.style.backgroundImage = getBackgroundFromType(existingItems[i].type);
       }
     }
   }
+}
+
+function getBackgroundFromType(type) {
+  if (type && type.includes("flag")) {
+    return "url( " + FLAG_IMG_SRC + ")";
+  }
+  
+  return "";
 }
 
 function getIdsWithChanges() {
@@ -198,15 +224,17 @@ function getIdsWithChanges() {
   let items = document.getElementsByClassName(SQUARE_CLASS);
   
   for (let i=0; i<items.length; i++) {
-    if (items[i].style.backgroundColor) {
+    if (items[i].style.backgroundImage) {
+      results.push({itemId: items[i].id, colour: UNCOLOURED_COLOUR, background: items[i].style.backgroundImage, innerHTML: items[i].innerHTML});
+    } else if (items[i].innerHTML) {
+      results.push({itemId: items[i].id, colour: UNCOLOURED_COLOUR, innerHTML: items[i].innerHTML});
+    } else if (items[i].style.backgroundColor) {
       let hexValue = rgb2hex(items[i].style.backgroundColor);
       if (hexValue != UNCOLOURED_COLOUR) {
         results.push({itemId: items[i].id, colour: hexValue, innerHTML: items[i].innerHTML});
       } else if (items[i].innerHTML) {
         results.push({itemId: items[i].id, colour: UNCOLOURED_COLOUR, innerHTML: items[i].innerHTML});
       }
-    } else if (items[i].innerHTML) {
-      results.push({itemId: items[i].id, colour: UNCOLOURED_COLOUR, innerHTML: items[i].innerHTML});
     }
   }
   
