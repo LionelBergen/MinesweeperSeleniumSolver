@@ -11,10 +11,10 @@ plugins {
     id 'java-library'
 }
 
-repositories {
-    // Use jcenter for resolving dependencies.
-    // You can declare any Maven/Ivy/file repository here.
-    jcenter()
+allprojects {
+	repositories {
+	    jcenter()
+	}
 }
 
 dependencies {
