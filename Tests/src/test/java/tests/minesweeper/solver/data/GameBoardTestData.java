@@ -110,6 +110,7 @@ public class GameBoardTestData {
 		return text != null && !text.isEmpty() && Character.isDigit(text.charAt(0));
 	}
 	
+	// TODO: issue with running full suite vs running single JUnit test.
 	private static File getFile(String fileName) {
 		URL resource = CLASS_LOADER.getResource(fileName);
 		
