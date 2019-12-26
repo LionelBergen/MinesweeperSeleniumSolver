@@ -13,8 +13,6 @@ import component.model.gamesquare.GameSquare;
 import component.model.gamesquare.SquareValue;
 import solver.component.Rule;
 import tests.minesweeper.data.component.SectionTestScenario;
-import tests.minesweeper.solver.data.GameBoardTestData;
-
 import static tests.minesweeper.data.TestDataHelper.getGameSquare;
 import static tests.minesweeper.data.TestDataHelper.makeCopy;
 

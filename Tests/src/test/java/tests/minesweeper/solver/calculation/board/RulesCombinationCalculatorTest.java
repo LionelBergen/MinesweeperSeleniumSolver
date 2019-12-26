@@ -57,7 +57,7 @@ public class RulesCombinationCalculatorTest {
 	
 	@Test
 	public void testGetAllVariationsOfRules() {
-		List<Rule> testRules = SectionTestScenarios.SCENARIO_SPECIAL_02.getExpectedOrigResults();
+		List<Rule> testRules = SectionTestScenarios.SCENARIO_SPECIAL_02.getExpectedRules();
 		List<Section> testSections = SectionTestScenarios.SCENARIO_SPECIAL_02.getExpectedContents()
 				.values()
 				.stream()

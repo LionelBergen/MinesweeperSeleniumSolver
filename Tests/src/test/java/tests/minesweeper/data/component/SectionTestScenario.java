@@ -27,7 +27,7 @@ public class SectionTestScenario {
 		this.sections = sections;
 	}
 	
-	public List<Rule> getExpectedOrigResults() {
+	public List<Rule> getExpectedRules() {
 		return expectedOrigResults;
 	}
 	
