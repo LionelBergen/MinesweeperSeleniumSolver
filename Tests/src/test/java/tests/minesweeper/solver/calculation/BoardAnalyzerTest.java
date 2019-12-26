@@ -173,7 +173,7 @@ public class BoardAnalyzerTest {
 	
 	@Test
 	public void testBreakupBoardSpecial02() {
-		GameBoardTestScenario testScenerio = GameBoardTestScenarios.SCENARIO_SPECIAL_02;
+		GameBoardTestScenario testScenerio = GameBoardTestData.SPECIAL_SCENARIO_02;
 		RegularGameBoard gameBoard = testScenerio.getGameBoard();
 		
 		List<? extends GenericSection<? extends GameSquare>> actualResults = BoardAnalyzer.breakupBoard(gameBoard);

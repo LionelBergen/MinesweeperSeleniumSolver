@@ -78,7 +78,11 @@ public class RegularGameSquare<T extends RegularGameSquare<T>> {
 	
 	@Override
 	public String toString() {
-		return name == null ? (x + " " + y + " " + value) : name;
+		if (name != null && !name.isEmpty()) {
+			return name;
+		} else {
+			return value.toString();
+		}
 	}
 	
 	@Override

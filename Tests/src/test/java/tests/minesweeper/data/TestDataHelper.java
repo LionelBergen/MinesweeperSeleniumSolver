@@ -105,7 +105,7 @@ public class TestDataHelper {
 	}
 	
 	private static String visualizeSquareValue(GameSquare gameSquare) {
-		if (gameSquare.getName() != null) {
+		if (gameSquare.getName() != null && !gameSquare.getName().isEmpty()) {
 			return gameSquare.getName();
 		}
 		switch (gameSquare.getValue()) {

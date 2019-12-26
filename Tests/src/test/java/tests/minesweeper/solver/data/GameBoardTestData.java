@@ -25,8 +25,14 @@ import tests.minesweeper.data.component.GameBoardTestScenario;
 public class GameBoardTestData {
 	private static final String DATA_DIRECTORY = "tests/minesweeper/solver/data/";
 	private static final ClassLoader CLASS_LOADER = new GameBoardTestData().getClass().getClassLoader();
-	
+
+	private static final String SPECIAL_SENARIO_02_FILE_NAME = "SpecialScenario02.json";
 	private static final String SPECIAL_SENARIO_03_FILE_NAME = "SpecialScenario03.json";
+	
+	/**
+	 * A Game board containing 2 flags, and a full large square of numbers
+	 */
+	public static final GameBoardTestScenario SPECIAL_SCENARIO_02 = getTestScenario(SPECIAL_SENARIO_02_FILE_NAME);
 	
 	/**
 	 * Described here: https://math.stackexchange.com/questions/3466402/calculating-minesweeper-odds-is-this-calculation-correct
@@ -35,7 +41,7 @@ public class GameBoardTestData {
 	
 	private static GameBoardTestScenario getTestScenario(String fileName) {
 		try {
-			File file = getFile(SPECIAL_SENARIO_03_FILE_NAME);
+			File file = getFile(fileName);
 			String fileContents = Files.readString(Paths.get(file.getPath()), StandardCharsets.US_ASCII);
 			
 			JSONParser parser = new JSONParser();
@@ -49,10 +55,21 @@ public class GameBoardTestData {
 			
 			for (Iterator<?> iter = listOfAllSquares.iterator(); iter.hasNext();) {
 				JSONObject gameSquare = (JSONObject) iter.next();
+				SquareValue squareValue = SquareValue.BLANK_UNTOUCHED;
 				
+				String type = "";
+				if (gameSquare.get("type") != null) {
+					type = gameSquare.get("type").toString();
+					
+					if (type.contains("flag")) {
+						squareValue = SquareValue.FLAGGED;
+					}
+				}
 				String name = gameSquare.get("name").toString();
-				SquareValue squareValue = isSingleDigitNumber(name) ? SquareValue.fromNumber(name) : SquareValue.BLANK_UNTOUCHED;
-				System.out.println(squareValue);
+				if (squareValue != null && isSingleDigitNumber(name)) {
+					squareValue = SquareValue.fromNumber(name);
+				}
+				
 				int x = Integer.parseInt(gameSquare.get("x").toString());
 				int y = Integer.parseInt(gameSquare.get("y").toString());
 				
@@ -69,9 +86,6 @@ public class GameBoardTestData {
 					sections.put(name, squaresInSection);
 				}
 			}
-			
-			System.out.println(numberOfMines);
-			System.out.println(gameSquaresFromResults);
 			
 			RegularGameBoard gameBoard = new RegularGameBoard(gameSquaresFromResults, numberOfMines);
 			

@@ -12,6 +12,7 @@ import component.model.Section;
 import component.model.gamesquare.GameSquare;
 import component.model.gamesquare.SquareValue;
 import tests.minesweeper.data.component.GameBoardTestScenario;
+import tests.minesweeper.solver.data.GameBoardTestData;
 
 public class GameBoardTestScenarios {
 	public static final GameBoardTestScenario SCENARIO_01 = getGameBoardScenario1();
@@ -25,10 +26,9 @@ public class GameBoardTestScenarios {
 	public static final GameBoardTestScenario SCENARIO_09 = getGameBoardScenario9();
 	
 	public static final GameBoardTestScenario SCENARIO_SPECIAL_01 = getGameBoardScenarioSpecial01();
-	public static final GameBoardTestScenario SCENARIO_SPECIAL_02 = getGameBoardScenarioSpecial02();
 	
 	public static void main(String[] args) {
-		TestDataHelper.visualizeGameBoard(SCENARIO_SPECIAL_02);
+		TestDataHelper.visualizeGameBoard(GameBoardTestData.SPECIAL_SCENARIO_02);
 	}
 	
 	/**
@@ -271,68 +271,6 @@ public class GameBoardTestScenarios {
 						);
 
 		return createTestScenario(gameBoard, Arrays.asList(expectedResults));
-	}
-	
-	/**
-	 * @return A Game board containing a flag, and a full square of numbers
-	 */
-	private static GameBoardTestScenario getGameBoardScenarioSpecial02() {
-		RegularGameBoard gameBoard = getValidGameBoard(9, 9, 4);
-		List<GameSquare> squares = gameBoard.getGameBoard();
-		getGameSquare(squares, 2, 2).setValue(SquareValue.TWO);
-		getGameSquare(squares, 3, 2).setValue(SquareValue.TWO);
-		getGameSquare(squares, 4, 2).setValue(SquareValue.TWO);
-		getGameSquare(squares, 5, 2).setValue(SquareValue.ONE);
-		getGameSquare(squares, 6, 2).setValue(SquareValue.ONE);
-		
-		getGameSquare(squares, 2, 3).setValue(SquareValue.ONE);
-		getGameSquare(squares, 6, 3).setValue(SquareValue.ONE);
-		
-		getGameSquare(squares, 2, 4).setValue(SquareValue.TWO);
-		getGameSquare(squares, 3, 4).setValue(SquareValue.ONE);
-		getGameSquare(squares, 5, 4).setValue(SquareValue.ONE);
-		getGameSquare(squares, 6, 4).setValue(SquareValue.THREE);
-		
-		getGameSquare(squares, 2, 5).setValue(SquareValue.FLAGGED);
-		getGameSquare(squares, 3, 5).setValue(SquareValue.ONE);
-		getGameSquare(squares, 5, 5).setValue(SquareValue.ONE);
-		getGameSquare(squares, 6, 5).setValue(SquareValue.FLAGGED);
-		
-		getGameSquare(squares, 2, 6).setValue(SquareValue.THREE);
-		getGameSquare(squares, 3, 6).setValue(SquareValue.THREE);
-		getGameSquare(squares, 4, 6).setValue(SquareValue.TWO);
-		getGameSquare(squares, 5, 6).setValue(SquareValue.TWO);
-		getGameSquare(squares, 6, 6).setValue(SquareValue.THREE);
-		
-		// TODO: This is unfinished. Not really needed anyway
-		final List<GameSquare> expectedResults1 = 
-				Arrays.asList(new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 1),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 1),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 1), new GameSquare(SquareValue.BLANK_UNTOUCHED, 6, 1), 
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 7, 1),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 2), new GameSquare(SquareValue.TWO, 2, 2),
-						new GameSquare(SquareValue.TWO, 3, 2), new GameSquare(SquareValue.TWO, 4, 2),
-						new GameSquare(SquareValue.ONE, 5, 2), new GameSquare(SquareValue.ONE, 6, 2), 
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 7, 2),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 3), new GameSquare(SquareValue.ONE, 2, 3),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 3, 3), new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 3),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 5, 3), new GameSquare(SquareValue.ONE, 6, 3),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 7, 3),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 1, 4), new GameSquare(SquareValue.TWO, 2, 4),
-						new GameSquare(SquareValue.ONE, 3, 4), new GameSquare(SquareValue.BLANK_UNTOUCHED, 4, 4),
-						new GameSquare(SquareValue.ONE, 5, 1), new GameSquare(SquareValue.THREE, 6, 4),
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 7, 4),
-						
-						/*
-						 * 0 1 2 3 4 5 6 7 8 9
-						 * 5 # # & 1 # 1 & # #
-						   6 # # 3 3 2 2 3 # #
-						   7 # # # # # # # # #
-						 */
-						new GameSquare(SquareValue.BLANK_UNTOUCHED, 2, 2)
-						);
-
-		return createTestScenario(gameBoard, Arrays.asList(expectedResults1));
 	}
 	
 	private static GameBoardTestScenario createTestScenario(RegularGameBoard gameBoard, List<List<GameSquare>> gameSquaresList) {
