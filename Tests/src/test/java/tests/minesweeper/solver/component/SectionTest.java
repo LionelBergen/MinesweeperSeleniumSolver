@@ -2,7 +2,6 @@ package tests.minesweeper.solver.component;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -97,5 +96,10 @@ public class SectionTest {
 		set2.add(new GameSquare(SquareValue.TWO, 0, 2));
 		
 		assertNotEquals(set1.hashCode(), set2.hashCode());
+	}
+	
+	// TODO: Not sure why eclipse is using wrong JUnit version.
+	private void assertNotEquals(Object obj1, Object obj2) {
+		assertFalse(obj1.equals(obj2));
 	}
 }
