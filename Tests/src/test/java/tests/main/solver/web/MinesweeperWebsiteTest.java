@@ -34,12 +34,13 @@ public class MinesweeperWebsiteTest {
 		
 		assertNotNull(testObject);
 	}
-	
+
 	@Ignore
 	@Test
 	public void testSelectARandomSquare() {
 		MinesweeperWebsite testObject = createTestSubject();
 		
+		// webElement.getAttribute("className");
 		List<WebElement> mockWebElements = new ArrayList<>();
 		mockWebElements.add(new MockWebElement());
 		

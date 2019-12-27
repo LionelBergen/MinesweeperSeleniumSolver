@@ -13,24 +13,10 @@ import solver.component.Rule;
 import static utility.util.GameBoardHelper.GameBoardHelper;
 
 public class SectionAnalyzer {
-	// TODO: remove this method & the 'SectionAnalyzedResults' class
-	public static SectionAnalyzedResults breakupSection(List<Section> sections) {
-		SectionAnalyzedResults result = null;
-		
-		List<Rule> ruleSet = breakupSectionIntoRules(sections);
-		result = new SectionAnalyzedResults(ruleSet);
-		
-		for (Section section : sections) {
-			Set<GameSquare> squaresInSectionList = section.getGameSquares();
-			for (GameSquare gs : squaresInSectionList) {
-				result.put(gs);
-			}
-		}
-		
-		return result;
-	}
-	
 	public static Collection<Section> getSections(List<Rule> rules, Collection<GameSquare> allSquares) {
+		//Map<SectionSet, Section> contents;
+		//RuleSet sectionRules = new RuleSet(rules);
+		
 		SectionAnalyzedResults result = new SectionAnalyzedResults(rules);
 		
 		for (GameSquare gs : allSquares) {
