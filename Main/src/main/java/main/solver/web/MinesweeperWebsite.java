@@ -26,8 +26,8 @@ public class MinesweeperWebsite {
 	private final WebElement gameElement;
 	
 	public MinesweeperWebsite(WebDriver webDriver) {
-		this.gameElement = webDriver.findElement(By.id(GAME_ELEMENT_ID));
 		goToMinesweeperPage(webDriver);
+		this.gameElement = webDriver.findElement(By.id(GAME_ELEMENT_ID));
 	}
 	
 	public void startGame(WebDriver webDriver) {
