@@ -98,6 +98,7 @@ public class MineSweeperSolver {
 	}
 	
 	private String gameBoardToJSON(GameBoard gameBoard) {
+		
 		return "";
 	}
 	
