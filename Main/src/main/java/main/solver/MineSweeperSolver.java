@@ -18,6 +18,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import component.model.GameBoard;
 import component.model.Section;
 import component.model.gamesquare.GameSquare;
 import component.model.gamesquare.SquareValue;
@@ -26,6 +27,7 @@ import main.solver.component.SeleniumGameBoard;
 import main.solver.component.SeleniumGameSquare;
 import main.solver.web.MinesweeperWebsite;
 import solver.board.analyzing.BoardAnalyzer;
+import solver.board.analyzing.GameBoardAnalyzer;
 import solver.board.analyzing.SectionAnalyzer;
 import solver.calculation.OddsCalculator;
 import solver.calculation.RulesCombinationCalculator;
@@ -82,16 +84,21 @@ public class MineSweeperSolver {
     		// Select a best square based on probability
 	    	surroundingSquaresToUpdate = getRandomSquareWithBestProbability(webDriver, gameBoard, startingMines);
 
-	    	do
-	    	{
+	    	do {
 	    		// Update all the squares that need to be updated
 	    		surroundingSquaresToUpdate = updateAllNumberedSquares(webDriver, gameBoard, surroundingSquaresToUpdate);
 	    		
 	        	Logger.logTimeTook("updating batch. Next round contains: " + surroundingSquaresToUpdate.size());
 	    	} while (!surroundingSquaresToUpdate.isEmpty());
+	    	
+	    	Logger.logMessage("Board should not be clear of all simple known possibilities");
     	}
     	
     	Logger.logMessage("Congrats you won!");
+	}
+	
+	private String gameBoardToJSON(GameBoard gameBoard) {
+		return "";
 	}
 	
 	private List<SeleniumGameSquare> updateAllNumberedSquares(WebDriver webDriver, SeleniumGameBoard gameBoard, List<SeleniumGameSquare> squaresToUpdate) {
@@ -130,9 +137,10 @@ public class MineSweeperSolver {
 	 * Does simple calculations, does not go into anything complicated such as calculating odds of each surrounding square around 2+ touching numbers
 	 */
 	private List<SeleniumGameSquare> getRandomSquareWithBestProbability(WebDriver webDriver, SeleniumGameBoard gameBoard, int startingMines) {
-		final int unFoundMines = startingMines - gameBoard.getAllFlaggedSquares().size();
 		final int totalUnidentifiedSquares = gameBoard.getAllBlankSquares().size();
-
+		gameBoard.setTotalUnidentifiedMines(totalUnidentifiedSquares);
+		
+		/*
 		// Step 1: Get Sections from Board
 		Logger.setCurrentTime();
 		Logger.logMessage("Breaking up board.....");
@@ -160,7 +168,15 @@ public class MineSweeperSolver {
 
 		// Get the item with the best probability
 		Entry<Section, BigDecimal> lowestValue = probabilities.entrySet().stream().sorted(Map.Entry.comparingByValue()).findFirst().get();
+		Section result = lowestValue.getKey();*/
+		
+		Logger.setCurrentTime();
+		final Map<Section, BigDecimal> probabilities = GameBoardAnalyzer.calculateOddsForEverySection(gameBoard);
+		Logger.logTimeTook("Caluclated: " + probabilities.size() + " probabilities");
+		
+		Entry<Section, BigDecimal> lowestValue = probabilities.entrySet().stream().sorted(Map.Entry.comparingByValue()).findFirst().get();
 		Section result = lowestValue.getKey();
+		
 		Set<GameSquare> squaresWithBestProbability = result.getGameSquares();
 		SeleniumGameSquare squareToSelect = getRandomSquareFromSet(squaresWithBestProbability);
     	
@@ -170,48 +186,6 @@ public class MineSweeperSolver {
     	
     	// handle the new value change
     	return updateSquare(webDriver, gameBoard, squareToSelect, newValue);
-    	
-    	//SquareValue newValue = selectSquareWithWait(webDriver, randomSquare);
-    	
-    	// handle the new value change
-    	//return updateSquare(webDriver, gameBoard, randomSquare, newValue);
-    	
-		/*int totalBlankSquares = gameBoard.getSize();
-		int unFoundMines = startingMines - gameBoard.getallFlaggedSquares().size();
-		
-		float oddsOfRandomSquare = Utility.asFloat(unFoundMines, totalBlankSquares);
-		GameSquare randomSquare = gameBoard.getRandomLonelySquare();
-		
-		TreeMap<Float, GameSquare> oddsForEachKnownSquare = new TreeMap<Float, GameSquare>();
-
-		if (randomSquare != null)
-		{
-			if (oddsOfRandomSquare <= BEST_ODDS) {
-		    	Logger.logMessage("Found random square. Odds of hitting a mine: " + oddsOfRandomSquare + "%");
-				return randomSquare;
-			}
-			
-			oddsForEachKnownSquare.put(Float.valueOf(oddsOfRandomSquare), randomSquare);
-		}
-		
-		for (GameSquare gameSquare : gameBoard.getAllNumberedSquares()) {
-			List<GameSquare> blankSquaresSurroundingSquare = gameBoard.getSurroundingBlankSquares(gameSquare);
-			
-			if (blankSquaresSurroundingSquare.size() > 0) {
-				// TODO: switch to new method 'getNumber'
-				int minesSurroundingSquare = gameSquare.getValue().getNumberOfSurroundingMines();
-				
-				float chancesOfHittingAMine = Utility.asFloat(minesSurroundingSquare, blankSquaresSurroundingSquare.size());
-				randomSquare = blankSquaresSurroundingSquare.get(Utility.getRandomNumber(0, blankSquaresSurroundingSquare.size() - 1));
-				
-				oddsForEachKnownSquare.put(Float.valueOf(chancesOfHittingAMine), randomSquare);
-			}
-		}
-		
-		Entry<Float, GameSquare> entryWithBestOdds = oddsForEachKnownSquare.firstEntry();
-    	Logger.logMessage("Found random square. Odds of hitting a mine: " + entryWithBestOdds.getKey() + "%");
-    	
-		return entryWithBestOdds.getValue();*/
 	}
 	
 	private SeleniumGameSquare getRandomSquareFromSet(Set<GameSquare> squares) {
@@ -336,7 +310,6 @@ public class MineSweeperSolver {
 		// Wait for the WebElement to update & retrieve the new value
     	String newClassName = waitForClassNameToChange(webDriver, gameSquare.getWebElement());
     	SquareValue newValue = SquareValue.fromValue(newClassName);
-    	Logger.logMessage("Changed square to: " + newValue + " at: " + gameSquare);
     	if (newValue == null) {
     		throw new RuntimeException("Cannot get value from class: " + newClassName);
     	}
