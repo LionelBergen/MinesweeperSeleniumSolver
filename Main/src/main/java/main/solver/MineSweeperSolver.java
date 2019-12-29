@@ -2,7 +2,6 @@ package main.solver;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -26,13 +25,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import main.solver.component.SeleniumGameBoard;
 import main.solver.component.SeleniumGameSquare;
 import main.solver.web.MinesweeperWebsite;
-import solver.board.analyzing.BoardAnalyzer;
 import solver.board.analyzing.GameBoardAnalyzer;
-import solver.board.analyzing.SectionAnalyzer;
-import solver.calculation.OddsCalculator;
-import solver.calculation.RulesCombinationCalculator;
-import solver.component.AssignedValue;
-import solver.component.Rule;
 import utility.logging.Logger;
 import utility.util.MathUtil;
 
