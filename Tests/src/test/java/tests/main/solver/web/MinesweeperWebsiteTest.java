@@ -29,7 +29,7 @@ public class MinesweeperWebsiteTest {
 		expect(mockWebDriver.findElement(By.id("game"))).andReturn(null);
 		
 		replayAll();
-		MinesweeperWebsite testObject = new MinesweeperWebsite(mockWebDriver);
+		MinesweeperWebsite testObject = new MinesweeperWebsite();
 		verifyAll();
 		
 		assertNotNull(testObject);
@@ -54,7 +54,7 @@ public class MinesweeperWebsiteTest {
 		mockWebDriver.get(anyString());
 		
 		replayAll();
-		MinesweeperWebsite testObject = new MinesweeperWebsite(mockWebDriver);
+		MinesweeperWebsite testObject = new MinesweeperWebsite();
 		verifyAll();
 		
 		return testObject;

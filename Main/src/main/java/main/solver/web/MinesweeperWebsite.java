@@ -23,14 +23,11 @@ public class MinesweeperWebsite {
 	
 	private static final String XPATH_FOR_SQUARES = "//div[@class='square blank']";
 	
-	private final WebElement gameElement;
-	
-	public MinesweeperWebsite(WebDriver webDriver) {
-		goToMinesweeperPage(webDriver);
-		this.gameElement = webDriver.findElement(By.id(GAME_ELEMENT_ID));
-	}
+	private WebElement gameElement;
 	
 	public void startGame(WebDriver webDriver) {
+		goToMinesweeperPage(webDriver);
+		this.gameElement = webDriver.findElement(By.id(GAME_ELEMENT_ID));
 		webDriver.findElement(By.id("face")).click();
 	}
 	

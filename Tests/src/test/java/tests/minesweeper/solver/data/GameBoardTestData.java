@@ -1,7 +1,6 @@
 package tests.minesweeper.solver.data;
 
 import java.io.File;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -24,9 +23,6 @@ import component.model.gamesquare.SquareValue;
 import tests.minesweeper.data.component.GameBoardTestScenario;
 
 public class GameBoardTestData {
-	private static final String DATA_DIRECTORY = "tests/minesweeper/solver/data/";
-	private static final ClassLoader CLASS_LOADER = new GameBoardTestData().getClass().getClassLoader();
-
 	private static final String SPECIAL_SENARIO_02_FILE_NAME = "SpecialScenario02.json";
 	private static final String SPECIAL_SENARIO_03_FILE_NAME = "SpecialScenario03.json";
 	
@@ -42,7 +38,7 @@ public class GameBoardTestData {
 	
 	private static GameBoardTestScenario getTestScenario(String fileName) {
 		try {
-			File file = getFile(fileName);
+			File file = TestFileUtil.getFile(fileName);
 			String fileContents = Files.readString(Paths.get(file.getPath()), StandardCharsets.US_ASCII);
 			
 			JSONParser parser = new JSONParser();
@@ -109,16 +105,5 @@ public class GameBoardTestData {
 	
 	private static boolean isSingleDigitNumber(String text) {
 		return text != null && !text.isEmpty() && Character.isDigit(text.charAt(0));
-	}
-	
-	// TODO: issue with running full suite vs running single JUnit test.
-	private static File getFile(String fileName) {
-		URL resource = CLASS_LOADER.getResource(fileName);
-		
-		if (resource != null) {
-			return new File(resource.getFile());
-		} else {
-			return new File(CLASS_LOADER.getResource(DATA_DIRECTORY + fileName).getFile());
-		}
 	}
 }

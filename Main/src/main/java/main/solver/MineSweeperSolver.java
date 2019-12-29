@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -21,9 +20,9 @@ import component.model.GameBoard;
 import component.model.Section;
 import component.model.gamesquare.GameSquare;
 import component.model.gamesquare.SquareValue;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import main.solver.component.SeleniumGameBoard;
 import main.solver.component.SeleniumGameSquare;
+import main.solver.helper.WebDriverToolkit;
 import main.solver.web.MinesweeperWebsite;
 import solver.board.analyzing.GameBoardAnalyzer;
 import utility.logging.Logger;
@@ -41,14 +40,13 @@ public class MineSweeperSolver {
     }
     
     private static WebDriver getWebDriver() {
-    	WebDriverManager.chromedriver().setup();
-    	
-    	return new ChromeDriver();
+    	return WebDriverToolkit.getWebDriver();
     }
 	
 	public MineSweeperSolver(WebDriver webDriver) {
 		// get URL for the website and log the time it takes
-		this.websiteHelper = new MinesweeperWebsite(webDriver);
+		this.websiteHelper = new MinesweeperWebsite();
+		this.websiteHelper.startGame(webDriver);
 		startGame(webDriver);
 	}
 	
