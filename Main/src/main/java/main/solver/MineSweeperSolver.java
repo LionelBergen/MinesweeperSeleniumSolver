@@ -92,14 +92,49 @@ public class MineSweeperSolver {
 	    	} while (!surroundingSquaresToUpdate.isEmpty());
 	    	
 	    	Logger.logMessage("Board should not be clear of all simple known possibilities");
+	    	Logger.logMessage(gameBoardToJSON(gameBoard));
     	}
     	
     	Logger.logMessage("Congrats you won!");
 	}
 	
 	private String gameBoardToJSON(GameBoard gameBoard) {
+		final int numberOfMines = gameBoard.getTotalUnidentifiedMines();
+		final int width = 30;
+		final int height = 16;
+		final List<GameSquare> allSquares = gameBoard.getGameBoard();
 		
-		return "";
+		String jsonValue = "{" 
+				+ String.format("\"mines\":\"%s\",", numberOfMines)
+				+ String.format("\"width\":\"%s\",", width)
+				+ String.format("\"height\":\"%s\",", height)
+				+ "\"squares\":[";
+		
+		for (GameSquare gameSquare : allSquares) {
+			jsonValue += "{";
+			
+			jsonValue += String.format(
+					"\"x\":%s,"
+					+ "\"y\":%s,"
+					+ "\"name\":\"%s\","
+					+ "\"colour\":\"%s\","
+					+"\"type\":\"%s\"",
+					// TODO: should match game? Or does it not matter?
+					// game doesn't use 0 but we do
+					gameSquare.getX() - 1,
+					gameSquare.getY() - 1,
+					"",
+					"",
+					gameSquare.getValue().toString());
+			
+			jsonValue += "},";
+		}
+		// remove last ","
+		jsonValue = jsonValue.substring(0, jsonValue.length() - 1);
+		
+		jsonValue += "]}";
+		
+		return jsonValue;
 	}
 	
 	private List<SeleniumGameSquare> updateAllNumberedSquares(WebDriver webDriver, SeleniumGameBoard gameBoard, List<SeleniumGameSquare> squaresToUpdate) {

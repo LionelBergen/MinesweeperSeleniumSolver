@@ -20,6 +20,9 @@ let numberOfMines = DEFAULT_NUM_MINES;
 let fillSelected;
 let lastSelectedElement;
 
+// order matters
+const NAMES_OF_NUMBER_OF_MINES = ["ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT"];
+
 window.onload = function() {
   // remove context menu, so we can right click
   document.oncontextmenu = function(e) {return false; };
@@ -82,7 +85,7 @@ function loadBoard() {
     for (let i=0; i<result.squares.length; i++) {
       let square = result.squares[i];
       
-      existingItems.push({itemId: square.y + "_" + square.x, type: square.type, innerHTML: square.name, colour: square.colour});
+      existingItems.push({itemId: square.x + "_" + square.y, type: square.type, innerHTML: square.name, colour: square.colour});
     }
     
     initializeBoard(existingItems);
@@ -128,17 +131,37 @@ function createBoardToUI(numberOfColumns, numberOfRows, existingItems) {
       let elementToModify = document.getElementById(existingItems[i].itemId);
       
       if (elementToModify) {
-        elementToModify.innerHTML = existingItems[i].innerHTML;
+        elementToModify.innerHTML = getInnerHTMLFromItem(existingItems[i]);
         elementToModify.style.backgroundImage = getBackgroundFromType(existingItems[i].type, existingItems[i].innerHTML);
       }
     }
   }
 }
 
+function getInnerHTMLFromItem(existingItem) {
+  innerHTMLValue = existingItem.innerHTML;
+  if (!innerHTMLValue) {
+    if (existingItem.type && NAMES_OF_NUMBER_OF_MINES.includes(existingItem.type) && "ZERO" !== existingItem.type) {
+      innerHTMLValue = NAMES_OF_NUMBER_OF_MINES.indexOf(existingItem.type);
+    }
+  }
+  
+  return innerHTMLValue;
+}
+
 function getBackgroundFromType(type, name) {
-  if (type && type.includes("flag")) {
-    return "url( " + FLAG_IMG_SRC + ")";
-  } else if (name && !isNaN(name)) {
+  if (type) {
+    if (type.includes("flag") || type.includes("FLAGGED")) {
+      return "url( " + FLAG_IMG_SRC + ")";
+    } else if (NAMES_OF_NUMBER_OF_MINES.includes(type)) {
+      return "url('square-active.png')";
+    } else if (type.includes("ONE")) {
+      return "url('square-active.png')";
+    } else {
+      console.log(type);
+    }
+  }
+  else if (name && !isNaN(name)) {
     return "url('square-active.png')";
   }
   
