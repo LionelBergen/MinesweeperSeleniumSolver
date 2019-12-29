@@ -14,11 +14,15 @@
 	width: 16px;
 	height: 16px;
 	float: left;
-	font-size: 2.5em;
+	font-size: 0.8em;
 	color: white;
 	text-align: center;
 	
 	box-shadow: 1px 1px #888888;
+}
+
+.active {
+	
 }
 
 .blank {

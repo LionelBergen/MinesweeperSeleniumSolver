@@ -8,7 +8,7 @@ const SQUARE_CLASS = "square";
 const UNCOLOURED_COLOUR = '#bcc0c4';
 const NUMBERED_COLOUR = '#a8abad';
 
-const FLAG_IMG_SRC = "flag.jpg";
+const FLAG_IMG_SRC = "flag.png";
 
 const DEFAULT_NUM_ROWS = 5;
 const DEFAULT_NUM_COLUMNS = 5;
@@ -67,44 +67,11 @@ function getType(elementFill) {
   return type;
 }
 
-function saveBoard() {
-  let squares = [];
-  for (let x=0; x<numberOfColumns; x++) {
-    for (let y=0; y<numberOfRows; y++) {
-      let currentElement = getElementByYX(y, x);
-      let elementFill = getElementFill(currentElement);
-
-      if (elementFill) {
-        if (elementFill == UNCOLOURED_COLOUR) {
-          elementFill = "";
-        }
-      } else {
-        elementFill = "";
-      }
-      
-      let type = getType(elementFill);
-      let colour = type == "" ? elementFill : "";
-      
-      squares.push({x: x, y: y, name: currentElement.innerHTML, colour: colour, type: type});
-    }
-  }
-  
-  let jsonData = {
-    mines:  document.getElementById('minesInput').value,
-    width: numberOfColumns,
-    height: numberOfRows,
-    squares: squares
-  };
-  console.log(JSON.stringify(jsonData));
-}
-
 function loadBoard() {
   let result = prompt('enter the JSON for the board');
   result = JSON.parse(result);
   
   if (result) {
-    console.log(result);
-    
     numberOfRows = result.height;
     numberOfColumns = result.width;
     numberOfMines = result.mines;
@@ -142,15 +109,11 @@ function createKeyEventListener() {
 }
 
 function createTDImage(imageSrc) {
-  return "<td style='background-image: url(\"" + imageSrc + "\")' onclick='setFill(\"" + imageSrc + "\")'></td>";
+  return "<td style='background-image: url(\"" + imageSrc + "\")'></td>";
 }
 
 function createTD(colour) {
-  return "<td style='background-color: " + colour + "' onclick='setFill(\"" + colour + "\")'></td>";
-}
-
-function setFill(colour) {
-  fillSelected = colour;
+  return "<td style='background-color: " + colour + "'></td>";
 }
 
 function createBoardToUI(numberOfColumns, numberOfRows, existingItems) {
@@ -165,17 +128,18 @@ function createBoardToUI(numberOfColumns, numberOfRows, existingItems) {
       let elementToModify = document.getElementById(existingItems[i].itemId);
       
       if (elementToModify) {
-        elementToModify.style.backgroundColor = existingItems[i].colour;
         elementToModify.innerHTML = existingItems[i].innerHTML;
-        elementToModify.style.backgroundImage = getBackgroundFromType(existingItems[i].type);
+        elementToModify.style.backgroundImage = getBackgroundFromType(existingItems[i].type, existingItems[i].innerHTML);
       }
     }
   }
 }
 
-function getBackgroundFromType(type) {
+function getBackgroundFromType(type, name) {
   if (type && type.includes("flag")) {
     return "url( " + FLAG_IMG_SRC + ")";
+  } else if (name && !isNaN(name)) {
+    return "url('square-active.png')";
   }
   
   return "";
