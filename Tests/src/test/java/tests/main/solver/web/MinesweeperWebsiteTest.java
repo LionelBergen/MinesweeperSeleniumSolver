@@ -25,9 +25,6 @@ public class MinesweeperWebsiteTest {
 	
 	@Test
 	public void testConstructor() {
-		mockWebDriver.get(anyString());
-		expect(mockWebDriver.findElement(By.id("game"))).andReturn(null);
-		
 		replayAll();
 		MinesweeperWebsite testObject = new MinesweeperWebsite();
 		verifyAll();
