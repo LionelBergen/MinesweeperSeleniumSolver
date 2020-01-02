@@ -16,7 +16,6 @@ import main.solver.component.SeleniumGameSquare;
 import utility.logging.Logger;
 import utility.util.MathUtil;
 
-// class for interacting with the Minesweeper board over at http://minesweeperonline.com/.
 public class MinesweeperWebsite {
 	private static final String GAME_ELEMENT_ID = "game";
 	private static final String MINESWEEPER_ONLINE_URL = "http://minesweeperonline.com/";

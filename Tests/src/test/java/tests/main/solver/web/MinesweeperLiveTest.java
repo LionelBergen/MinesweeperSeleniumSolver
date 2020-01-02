@@ -1,23 +1,46 @@
 package tests.main.solver.web;
 
-import org.junit.Ignore;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 import org.junit.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import main.solver.helper.WebDriverToolkit;
 import main.solver.web.MinesweeperWebsite;
+import tests.minesweeper.solver.data.TestFileUtil;
 
 public class MinesweeperLiveTest {
-	
-	@Ignore
 	@Test
-	public void test() {
-		WebDriver webDriver = WebDriverToolkit.getWebDriver();
+	public void test() throws Exception {
+		setupTestSite("LargeScenario01.json");
 		MinesweeperWebsite websiteHelper = new MinesweeperWebsite();
-		
-		
 	}
 	
-	private void setupTestSite(String testJsonFile) {
+	private void setupTestSite(String testJsonFile) throws Exception {
+		WebDriver webDriver = WebDriverToolkit.getWebDriver();
 		
+		JSONObject jsonFromFile =  TestFileUtil.getJsonFromFile(testJsonFile);
+		
+		webDriver.get(new File("C:\\Users\\Lionel\\eclipse-workspace\\MinesweeperSolver\\MockBuilder\\assets\\board-tester/board-tester.html").getAbsolutePath());
+		webDriver.findElement(By.id("loadBoard")).click();
+		
+		synchronized(webDriver) {
+			WebDriverWait wait = new WebDriverWait(webDriver, 30);
+			synchronized(wait) {
+				wait.until(ExpectedConditions.alertIsPresent());
+				System.out.println(jsonFromFile.toString());
+				Alert alert = webDriver.switchTo().alert();
+				alert.sendKeys(jsonFromFile.toString());
+				alert.accept();
+			}
+		}
 	}
 }

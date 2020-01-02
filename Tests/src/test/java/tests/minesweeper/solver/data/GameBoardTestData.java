@@ -1,9 +1,5 @@
 package tests.minesweeper.solver.data;
 
-import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,8 +10,6 @@ import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
 import component.model.RegularGameBoard;
 import component.model.Section;
 import component.model.gamesquare.GameSquare;
@@ -38,11 +32,7 @@ public class GameBoardTestData {
 	
 	private static GameBoardTestScenario getTestScenario(String fileName) {
 		try {
-			File file = TestFileUtil.getFile(fileName);
-			String fileContents = Files.readString(Paths.get(file.getPath()), StandardCharsets.US_ASCII);
-			
-			JSONParser parser = new JSONParser();
-			JSONObject result = (JSONObject) parser.parse(fileContents);
+			JSONObject result = TestFileUtil.getJsonFromFile(fileName);
 			
 			int numberOfMines = Integer.parseInt(result.get("mines").toString());
 			List<GameSquare> gameSquaresFromResults = new ArrayList<GameSquare>();
