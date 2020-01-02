@@ -16,23 +16,32 @@ import main.solver.component.SeleniumGameSquare;
 import utility.logging.Logger;
 import utility.util.MathUtil;
 
-public class MinesweeperWebsite {
-	private static final String GAME_ELEMENT_ID = "game";
-	private static final String MINESWEEPER_ONLINE_URL = "http://minesweeperonline.com/";
+public abstract class MinesweeperWebsite {
+	private WebDriver webDriver;
+	private String pageURL;
 	
-	private static final String XPATH_FOR_SQUARES = "//div[@class='square blank']";
+	protected WebElement gameElement;
+	private WebElement startButtonElement;
 	
-	private WebElement gameElement;
-	
-	public void startGame(WebDriver webDriver) {
+	public void startGame(WebDriver webDriver, String pageURL, String gameElementId, String startButtonId) {
+		this.pageURL = pageURL;
+		this.webDriver = webDriver;
 		goToMinesweeperPage(webDriver);
-		this.gameElement = webDriver.findElement(By.id(GAME_ELEMENT_ID));
-		webDriver.findElement(By.id("face")).click();
+		this.gameElement = webDriver.findElement(By.id(gameElementId));
+		this.startButtonElement = webDriver.findElement(By.id(startButtonId));
+		
+		this.startButtonElement.click();
 	}
 	
-	public List<WebElement> getAllPlayableSquares() {
+	public void restartGame() {
+		goToMinesweeperPage(webDriver);
+		this.gameElement = webDriver.findElement(By.id(this.gameElement.getAttribute("id")));
+		this.startButtonElement.click();
+	}
+	
+	public List<WebElement> getAllPlayableSquares(String xPathForSquares) {
     	// get all squares
-    	List<WebElement> allPlayableSquares = gameElement.findElements(By.xpath(XPATH_FOR_SQUARES));
+    	List<WebElement> allPlayableSquares = gameElement.findElements(By.xpath(xPathForSquares));
     	
     	// Filter invisible squares. Not sure why the game has extra invisible squares
     	allPlayableSquares = allPlayableSquares.stream().filter(e -> e.isDisplayed()).collect(Collectors.toList());
@@ -40,13 +49,7 @@ public class MinesweeperWebsite {
     	return allPlayableSquares;
     }
     
-    public int getCurrentMinesFromGame() {
-    	String minesValue = gameElement.findElement(By.id("mines_hundreds")).getAttribute("class")
-    			+ gameElement.findElement(By.id("mines_tens")).getAttribute("class")
-    			+ gameElement.findElement(By.id("mines_ones")).getAttribute("class");
-
-    	return Integer.parseInt(minesValue.replace("time", ""));
-    }
+    public abstract int getCurrentMinesFromGame();
 
 	/**
 	 * Selects a random square and returns all squares which now need to be updated
@@ -124,7 +127,7 @@ public class MinesweeperWebsite {
 	    	case BOMB:
 	    		// TODO: instead of starting the game, return an indication that we should end the game (To prevent recursive overflow)
 	    		Logger.logMessage("GAME OVER!");
-	    		startGame(webDriver);
+	    		restartGame();
 	    		break;
 			case ZERO:
 				// If 0, it means all surrounding blank squares were also updated.
@@ -163,7 +166,7 @@ public class MinesweeperWebsite {
 	
 	private void goToMinesweeperPage(WebDriver webDriver) {
 		Logger.setCurrentTime();
-    	webDriver.get(MINESWEEPER_ONLINE_URL);
+    	webDriver.get(this.pageURL);
     	Logger.logTimeTook("Opening a webdriver");
 	}
 }
