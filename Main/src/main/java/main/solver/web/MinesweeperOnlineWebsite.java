@@ -1,7 +1,10 @@
 package main.solver.web;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 //class for interacting with the Minesweeper board over at http://minesweeperonline.com/.
 public class MinesweeperOnlineWebsite extends MinesweeperWebsite {
@@ -15,8 +18,8 @@ public class MinesweeperOnlineWebsite extends MinesweeperWebsite {
 		this.startGame(webDriver, MINESWEEPER_ONLINE_URL, GAME_ELEMENT_ID, RESTART_BUTTON_ID);
 	}
 	
-	public void getAllPlayableSquares() {
-		this.getAllPlayableSquares(XPATH_FOR_SQUARES);
+	public List<WebElement> getAllPlayableSquares() {
+		return this.getAllPlayableSquares(XPATH_FOR_SQUARES);
 	}
 	
 	@Override

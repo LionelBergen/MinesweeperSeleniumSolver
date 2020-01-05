@@ -19,6 +19,7 @@ import org.openqa.selenium.WebElement;
 
 import main.solver.component.SeleniumGameBoard;
 import main.solver.web.MinesweeperWebsite;
+import tests.main.solver.web.component.MinesweeperTestWebsite;
 
 public class MinesweeperWebsiteTest {
 	private final WebDriver mockWebDriver = createMock(WebDriver.class);
@@ -26,7 +27,7 @@ public class MinesweeperWebsiteTest {
 	@Test
 	public void testConstructor() {
 		replayAll();
-		MinesweeperWebsite testObject = new MinesweeperWebsite();
+		MinesweeperWebsite testObject = new MinesweeperTestWebsite();
 		verifyAll();
 		
 		assertNotNull(testObject);
@@ -51,7 +52,7 @@ public class MinesweeperWebsiteTest {
 		mockWebDriver.get(anyString());
 		
 		replayAll();
-		MinesweeperWebsite testObject = new MinesweeperWebsite();
+		MinesweeperWebsite testObject = new MinesweeperTestWebsite();
 		verifyAll();
 		
 		return testObject;

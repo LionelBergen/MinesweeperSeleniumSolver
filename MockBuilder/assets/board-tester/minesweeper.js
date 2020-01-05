@@ -79,6 +79,8 @@ function loadBoard() {
     numberOfColumns = result.width;
     numberOfMines = result.mines;
     
+    document.getElementById('minesLeft').value = numberOfMines;
+    
     let existingItems = [];
     
     // itemId, colour, type, innerHTML

@@ -15,13 +15,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import main.solver.helper.WebDriverToolkit;
 import main.solver.web.MinesweeperWebsite;
+import tests.main.solver.web.component.MinesweeperTestWebsite;
 import tests.minesweeper.solver.data.TestFileUtil;
 
 public class MinesweeperLiveTest {
 	@Test
 	public void test() throws Exception {
 		setupTestSite("LargeScenario01.json");
-		MinesweeperWebsite websiteHelper = new MinesweeperWebsite();
+		MinesweeperWebsite websiteHelper = new MinesweeperTestWebsite();
 	}
 	
 	private void setupTestSite(String testJsonFile) throws Exception {

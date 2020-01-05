@@ -23,7 +23,7 @@ import component.model.gamesquare.SquareValue;
 import main.solver.component.SeleniumGameBoard;
 import main.solver.component.SeleniumGameSquare;
 import main.solver.helper.WebDriverToolkit;
-import main.solver.web.MinesweeperWebsite;
+import main.solver.web.MinesweeperOnlineWebsite;
 import solver.board.analyzing.GameBoardAnalyzer;
 import utility.logging.Logger;
 import utility.util.MathUtil;
@@ -31,7 +31,7 @@ import utility.util.MathUtil;
 // class for auto-completing http://minesweeperonline.com/.
 public class MineSweeperSolver {
 	private static final Random RANDOM = new Random();
-	private final MinesweeperWebsite websiteHelper;
+	private final MinesweeperOnlineWebsite websiteHelper;
 	
     public static void main(String[] args) {
     	WebDriver webDriver = getWebDriver();
@@ -45,7 +45,7 @@ public class MineSweeperSolver {
 	
 	public MineSweeperSolver(WebDriver webDriver) {
 		// get URL for the website and log the time it takes
-		this.websiteHelper = new MinesweeperWebsite();
+		this.websiteHelper = new MinesweeperOnlineWebsite();
 		this.websiteHelper.startGame(webDriver);
 		startGame(webDriver);
 	}
