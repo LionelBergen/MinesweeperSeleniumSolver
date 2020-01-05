@@ -19,8 +19,8 @@
 	height: 16px;
 	float: left;
 	font-size: 0.8em;
-	color: white;
 	text-align: center;
+	font-weight: bold;
 	
 	box-shadow: 1px 1px #888888;
 }
@@ -37,14 +37,34 @@
 	clear: both;
 }
 
+.one {
+	color: blue;
+}
+
+.two { 
+	color: green;
+}
+
+.three {
+	color: red;
+}
+
+.four {
+	color: black;
+}
+
+.five {
+	color: brown;
+}
+
 #gameBoard {
 	margin-top: 20px;
-	width: 500px;
-	height: 318px;
+	width: 480px;
+	height: 218px;
 }
 
 #gameBoard-container {
-	width: 500px;
+	width: 480px;
 	background-color: #c0c0c0;
 }
 

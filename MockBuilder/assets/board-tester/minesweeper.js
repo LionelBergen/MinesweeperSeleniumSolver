@@ -135,8 +135,36 @@ function createBoardToUI(numberOfColumns, numberOfRows, existingItems) {
       if (elementToModify) {
         elementToModify.innerHTML = getInnerHTMLFromItem(existingItems[i]);
         elementToModify.style.backgroundImage = getBackgroundFromType(existingItems[i].type, existingItems[i].innerHTML);
+        let classToAdd = getClass(elementToModify.innerHTML);
+        
+        if (classToAdd) {
+          elementToModify.classList.add(classToAdd);
+        }
       }
     }
+  }
+}
+
+function getClass(innerHTMLOfElement) {
+    console.log(innerHTMLOfElement);
+  if (innerHTMLOfElement == '1') {
+    return "one";
+  } else if (innerHTMLOfElement == '2') {
+    return "two";
+  } else if (innerHTMLOfElement == '3') {
+    return "three";
+  } else if (innerHTMLOfElement == '4') {
+    return "four";
+  } else if (innerHTMLOfElement == '5') {
+    return "five";
+  } else if (innerHTMLOfElement == '6') {
+    return "six";
+  } else if (innerHTMLOfElement == '7') {
+    return "seven";
+  } else if (innerHTMLOfElement == '8') {
+    return "eight";
+  } else {
+    return "";
   }
 }
 
@@ -159,8 +187,6 @@ function getBackgroundFromType(type, name) {
       return "url('square-active.png')";
     } else if (type.includes("ONE")) {
       return "url('square-active.png')";
-    } else {
-      console.log(type);
     }
   }
   else if (name && !isNaN(name)) {
