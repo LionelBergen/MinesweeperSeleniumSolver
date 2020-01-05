@@ -39,15 +39,23 @@ public abstract class MinesweeperWebsite {
 		this.startButtonElement.click();
 	}
 	
-	public List<WebElement> getAllPlayableSquares(String xPathForSquares) {
+	protected List<WebElement> getAllPlayableSquares(String xPathForSquares) {
+		Logger.setCurrentTime();
     	// get all squares
     	List<WebElement> allPlayableSquares = gameElement.findElements(By.xpath(xPathForSquares));
+    	Logger.logTimeTook("Getting " + allPlayableSquares.size() + " elements");
     	
     	// Filter invisible squares. Not sure why the game has extra invisible squares
-    	allPlayableSquares = allPlayableSquares.stream().filter(e -> e.isDisplayed()).collect(Collectors.toList());
+    	allPlayableSquares = allPlayableSquares.stream().filter(e -> isElementVisible(e)).collect(Collectors.toList());
+    	Logger.logTimeTook("filtering down to " + allPlayableSquares.size() + " elements");
     	
     	return allPlayableSquares;
     }
+	
+	public boolean isElementVisible(WebElement webElement) {
+		Logger.logMessage(webElement.getCssValue("display"));
+		return webElement.isDisplayed();
+	}
     
     public abstract int getCurrentMinesFromGame();
 

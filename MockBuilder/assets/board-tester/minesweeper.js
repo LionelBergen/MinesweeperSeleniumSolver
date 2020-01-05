@@ -138,6 +138,7 @@ function createBoardToUI(numberOfColumns, numberOfRows, existingItems) {
         let classToAdd = getClass(elementToModify.innerHTML);
         
         if (classToAdd) {
+          elementToModify.classList.remove("blank");
           elementToModify.classList.add(classToAdd);
         }
       }
@@ -146,23 +147,22 @@ function createBoardToUI(numberOfColumns, numberOfRows, existingItems) {
 }
 
 function getClass(innerHTMLOfElement) {
-    console.log(innerHTMLOfElement);
   if (innerHTMLOfElement == '1') {
-    return "one";
+    return "open1";
   } else if (innerHTMLOfElement == '2') {
-    return "two";
+    return "open2";
   } else if (innerHTMLOfElement == '3') {
-    return "three";
+    return "open3";
   } else if (innerHTMLOfElement == '4') {
-    return "four";
+    return "open4";
   } else if (innerHTMLOfElement == '5') {
-    return "five";
+    return "open5";
   } else if (innerHTMLOfElement == '6') {
-    return "six";
+    return "open6";
   } else if (innerHTMLOfElement == '7') {
-    return "seven";
+    return "open7";
   } else if (innerHTMLOfElement == '8') {
-    return "eight";
+    return "open8";
   } else {
     return "";
   }
