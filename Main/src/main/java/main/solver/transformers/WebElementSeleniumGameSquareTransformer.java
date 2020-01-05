@@ -4,7 +4,6 @@ import org.openqa.selenium.WebElement;
 
 import component.model.gamesquare.SquareValue;
 import main.solver.component.SeleniumGameSquare;
-import utility.logging.Logger;
 
 // Transforms a WebElement to a 'SeleniumGameSquare'
 public class WebElementSeleniumGameSquareTransformer {
@@ -21,9 +20,6 @@ public class WebElementSeleniumGameSquareTransformer {
 	private static SquareValue getValueFromElement(WebElement webElement) {
 		String className = webElement.getAttribute("className");
 		SquareValue value = SquareValue.fromValue(className);
-		
-		// TODO: remove
-		Logger.logMessage(className);
 		
 		if (null == value) {
 			// If the value doesn't exist something is wrong

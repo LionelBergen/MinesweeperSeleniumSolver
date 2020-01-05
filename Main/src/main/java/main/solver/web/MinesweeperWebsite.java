@@ -53,8 +53,7 @@ public abstract class MinesweeperWebsite {
     }
 	
 	public boolean isElementVisible(WebElement webElement) {
-		Logger.logMessage(webElement.getCssValue("display"));
-		return webElement.isDisplayed();
+		return !webElement.getCssValue("display").contains("none");
 	}
     
     public abstract int getCurrentMinesFromGame();
