@@ -1,11 +1,7 @@
 package tests.main.solver.web;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
 import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;

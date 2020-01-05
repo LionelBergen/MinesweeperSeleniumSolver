@@ -90,7 +90,7 @@ public class MineSweeperSolver {
 	}
 	
 	private String gameBoardToJSON(GameBoard gameBoard) {
-		final int numberOfMines = gameBoard.getTotalUnidentifiedMines();
+		final int numberOfMines = websiteHelper.getCurrentMinesFromGame();
 		final int width = 30;
 		final int height = 16;
 		final List<GameSquare> allSquares = gameBoard.getGameBoard();
@@ -142,7 +142,7 @@ public class MineSweeperSolver {
 	 */
 	private List<SeleniumGameSquare> selectARandomSquare(WebDriver webDriver, SeleniumGameBoard gameBoard, int startingMines) {
 		int totalBlankSquares = gameBoard.getSize();
-		int unFoundMines = startingMines - gameBoard.getAllFlaggedSquares().size();
+		int unFoundMines = websiteHelper.getCurrentMinesFromGame();
 		
 		float oddsOfRandomSquare = MathUtil.asFloat(unFoundMines, totalBlankSquares);
 		SeleniumGameSquare randomSquare = getARandomSquare(gameBoard);
@@ -164,8 +164,7 @@ public class MineSweeperSolver {
 	 * Does simple calculations, does not go into anything complicated such as calculating odds of each surrounding square around 2+ touching numbers
 	 */
 	private List<SeleniumGameSquare> getRandomSquareWithBestProbability(WebDriver webDriver, SeleniumGameBoard gameBoard, int startingMines) {
-		final int totalUnidentifiedSquares = gameBoard.getAllBlankSquares().size();
-		gameBoard.setTotalUnidentifiedMines(totalUnidentifiedSquares);
+		gameBoard.setTotalUnidentifiedMines(websiteHelper.getCurrentMinesFromGame());
 		
 		/*
 		// Step 1: Get Sections from Board
