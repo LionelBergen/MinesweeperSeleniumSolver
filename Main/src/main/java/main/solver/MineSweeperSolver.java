@@ -82,7 +82,7 @@ public class MineSweeperSolver {
 	        	Logger.logTimeTook("updating batch. Next round contains: " + surroundingSquaresToUpdate.size());
 	    	} while (!surroundingSquaresToUpdate.isEmpty());
 	    	
-	    	Logger.logMessage("Board should not be clear of all simple known possibilities");
+	    	Logger.logMessage("Board should now be clear of all simple known possibilities");
 	    	Logger.logMessage(gameBoardToJSON(gameBoard));
     	}
     	
